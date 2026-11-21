@@ -1,4 +1,4 @@
-<nav x-data="{ open: false, userDropdown: false }" class="bg-white/95 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50">
+<nav x-data="{ open: false, userDropdown: false }" class="bg-white border-b border-gray-200/80 sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
             
@@ -16,21 +16,21 @@
                 <div class="hidden md:flex items-center space-x-1.5 text-sm font-medium">
                     <!-- Beranda -->
                     <a href="{{ route('dashboard') }}" 
-                       class="px-3.5 py-2 rounded-xl transition-all duration-150 {{ request()->routeIs('dashboard') ? 'bg-emerald-50 text-emerald-800 font-bold shadow-2xs' : 'text-gray-600 hover:text-emerald-800 hover:bg-gray-50' }}">
+                       class="px-3.5 py-2 rounded-xl transition-all duration-150 {{ request()->routeIs('dashboard') ? 'bg-emerald-50 text-emerald-800 font-bold' : 'text-gray-600 hover:text-emerald-800 hover:bg-gray-50' }}">
                         Beranda
                     </a>
 
                     <!-- Jelajahi Katalog -->
                     <a href="{{ route('items.index') }}" 
-                       class="px-3.5 py-2 rounded-xl transition-all duration-150 {{ request()->routeIs('items.index') ? 'bg-emerald-50 text-emerald-800 font-bold shadow-2xs' : 'text-gray-600 hover:text-emerald-800 hover:bg-gray-50' }}">
+                       class="px-3.5 py-2 rounded-xl transition-all duration-150 {{ request()->routeIs('items.index') ? 'bg-emerald-50 text-emerald-800 font-bold' : 'text-gray-600 hover:text-emerald-800 hover:bg-gray-50' }}">
                         Jelajahi Katalog
                     </a>
 
                     @auth
-                        <!-- Pasang Barang (CTA Button) -->
+                        <!-- Pasang Barang (Solid Accent Button) -->
                         <a href="{{ Route::has('items.create') ? route('items.create') : '#' }}" 
-                           class="inline-flex items-center space-x-1 px-3.5 py-2 rounded-xl transition-all duration-150 {{ request()->routeIs('items.create') ? 'bg-emerald-800 text-white font-bold' : 'text-emerald-800 hover:bg-emerald-50 font-bold' }}">
-                            <span>+</span>
+                           class="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl transition-all duration-150 {{ request()->routeIs('items.create') ? 'bg-emerald-800 text-white font-bold' : 'text-emerald-800 hover:bg-emerald-50 font-bold' }}">
+                            <x-icon name="plus" class="w-4 h-4" />
                             <span>Pasang Barang</span>
                         </a>
                     @endauth
@@ -43,7 +43,7 @@
                     <!-- Pill Profile Dropdown -->
                     <div class="relative" @click.outside="userDropdown = false">
                         <button @click="userDropdown = !userDropdown" 
-                                class="flex items-center space-x-3 p-1.5 pe-4 bg-gray-50 hover:bg-emerald-50/70 border border-gray-200/80 hover:border-emerald-300 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700">
+                                class="flex items-center space-x-3 p-1.5 pe-4 bg-gray-50 hover:bg-emerald-50 border border-gray-200 hover:border-emerald-300 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700">
                             <!-- Avatar -->
                             <img class="w-8 h-8 rounded-full object-cover border border-emerald-700/20" 
                                  src="{{ Auth::user()->avatar ?? 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name).'&background=144d37&color=ffffff' }}" 
@@ -60,11 +60,9 @@
                             </div>
 
                             <!-- Panah Bawah -->
-                            <svg class="w-3.5 h-3.5 text-gray-400 transition-transform duration-200" 
-                                 :class="userDropdown ? 'rotate-180 text-emerald-700' : ''" 
-                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
-                            </svg>
+                            <x-icon name="chevron-down" 
+                                    class="w-3.5 h-3.5 text-gray-400 transition-transform duration-200" 
+                                    ::class="userDropdown ? 'rotate-180 text-emerald-700' : ''" />
                         </button>
 
                         <!-- Menu Dropdown -->
@@ -75,16 +73,16 @@
                              x-transition:exit="transition ease-in duration-100"
                              x-transition:exit-start="transform opacity-100 scale-100 translate-y-0"
                              x-transition:exit-end="transform opacity-0 scale-95 -translate-y-1"
-                             class="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 divide-y divide-gray-100"
+                             class="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-200 py-2 z-50 divide-y divide-gray-100"
                              style="display: none;">
                             
                             <!-- Ringkasan Info Mahasiswa -->
-                            <div class="px-4 py-3 bg-gray-50/50">
+                            <div class="px-4 py-3 bg-gray-50/70">
                                 <p class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Akun Mahasiswa</p>
                                 <p class="text-xs font-bold text-gray-900 truncate mt-0.5">{{ Auth::user()->name }}</p>
                                 <p class="text-[11px] text-gray-500 truncate">{{ Auth::user()->email }}</p>
                                 @if(Auth::user()->nim)
-                                    <span class="inline-flex items-center text-[10px] font-bold text-emerald-800 bg-emerald-100/70 px-2 py-0.5 rounded-md mt-1.5">
+                                    <span class="inline-flex items-center text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-md mt-1.5">
                                         NIM: {{ Auth::user()->nim }}
                                     </span>
                                 @endif
@@ -93,27 +91,21 @@
                             <!-- Menu Utama Mahasiswa -->
                             <div class="py-1.5 text-xs font-medium">
                                 <a href="{{ Route::has('claims.incoming') ? route('claims.incoming') : '#' }}" 
-                                   class="flex items-center justify-between px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors">
-                                    <span class="flex items-center space-x-2">
-                                        <span>📥</span>
-                                        <span>Pengajuan Masuk</span>
-                                    </span>
+                                   class="flex items-center space-x-2.5 px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors">
+                                    <x-icon name="inbox" class="w-4 h-4 text-emerald-700" />
+                                    <span>Pengajuan Masuk</span>
                                 </a>
 
                                 <a href="{{ Route::has('items.my') ? route('items.my') : '#' }}" 
-                                   class="flex items-center justify-between px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors">
-                                    <span class="flex items-center space-x-2">
-                                        <span>📦</span>
-                                        <span>Barang Saya</span>
-                                    </span>
+                                   class="flex items-center space-x-2.5 px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors">
+                                    <x-icon name="package" class="w-4 h-4 text-emerald-700" />
+                                    <span>Barang Saya</span>
                                 </a>
 
                                 <a href="{{ Route::has('claims.my') ? route('claims.my') : '#' }}" 
-                                   class="flex items-center justify-between px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors">
-                                    <span class="flex items-center space-x-2">
-                                        <span>⏳</span>
-                                        <span>Pengajuan Saya</span>
-                                    </span>
+                                   class="flex items-center space-x-2.5 px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors">
+                                    <x-icon name="clock" class="w-4 h-4 text-amber-600" />
+                                    <span>Pengajuan Saya</span>
                                 </a>
                             </div>
 
@@ -121,15 +113,15 @@
                             <div class="py-1.5 text-xs font-medium">
                                 @if(Auth::user()->role === 'admin')
                                     <a href="{{ Route::has('admin.dashboard') ? route('admin.dashboard') : '#' }}" 
-                                       class="flex items-center space-x-2 px-4 py-2 text-amber-800 hover:bg-amber-50 font-bold transition-colors">
-                                        <span>🛡️</span>
+                                       class="flex items-center space-x-2.5 px-4 py-2 text-amber-800 hover:bg-amber-50 font-bold transition-colors">
+                                        <x-icon name="shield" class="w-4 h-4 text-amber-700" />
                                         <span>Portal Moderasi Admin</span>
                                     </a>
                                 @endif
 
                                 <a href="{{ route('profile.edit') }}" 
-                                   class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors">
-                                    <span>⚙️</span>
+                                   class="flex items-center space-x-2.5 px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors">
+                                    <x-icon name="settings" class="w-4 h-4 text-gray-500" />
                                     <span>Pengaturan Profil</span>
                                 </a>
                             </div>
@@ -139,8 +131,8 @@
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit" 
-                                            class="w-full text-left px-4 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 flex items-center space-x-2 transition-colors">
-                                        <span>🚪</span>
+                                            class="w-full text-left px-4 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 flex items-center space-x-2.5 transition-colors">
+                                        <x-icon name="log-out" class="w-4 h-4 text-rose-600" />
                                         <span>Keluar Sesi</span>
                                     </button>
                                 </form>
@@ -154,9 +146,9 @@
                         Masuk
                     </a>
                     <a href="{{ route('register') }}" 
-                       class="inline-flex items-center space-x-1.5 text-xs font-bold text-white bg-emerald-800 hover:bg-emerald-900 px-4 py-2.5 rounded-xl shadow-xs transition-colors focus-visible:ring-2 focus-visible:ring-emerald-700">
+                       class="inline-flex items-center space-x-1.5 text-xs font-bold text-white bg-emerald-800 hover:bg-emerald-900 px-4.5 py-2.5 rounded-xl transition-colors focus-visible:ring-2 focus-visible:ring-emerald-700">
                         <span>Daftar Sekarang</span>
-                        <span>&rarr;</span>
+                        <x-icon name="arrow-right" class="w-3.5 h-3.5" />
                     </a>
                 @endauth
             </div>
@@ -183,35 +175,41 @@
          x-transition:exit="transition ease-in duration-150"
          x-transition:exit-start="opacity-100 translate-y-0"
          x-transition:exit-end="opacity-0 -translate-y-2"
-         class="md:hidden border-t border-gray-100 bg-white/98 backdrop-blur-md px-4 pt-3 pb-6 space-y-2 shadow-lg"
+         class="md:hidden border-t border-gray-200 bg-white px-4 pt-3 pb-6 space-y-2 shadow-lg"
          style="display: none;">
         
         <div class="space-y-1 text-sm font-medium">
             <a href="{{ route('dashboard') }}" 
-               class="block px-3.5 py-3 rounded-xl transition-colors {{ request()->routeIs('dashboard') ? 'bg-emerald-50 text-emerald-800 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
-                🏠 Beranda
+               class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl transition-colors {{ request()->routeIs('dashboard') ? 'bg-emerald-50 text-emerald-800 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
+                <x-icon name="package" class="w-4 h-4 text-emerald-800" />
+                <span>Beranda</span>
             </a>
             <a href="{{ route('items.index') }}" 
-               class="block px-3.5 py-3 rounded-xl transition-colors {{ request()->routeIs('items.index') ? 'bg-emerald-50 text-emerald-800 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
-                🔍 Jelajahi Katalog
+               class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl transition-colors {{ request()->routeIs('items.index') ? 'bg-emerald-50 text-emerald-800 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
+                <x-icon name="search" class="w-4 h-4 text-emerald-800" />
+                <span>Jelajahi Katalog</span>
             </a>
             
             @auth
                 <a href="{{ Route::has('items.create') ? route('items.create') : '#' }}" 
-                   class="block px-3.5 py-3 rounded-xl text-emerald-800 font-bold hover:bg-emerald-50 transition-colors">
-                    ➕ Pasang Barang Baru
+                   class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl text-emerald-800 font-bold hover:bg-emerald-50 transition-colors">
+                    <x-icon name="plus" class="w-4 h-4 text-emerald-800" />
+                    <span>Pasang Barang Baru</span>
                 </a>
                 <a href="{{ Route::has('claims.incoming') ? route('claims.incoming') : '#' }}" 
-                   class="block px-3.5 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors">
-                    📥 Pengajuan Masuk
+                   class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors">
+                    <x-icon name="inbox" class="w-4 h-4 text-emerald-700" />
+                    <span>Pengajuan Masuk</span>
                 </a>
                 <a href="{{ Route::has('items.my') ? route('items.my') : '#' }}" 
-                   class="block px-3.5 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors">
-                    📦 Barang Saya
+                   class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors">
+                    <x-icon name="package" class="w-4 h-4 text-emerald-700" />
+                    <span>Barang Saya</span>
                 </a>
                 <a href="{{ Route::has('claims.my') ? route('claims.my') : '#' }}" 
-                   class="block px-3.5 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors">
-                    ⏳ Pengajuan Saya
+                   class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors">
+                    <x-icon name="clock" class="w-4 h-4 text-amber-600" />
+                    <span>Pengajuan Saya</span>
                 </a>
             @endauth
         </div>
@@ -230,14 +228,15 @@
 
                 <div class="space-y-1">
                     <a href="{{ route('profile.edit') }}" 
-                       class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50">
-                        ⚙️ Pengaturan Profil
+                       class="flex items-center space-x-2 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50">
+                        <x-icon name="settings" class="w-4 h-4 text-gray-500" />
+                        <span>Pengaturan Profil</span>
                     </a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" 
                                 class="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-bold text-rose-600 hover:bg-rose-50 flex items-center space-x-2">
-                            <span>🚪</span>
+                            <x-icon name="log-out" class="w-4 h-4 text-rose-600" />
                             <span>Keluar Sesi</span>
                         </button>
                     </form>
@@ -249,7 +248,7 @@
                         Masuk
                     </a>
                     <a href="{{ route('register') }}" 
-                       class="w-full text-center py-3 text-xs font-bold text-white bg-emerald-800 rounded-xl shadow-xs hover:bg-emerald-900">
+                       class="w-full text-center py-3 text-xs font-bold text-white bg-emerald-800 rounded-xl hover:bg-emerald-900">
                         Daftar Akun
                     </a>
                 </div>
