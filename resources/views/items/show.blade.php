@@ -19,35 +19,53 @@
                 setTimeout(() => this.copied = false, 2500);
             }
          }" 
-         class="space-y-10 pb-16 lg:pb-8">
+         class="space-y-10 pb-20 lg:pb-8">
 
-        <!-- 1. Breadcrumbs Navigasi -->
-        <nav class="flex items-center space-x-2 text-xs font-medium text-gray-500 overflow-x-auto whitespace-nowrap py-1">
-            <a href="{{ route('dashboard') }}" class="hover:text-emerald-800 transition-colors">Beranda</a>
-            <span class="text-gray-300">/</span>
-            <a href="{{ route('items.index') }}" class="hover:text-emerald-800 transition-colors">Jelajahi Barang</a>
-            <span class="text-gray-300">/</span>
-            <a href="{{ route('items.index', ['category' => $item->category]) }}" class="hover:text-emerald-800 transition-colors text-emerald-800 font-semibold">
-                {{ $item->category }}
-            </a>
-            <span class="text-gray-300">/</span>
-            <span class="text-gray-800 font-bold truncate max-w-xs sm:max-w-md" title="{{ $item->title }}">
-                {{ $item->title }}
-            </span>
-        </nav>
+        <!-- 1. Top Bar: Breadcrumbs & Kembali ke Katalog -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-gray-200/60">
+            <nav class="flex items-center space-x-2 text-xs font-medium text-gray-500 overflow-x-auto whitespace-nowrap">
+                <a href="{{ route('items.index') }}" class="inline-flex items-center space-x-1 text-emerald-800 hover:text-emerald-950 font-bold transition-colors">
+                    <span>&larr;</span>
+                    <span>Kembali ke Katalog</span>
+                </a>
+                <span class="text-gray-300">/</span>
+                <a href="{{ route('dashboard') }}" class="hover:text-emerald-800 transition-colors">Beranda</a>
+                <span class="text-gray-300">/</span>
+                <a href="{{ route('items.index', ['category' => $item->category]) }}" class="hover:text-emerald-800 transition-colors font-semibold text-emerald-800">
+                    {{ $item->category }}
+                </a>
+                <span class="text-gray-300">/</span>
+                <span class="text-gray-800 font-bold truncate max-w-xs" title="{{ $item->title }}">
+                    {{ $item->title }}
+                </span>
+            </nav>
 
-        <!-- 2. Grid Konten Utama: Galeri Kiri + Spesifikasi & Aksi Kanan -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <!-- Listing ID & Tombol Salin Tautan -->
+            <div class="flex items-center space-x-3 text-xs text-gray-500 shrink-0">
+                <span class="font-mono text-[11px] bg-gray-100 text-gray-600 px-2.5 py-1 rounded-lg border border-gray-200/70">
+                    #WARIS-{{ str_pad($item->id, 5, '0', STR_PAD_LEFT) }}
+                </span>
+                <button @click="copyUrl()" 
+                        class="inline-flex items-center space-x-1.5 text-xs font-bold text-emerald-800 hover:text-emerald-950 transition-colors">
+                    <span x-show="!copied">🔗 Salin Tautan Barang</span>
+                    <span x-show="copied" class="text-emerald-700 font-bold">✓ Tautan Berhasil Disalin!</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 2. Grid Utama Produk: Galeri Kiri (Sticky) + Detail Kanan -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
             
-            <!-- Sisi Kiri (Col 12 -> Col 7): Galeri Foto Interaktif -->
-            <div class="lg:col-span-7 space-y-4">
-                <!-- Preview Gambar Utama -->
-                <div class="relative bg-gray-100 rounded-3xl overflow-hidden border border-gray-200/80 shadow-sm aspect-4/3 flex items-center justify-center group">
+            <!-- Sisi Kiri (Col 12 -> Col 6): Galeri Foto Interaktif (Sticky on Desktop) -->
+            <div class="lg:col-span-6 lg:sticky lg:top-28 space-y-4">
+                
+                <!-- Frame Gambar Utama -->
+                <div class="relative bg-white rounded-3xl overflow-hidden border border-gray-200/80 shadow-xs aspect-4/3 flex items-center justify-center group">
                     <img :src="images[activeImageIndex]" 
                          alt="{{ $item->title }}" 
-                         class="w-full h-full object-cover transition-all duration-300 group-hover:scale-[1.02] {{ !$isAvailable ? 'grayscale-[30%]' : '' }}">
+                         class="w-full h-full object-cover transition-all duration-300 group-hover:scale-[1.02] {{ !$isAvailable ? 'grayscale-[35%]' : '' }}">
 
-                    <!-- Overlay Mode Badge (Kiri Atas Gambar) -->
+                    <!-- Overlay Mode Badge (Kiri Atas) -->
                     <div class="absolute top-4 left-4 flex flex-wrap gap-2 items-center">
                         @if ($item->mode === 'harga_pas')
                             <span class="inline-flex items-center px-3 py-1.5 rounded-2xl text-xs font-black bg-amber-500 text-white shadow-md backdrop-blur-md">
@@ -59,7 +77,7 @@
                             </span>
                         @elseif ($item->mode === 'barter')
                             <span class="inline-flex items-center px-3 py-1.5 rounded-2xl text-xs font-black bg-teal-700 text-white shadow-md backdrop-blur-md">
-                                🔄 Barter (Tukar Barang)
+                                🔄 Mode Barter
                             </span>
                         @endif
 
@@ -105,9 +123,9 @@
                     </template>
                 </div>
 
-                <!-- Thumbnail Carousel Row -->
+                <!-- Thumbnail Reel di Bawah Gambar Utama -->
                 <template x-if="images.length > 1">
-                    <div class="flex items-center space-x-3 overflow-x-auto pb-2">
+                    <div class="flex items-center space-x-3 overflow-x-auto pb-1 scrollbar-none">
                         <template x-for="(img, idx) in images" :key="idx">
                             <button @click="activeImageIndex = idx"
                                     class="relative w-20 h-20 rounded-2xl overflow-hidden border-2 transition-all shrink-0 focus:outline-none"
@@ -117,67 +135,53 @@
                         </template>
                     </div>
                 </template>
-
-                <!-- Tombol Bagikan & Info ID Listing -->
-                <div class="flex items-center justify-between text-xs text-gray-500 pt-2 px-1">
-                    <span>ID Listing: #WARIS-{{ str_pad($item->id, 5, '0', STR_PAD_LEFT) }}</span>
-                    <button @click="copyUrl()" 
-                            class="inline-flex items-center space-x-1.5 text-emerald-800 hover:text-emerald-950 font-bold transition-colors">
-                        <span x-show="!copied">🔗 Salin Tautan Barang</span>
-                        <span x-show="copied" class="text-emerald-700 font-bold">✓ Berhasil Disalin!</span>
-                    </button>
-                </div>
             </div>
 
-            <!-- Sisi Kanan (Col 12 -> Col 5): Detail Info, Profil Pemilik & Action Card -->
-            <div class="lg:col-span-5 space-y-6">
+            <!-- Sisi Kanan (Col 12 -> Col 6): Rincian Spesifikasi, Profil & Aksi Transaksi -->
+            <div class="lg:col-span-6 space-y-6">
                 
-                <!-- Kartu Informasi Barang -->
-                <div class="bg-white rounded-3xl p-6 sm:p-7 border border-gray-100 shadow-sm space-y-5">
-                    
-                    <!-- Metadata Header -->
-                    <div class="space-y-2">
-                        <div class="flex flex-wrap items-center gap-2">
-                            <span class="inline-flex items-center px-3 py-1 rounded-xl text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-100/60">
-                                📂 {{ $item->category }}
-                            </span>
-                            <span class="inline-flex items-center px-3 py-1 rounded-xl text-xs font-semibold bg-gray-100 text-gray-700">
-                                ✨ {{ $item->condition }}
-                            </span>
-                            <span class="text-xs text-gray-400 ms-auto">
-                                ⏱️ {{ $item->created_at->diffForHumans() }}
-                            </span>
-                        </div>
-
-                        <h1 class="text-xl sm:text-2xl font-black text-gray-900 leading-tight">
-                            {{ $item->title }}
-                        </h1>
+                <!-- 1. Header Judul & Tag Kategori -->
+                <div class="bg-white rounded-3xl p-6 sm:p-7 border border-gray-200/80 shadow-xs space-y-4">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="inline-flex items-center px-3 py-1 rounded-xl text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-100">
+                            📂 {{ $item->category }}
+                        </span>
+                        <span class="inline-flex items-center px-3 py-1 rounded-xl text-xs font-semibold bg-gray-100 text-gray-700">
+                            ✨ {{ $item->condition }}
+                        </span>
+                        <span class="text-xs text-gray-400 ms-auto">
+                            ⏱️ {{ $item->created_at->diffForHumans() }}
+                        </span>
                     </div>
 
-                    <!-- Highlight Mode Transaksi -->
-                    <div class="p-4 rounded-2xl {{ $item->mode === 'harga_pas' ? 'bg-amber-50/70 border border-amber-200/70' : ($item->mode === 'barter' ? 'bg-teal-50/70 border border-teal-200/70' : 'bg-emerald-50/70 border border-emerald-200/70') }}">
+                    <h1 class="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight leading-snug">
+                        {{ $item->title }}
+                    </h1>
+
+                    <!-- Highlight Mode Transaksi (Bespoke Card) -->
+                    <div class="p-4 sm:p-5 rounded-2xl {{ $item->mode === 'harga_pas' ? 'bg-amber-50/80 border border-amber-200' : ($item->mode === 'barter' ? 'bg-teal-50/80 border border-teal-200' : 'bg-emerald-50/80 border border-emerald-200') }}">
                         @if ($item->mode === 'harga_pas')
                             <div class="flex items-center justify-between">
                                 <div>
                                     <span class="text-[11px] font-bold text-amber-800 uppercase tracking-wider block">Harga Pas Mahasiswa</span>
-                                    <span class="text-2xl font-black text-amber-900 mt-0.5 block">
+                                    <span class="text-3xl font-black text-amber-950 mt-1 block">
                                         Rp {{ number_format($item->price, 0, ',', '.') }}
                                     </span>
                                 </div>
-                                <span class="text-2xl">🏷️</span>
+                                <span class="text-3xl">🏷️</span>
                             </div>
-                            <p class="text-[11px] text-amber-700/90 mt-1">
-                                Transaksi dibayar tunai / transfer langsung saat ketemuan (COD di kampus). Tanpa biaya admin platform.
+                            <p class="text-xs text-amber-800/90 mt-2 leading-relaxed">
+                                Transaksi dibayar tunai atau transfer langsung saat ketemuan (COD di kampus). Tanpa potongan komisi platform.
                             </p>
                         @elseif ($item->mode === 'barter')
-                            <div class="space-y-1.5">
+                            <div class="space-y-2">
                                 <div class="flex items-center justify-between">
                                     <span class="text-[11px] font-bold text-teal-800 uppercase tracking-wider block">Mode Barter / Tukar Barang</span>
-                                    <span class="text-2xl">🔄</span>
+                                    <span class="text-3xl">🔄</span>
                                 </div>
-                                <div class="bg-white/80 p-3 rounded-xl border border-teal-200">
-                                    <span class="text-[11px] font-bold text-teal-900 block">Pemilik mencari penukar:</span>
-                                    <p class="text-xs font-medium text-gray-800 mt-0.5">
+                                <div class="bg-white p-3.5 rounded-xl border border-teal-200 shadow-2xs">
+                                    <span class="text-[11px] font-bold text-teal-900 block">Pemilik mencari barang penukar:</span>
+                                    <p class="text-xs font-semibold text-gray-800 mt-1 italic">
                                         "{{ $item->barter_request ?? 'Terbuka tawaran barang kuliah sepadan' }}"
                                     </p>
                                 </div>
@@ -186,158 +190,21 @@
                             <div class="flex items-center justify-between">
                                 <div>
                                     <span class="text-[11px] font-bold text-emerald-800 uppercase tracking-wider block">Pahala & Hibah Bersih</span>
-                                    <span class="text-xl font-black text-emerald-900 mt-0.5 block">
+                                    <span class="text-2xl sm:text-3xl font-black text-emerald-950 mt-1 block">
                                         Rp 0 (100% Gratis)
                                     </span>
                                 </div>
-                                <span class="text-2xl">🎁</span>
+                                <span class="text-3xl">🎁</span>
                             </div>
-                            <p class="text-[11px] text-emerald-700/90 mt-1">
+                            <p class="text-xs text-emerald-800/90 mt-2 leading-relaxed">
                                 Silakan klaim bagi yang membutuhkan untuk perlengkapan kuliah. Dijaga amanahnya ya!
                             </p>
                         @endif
                     </div>
-
-                    <!-- Catatan Kondisi & Deskripsi -->
-                    <div class="space-y-3 pt-2">
-                        @if ($item->condition_note)
-                            <div class="bg-gray-50 p-3.5 rounded-2xl border border-gray-100">
-                                <span class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">
-                                    Catatan Kejujuran Kondisi:
-                                </span>
-                                <p class="text-xs text-gray-700 leading-relaxed italic">
-                                    "{{ $item->condition_note }}"
-                                </p>
-                            </div>
-                        @endif
-
-                        <div>
-                            <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider block mb-1.5">
-                                Deskripsi Barang:
-                            </span>
-                            <div class="text-xs sm:text-sm text-gray-700 leading-relaxed whitespace-pre-line">
-                                {{ $item->description }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Titik Temu & Jadwal Serah Terima di Kampus -->
-                    <div class="pt-4 border-t border-gray-100 space-y-2.5">
-                        <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider block">
-                            Rencana Ketemuan (COD Kampus):
-                        </span>
-                        
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                            <div class="flex items-center space-x-2 bg-gray-50 p-2.5 rounded-xl border border-gray-100">
-                                <span class="text-base">📍</span>
-                                <div>
-                                    <span class="text-[10px] text-gray-400 block font-semibold">Lokasi Kampus</span>
-                                    <span class="text-gray-800 font-bold truncate block">{{ $item->meetup_location ?? 'Sekitar Kampus Utama' }}</span>
-                                </div>
-                            </div>
-                            <div class="flex items-center space-x-2 bg-gray-50 p-2.5 rounded-xl border border-gray-100">
-                                <span class="text-base">⏱️</span>
-                                <div>
-                                    <span class="text-[10px] text-gray-400 block font-semibold">Waktu Serah Terima</span>
-                                    <span class="text-gray-800 font-bold truncate block">{{ $item->time_handover ?? 'Fleksibel sepulang kuliah' }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tombol Aksi Kontekstual (Desktop) -->
-                    <div class="pt-4 border-t border-gray-100">
-                        @if ($isOwner)
-                            <!-- Skenario 1: User adalah Pemilik Barang -->
-                            <div class="space-y-2">
-                                <div class="bg-emerald-50 border border-emerald-200 text-emerald-900 p-3 rounded-2xl text-xs flex items-center justify-between">
-                                    <div>
-                                        <span class="font-bold block">Status Barang Anda:</span>
-                                        <span class="text-[11px]">{{ $item->claims->count() }} Mahasiswa Mengajukan Klaim</span>
-                                    </div>
-                                    <span class="text-xl">📋</span>
-                                </div>
-
-                                <div class="flex items-center space-x-2">
-                                    <a href="{{ Route::has('claims.incoming') ? route('claims.incoming') : '#' }}" 
-                                       class="flex-1 py-3 px-4 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-2xl shadow-xs transition-colors text-center">
-                                        Lihat Pengajuan Masuk ({{ $item->claims->count() }})
-                                    </a>
-                                    <a href="{{ Route::has('items.my') ? route('items.my') : '#' }}" 
-                                       class="py-3 px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs rounded-2xl transition-colors text-center">
-                                        Kelola Barang Saya
-                                    </a>
-                                </div>
-                            </div>
-
-                        @elseif (!$isAvailable)
-                            <!-- Skenario 2: Barang Sudah Terkunci / Diambil -->
-                            <div class="bg-gray-100 border border-gray-200 p-4 rounded-2xl text-center space-y-1">
-                                <span class="text-xl block">🔒</span>
-                                <span class="text-xs font-bold text-gray-800 block">Barang Sudah Terkunci</span>
-                                <p class="text-[11px] text-gray-500">
-                                    Barang ini telah disetujui untuk mahasiswa lain. Coba cari barang serupa di katalog ya!
-                                </p>
-                            </div>
-
-                        @elseif ($userClaim)
-                            <!-- Skenario 3: User Sudah Pernah Mengajukan Klaim -->
-                            <div class="p-4 rounded-2xl border text-center space-y-1.5 {{ $userClaim->status === 'approved' ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : ($userClaim->status === 'rejected' ? 'bg-rose-50 border-rose-200 text-rose-900' : 'bg-amber-50 border-amber-200 text-amber-900') }}">
-                                <span class="text-xl block">
-                                    {{ $userClaim->status === 'approved' ? '🎉' : ($userClaim->status === 'rejected' ? '😔' : '⏳') }}
-                                </span>
-                                <span class="text-xs font-bold block">
-                                    {{ $userClaim->status === 'approved' ? 'Pengajuan Anda Telah Disetujui Pemilik!' : ($userClaim->status === 'rejected' ? 'Pengajuan Anda Belum Terpilih' : 'Pengajuan Anda Sedang Ditinjau') }}
-                                </span>
-                                <p class="text-[11px] opacity-90">
-                                    @if ($userClaim->status === 'approved')
-                                        Silakan hubungi pemilik barang via kontak yang terbuka di menu "Pengajuan Saya".
-                                    @elseif ($userClaim->status === 'pending')
-                                        Tunggu persetujuan dari pemilik barang. Kamu akan segera diberitahu begitu pemilik merespons.
-                                    @else
-                                        Barang ini dialokasikan kepada mahasiswa lain yang lebih membutuhkan.
-                                    @endif
-                                </p>
-                                <div class="pt-2">
-                                    <a href="{{ Route::has('claims.my') ? route('claims.my') : '#' }}" class="inline-flex items-center text-xs font-bold underline">
-                                        Buka Menu Pengajuan Saya &rarr;
-                                    </a>
-                                </div>
-                            </div>
-
-                        @else
-                            <!-- Skenario 4: Barang Tersedia & Siap Diklaim -->
-                            @auth
-                                <div class="space-y-2">
-                                    <!-- Tombol Pemicu Modal Pengajuan (Diaktifkan pada Task 7) -->
-                                    <button type="button"
-                                            onclick="alert('Fitur Formulir Pengajuan Klaim / Barter siap dihubungkan pada Task 7!')"
-                                            class="w-full py-3.5 px-6 bg-emerald-800 hover:bg-emerald-900 text-white font-black text-sm rounded-2xl shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2">
-                                        <span>{{ $item->mode === 'barter' ? '🔄 Ajukan Tawaran Barter' : ($item->mode === 'gratis' ? '🎁 Ajukan Klaim Gratis' : '🏷️ Ajukan Pembelian Harga Pas') }}</span>
-                                        <span>&rarr;</span>
-                                    </button>
-                                    <p class="text-[11px] text-gray-400 text-center">
-                                        🔒 Info kontak Anda aman dan hanya terbuka ke pemilik jika disetujui.
-                                    </p>
-                                </div>
-                            @else
-                                <div class="bg-emerald-50/70 border border-emerald-200/70 p-4 rounded-2xl text-center space-y-2">
-                                    <span class="text-xs font-bold text-emerald-900 block">Tertarik dengan barang ini?</span>
-                                    <p class="text-[11px] text-emerald-700">
-                                        Silakan masuk dengan akun mahasiswa Anda untuk mengajukan klaim atau barter.
-                                    </p>
-                                    <a href="{{ route('login') }}" 
-                                       class="inline-block w-full py-2.5 px-4 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-xs transition-colors">
-                                        Masuk untuk Mengajukan
-                                    </a>
-                                </div>
-                            @endauth
-                        @endif
-                    </div>
                 </div>
 
-                <!-- Kartu Profil Pemilik Barang (Sivitas Kampus) -->
-                <div class="bg-white rounded-3xl p-5 border border-gray-100 shadow-sm flex items-center justify-between gap-4">
+                <!-- 2. Kartu Profil Pemilik Barang (Sivitas Kampus Terverifikasi) -->
+                <div class="bg-white rounded-3xl p-5 border border-gray-200/80 shadow-xs flex items-center justify-between gap-4">
                     <div class="flex items-center space-x-3.5 truncate">
                         <img src="{{ $item->user->avatar ?? 'https://ui-avatars.com/api/?name='.urlencode($item->user->name).'&background=144d37&color=ffffff' }}" 
                              alt="{{ $item->user->name }}" 
@@ -345,44 +212,173 @@
                         <div class="truncate">
                             <div class="flex items-center space-x-1.5">
                                 <span class="font-bold text-gray-900 text-sm truncate">{{ $item->user->name }}</span>
-                                <span class="text-emerald-700 text-xs shrink-0" title="Mahasiswa Terverifikasi">✓</span>
+                                <span class="text-emerald-700 text-xs shrink-0 font-bold" title="Mahasiswa Terverifikasi">✓</span>
                             </div>
-                            <span class="text-xs text-gray-500 block truncate">
+                            <span class="text-xs text-gray-500 block truncate mt-0.5">
                                 {{ $item->user->faculty ?? 'Mahasiswa Kampus' }} &bull; Angkatan {{ $item->user->batch ?? 'Aktif' }}
                             </span>
                         </div>
                     </div>
 
                     <div class="text-right shrink-0">
-                        <span class="text-[10px] text-gray-400 uppercase font-bold tracking-wider block">Jejak Barang</span>
-                        <span class="text-xs font-black text-emerald-800 block">
+                        <span class="text-[10px] text-gray-400 uppercase font-bold tracking-wider block">Jejak Kebaikan</span>
+                        <span class="text-xs font-black text-emerald-800 block mt-0.5">
                             {{ $item->user->items()->count() }} Terpasang
                         </span>
                     </div>
                 </div>
 
-                <!-- Kebijakan Keamanan & Etika Kampus (Anti-Slop Content Guard) -->
-                <div class="bg-gray-50/80 rounded-2xl p-4 border border-gray-100 text-[11px] text-gray-500 space-y-1">
-                    <div class="font-bold text-gray-700 flex items-center space-x-1">
-                        <span>🛡️</span>
-                        <span>Etika Transaksi Kampus</span>
+                <!-- 3. Rencana Ketemuan (COD Kampus) & Catatan Kondisi Fisik -->
+                <div class="bg-white rounded-3xl p-6 border border-gray-200/80 shadow-xs space-y-4">
+                    
+                    <!-- Lokasi & Waktu Serah Terima -->
+                    <div class="space-y-2">
+                        <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider block">
+                            Rencana Titik Ketemuan (COD Kampus):
+                        </span>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                            <div class="flex items-center space-x-3 bg-gray-50 p-3 rounded-2xl border border-gray-100">
+                                <span class="text-xl">📍</span>
+                                <div>
+                                    <span class="text-[10px] text-gray-400 block font-semibold">Titik Lokasi Kampus</span>
+                                    <span class="text-gray-900 font-bold truncate block">{{ $item->meetup_location ?? 'Sekitar Kampus Utama' }}</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3 bg-gray-50 p-3 rounded-2xl border border-gray-100">
+                                <span class="text-xl">⏱️</span>
+                                <div>
+                                    <span class="text-[10px] text-gray-400 block font-semibold">Waktu Serah Terima</span>
+                                    <span class="text-gray-900 font-bold truncate block">{{ $item->time_handover ?? 'Fleksibel sepulang kuliah' }}</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <p class="leading-relaxed">
-                        Pastikan saling memeriksa kondisi barang saat serah terima. Dilarang memperjualbelikan materi kuliah yang bersifat rahasia ujian atau melanggar hak cipta dosen.
-                    </p>
+
+                    <!-- Catatan Kejujuran Kondisi (Jika Ada) -->
+                    @if ($item->condition_note)
+                        <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100 space-y-1">
+                            <span class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block">
+                                Catatan Kejujuran Kondisi:
+                            </span>
+                            <p class="text-xs text-gray-700 leading-relaxed italic">
+                                "{{ $item->condition_note }}"
+                            </p>
+                        </div>
+                    @endif
+
+                    <!-- Deskripsi Lengkap -->
+                    <div class="pt-2">
+                        <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider block mb-1.5">
+                            Deskripsi Barang:
+                        </span>
+                        <div class="text-xs sm:text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+                            {{ $item->description }}
+                        </div>
+                    </div>
                 </div>
+
+                <!-- 4. Tombol Aksi Kontekstual Pintar (Desktop & Tablet) -->
+                <div class="bg-white rounded-3xl p-6 border border-gray-200/80 shadow-xs">
+                    @if ($isOwner)
+                        <!-- Skenario 1: User adalah Pemilik Barang -->
+                        <div class="space-y-3">
+                            <div class="bg-emerald-50 border border-emerald-200 text-emerald-900 p-3.5 rounded-2xl text-xs flex items-center justify-between">
+                                <div>
+                                    <span class="font-bold block">Status Listing Barang Anda:</span>
+                                    <span class="text-[11px]">{{ $item->claims->count() }} Mahasiswa Mengajukan Klaim / Barter</span>
+                                </div>
+                                <span class="text-2xl">📋</span>
+                            </div>
+
+                            <div class="flex flex-col sm:flex-row items-center gap-2.5">
+                                <a href="{{ Route::has('claims.incoming') ? route('claims.incoming') : '#' }}" 
+                                   class="w-full sm:flex-1 py-3 px-4 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-xs transition-colors text-center">
+                                    Lihat Pengajuan Masuk ({{ $item->claims->count() }})
+                                </a>
+                                <a href="{{ Route::has('items.my') ? route('items.my') : '#' }}" 
+                                   class="w-full sm:w-auto py-3 px-5 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold text-xs rounded-xl transition-colors text-center">
+                                    Kelola Barang Saya
+                                </a>
+                            </div>
+                        </div>
+
+                    @elseif (!$isAvailable)
+                        <!-- Skenario 2: Barang Sudah Terkunci / Diambil -->
+                        <div class="bg-gray-50 border border-gray-200 p-5 rounded-2xl text-center space-y-1.5">
+                            <span class="text-2xl block">🔒</span>
+                            <span class="text-sm font-bold text-gray-900 block">Barang Sudah Terkunci</span>
+                            <p class="text-xs text-gray-500 max-w-sm mx-auto leading-relaxed">
+                                Barang ini telah disetujui untuk mahasiswa lain. Coba cari barang serupa di katalog kampus ya!
+                            </p>
+                        </div>
+
+                    @elseif ($userClaim)
+                        <!-- Skenario 3: User Sudah Pernah Mengajukan Klaim -->
+                        <div class="p-5 rounded-2xl border text-center space-y-2 {{ $userClaim->status === 'approved' ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : ($userClaim->status === 'rejected' ? 'bg-rose-50 border-rose-200 text-rose-900' : 'bg-amber-50 border-amber-200 text-amber-900') }}">
+                            <span class="text-2xl block">
+                                {{ $userClaim->status === 'approved' ? '🎉' : ($userClaim->status === 'rejected' ? '😔' : '⏳') }}
+                            </span>
+                            <span class="text-sm font-bold block">
+                                {{ $userClaim->status === 'approved' ? 'Pengajuan Anda Telah Disetujui Pemilik!' : ($userClaim->status === 'rejected' ? 'Pengajuan Anda Belum Terpilih' : 'Pengajuan Anda Sedang Ditinjau') }}
+                            </span>
+                            <p class="text-xs opacity-90 max-w-sm mx-auto leading-relaxed">
+                                @if ($userClaim->status === 'approved')
+                                    Silakan hubungi pemilik barang via kontak yang terbuka di menu "Pengajuan Saya".
+                                @elseif ($userClaim->status === 'pending')
+                                    Tunggu persetujuan dari pemilik barang. Kamu akan segera diberitahu begitu pemilik merespons.
+                                @else
+                                    Barang ini dialokasikan kepada mahasiswa lain yang lebih membutuhkan.
+                                @endif
+                            </p>
+                            <div class="pt-1">
+                                <a href="{{ Route::has('claims.my') ? route('claims.my') : '#' }}" class="inline-flex items-center text-xs font-bold underline">
+                                    Buka Menu Pengajuan Saya &rarr;
+                                </a>
+                            </div>
+                        </div>
+
+                    @else
+                        <!-- Skenario 4: Barang Tersedia & Siap Diklaim -->
+                        @auth
+                            <div class="space-y-2.5">
+                                <button type="button"
+                                        onclick="alert('Fitur Formulir Pengajuan Klaim / Barter siap dihubungkan pada Task 7!')"
+                                        class="w-full py-4 px-6 bg-emerald-800 hover:bg-emerald-900 text-white font-black text-sm rounded-2xl shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2">
+                                    <span>{{ $item->mode === 'barter' ? '🔄 Ajukan Tawaran Barter' : ($item->mode === 'gratis' ? '🎁 Ajukan Klaim Gratis' : '🏷️ Ajukan Pembelian Harga Pas') }}</span>
+                                    <span>&rarr;</span>
+                                </button>
+                                <p class="text-[11px] text-gray-400 text-center">
+                                    🔒 Nomor kontak Anda aman dan hanya terbuka ke pemilik jika pengajuan disetujui.
+                                </p>
+                            </div>
+                        @else
+                            <div class="bg-emerald-50/70 border border-emerald-200/80 p-5 rounded-2xl text-center space-y-2.5">
+                                <span class="text-sm font-bold text-emerald-950 block">Tertarik dengan barang kuliah ini?</span>
+                                <p class="text-xs text-emerald-800 leading-relaxed max-w-sm mx-auto">
+                                    Silakan masuk dengan akun mahasiswa Anda untuk mengajukan klaim atau barter tanpa perantara.
+                                </p>
+                                <a href="{{ route('login') }}" 
+                                   class="inline-block w-full py-3 px-4 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-xs transition-colors">
+                                    Masuk untuk Mengajukan
+                                </a>
+                            </div>
+                        @endauth
+                    @endif
+                </div>
+
             </div>
         </div>
 
         <!-- 3. Rekomendasi Barang Terkait (Related Items) -->
         @if ($relatedItems->count() > 0)
-            <div class="pt-8 border-t border-gray-200/80 space-y-5">
+            <div class="pt-10 border-t border-gray-200/80 space-y-6">
                 <div class="flex items-center justify-between">
                     <div>
-                        <span class="text-[10px] font-bold text-emerald-800 uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-md">
-                            Rekomendasi Serupa
+                        <span class="text-[10px] font-bold text-emerald-800 uppercase tracking-wider bg-emerald-50 px-2.5 py-1 rounded-md">
+                            ● Rekomendasi Kampus
                         </span>
-                        <h2 class="text-lg sm:text-xl font-black text-gray-900 tracking-tight mt-1">
+                        <h2 class="text-xl sm:text-2xl font-black text-gray-900 tracking-tight mt-1">
                             Barang Lain di Kategori {{ $item->category }}
                         </h2>
                     </div>
@@ -401,7 +397,7 @@
         @endif
 
         <!-- 4. Mobile Sticky Bottom Action Bar (Ergonomi Jempol Ponsel - antislop-layoutmobile) -->
-        <div class="lg:hidden fixed bottom-0 left-0 right-0 p-3 bg-white/95 backdrop-blur-md border-t border-gray-200/80 z-40 shadow-lg flex items-center justify-between gap-3">
+        <div class="lg:hidden fixed bottom-0 left-0 right-0 p-3 bg-white/95 backdrop-blur-md border-t border-gray-200 z-40 shadow-lg flex items-center justify-between gap-3">
             <div>
                 <span class="text-[10px] text-gray-400 block font-semibold">Mode Transaksi</span>
                 <span class="text-xs font-black {{ $item->mode === 'harga_pas' ? 'text-amber-800' : ($item->mode === 'barter' ? 'text-teal-800' : 'text-emerald-800') }}">

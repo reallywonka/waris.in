@@ -1,39 +1,39 @@
 <x-app-layout>
-    <div class="space-y-8">
+    <div class="space-y-8 pb-12">
         
         <!-- 1. Header Katalog & Stats Counter -->
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-2">
             <div>
                 <span class="inline-flex items-center text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100/70 px-3 py-1 rounded-full mb-2">
-                    ● Katalog Kampus Terintegrasi
+                    ● Katalog Kampus Terpadu
                 </span>
                 <h1 class="text-2xl sm:text-4xl font-black text-gray-900 tracking-tight">
-                    Cari Barang yang Kamu Butuhkan
+                    Cari Perlengkapan Kuliah
                 </h1>
-                <p class="text-xs sm:text-sm text-gray-600 mt-1 max-w-xl">
-                    Jelajahi ratusan barang dari mahasiswa di seluruh fakultas. Praktis, hemat, dan dukung sirkularitas kampus!
+                <p class="text-xs sm:text-sm text-gray-600 mt-1 max-w-xl leading-relaxed">
+                    Jelajahi barang-barang perkuliahan dari mahasiswa di seluruh fakultas. Praktis, hemat, dan dukung sirkularitas kampus tanpa potongan komisi!
                 </p>
             </div>
 
-            <!-- Stats Bar Kanan (Sesuai Mockup) -->
-            <div class="flex items-center space-x-3 bg-white p-3 rounded-2xl border border-gray-100 shadow-xs self-start lg:self-auto shrink-0">
+            <!-- Stats Bar Kanan (Bespoke Metric Ribbon) -->
+            <div class="flex items-center space-x-3 bg-white p-3.5 rounded-2xl border border-gray-200/80 shadow-xs self-start lg:self-auto shrink-0">
                 <div class="text-center px-4 border-r border-gray-100">
                     <span class="block text-xl font-black text-gray-900">{{ $totalListing }}</span>
-                    <span class="text-[10px] text-gray-400 font-semibold uppercase">Total Listing</span>
+                    <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Total Listing</span>
                 </div>
                 <div class="text-center px-4 border-r border-gray-100">
                     <span class="block text-xl font-black text-emerald-700">{{ $gratisCount }}</span>
-                    <span class="text-[10px] text-gray-400 font-semibold uppercase">Gratis Tersedia</span>
+                    <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Gratis Tersedia</span>
                 </div>
                 <div class="text-center px-4">
                     <span class="block text-xl font-black text-teal-700">{{ $fakultasCount }}</span>
-                    <span class="text-[10px] text-gray-400 font-semibold uppercase">Fakultas Aktif</span>
+                    <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Fakultas Aktif</span>
                 </div>
             </div>
         </div>
 
         <!-- 2. Form Filter & Pencarian Lengkap -->
-        <div class="bg-white rounded-3xl p-5 border border-gray-100 shadow-sm space-y-4">
+        <div class="bg-white rounded-3xl p-5 sm:p-6 border border-gray-200/80 shadow-xs space-y-4">
             <form action="{{ route('items.index') }}" method="GET" class="space-y-4">
                 
                 <!-- Baris 1: Search Bar + Filter Fakultas + Tombol Cari -->
@@ -43,13 +43,13 @@
                             🔍
                         </span>
                         <input type="text" name="search" value="{{ request('search') }}" 
-                               placeholder="Cari berdasarkan judul barang, kalkulator, modul, jas lab..."
+                               placeholder="Cari berdasarkan judul barang, kalkulator, modul, jas praktikum..."
                                class="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm rounded-xl border-gray-200 focus:border-emerald-700 focus:ring-emerald-700 bg-gray-50/50">
                     </div>
 
                     <!-- Dropdown Fakultas -->
                     <div class="w-full md:w-56 shrink-0">
-                        <select name="faculty" class="w-full py-2.5 text-xs rounded-xl border-gray-200 focus:border-emerald-700 focus:ring-emerald-700 bg-gray-50/50">
+                        <select name="faculty" class="w-full py-2.5 text-xs rounded-xl border-gray-200 focus:border-emerald-700 focus:ring-emerald-700 bg-gray-50/50 font-medium">
                             <option value="Semua">🏛️ Semua Fakultas</option>
                             @foreach ($faculties as $fac)
                                 <option value="{{ $fac }}" {{ request('faculty') === $fac ? 'selected' : '' }}>
@@ -61,7 +61,7 @@
 
                     <!-- Tombol Cari -->
                     <button type="submit" class="w-full md:w-auto px-6 py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-xs transition-colors shrink-0 flex items-center justify-center space-x-2">
-                        <span>Cari</span>
+                        <span>Cari Barang</span>
                         <span>&rarr;</span>
                     </button>
                 </div>
@@ -72,35 +72,36 @@
                     <!-- Mode Pills Toggle -->
                     <div class="flex flex-wrap items-center gap-1.5">
                         <a href="{{ route('items.index', array_merge(request()->except('mode', 'page'), ['mode' => ''])) }}"
-                           class="px-3 py-1.5 rounded-xl font-bold transition-all {{ !request('mode') ? 'bg-emerald-900 text-white shadow-xs' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
+                           class="px-3.5 py-1.5 rounded-xl font-bold transition-all {{ !request('mode') ? 'bg-emerald-900 text-white shadow-xs' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
                             Semua <span class="text-[10px] opacity-80">({{ $totalListing }})</span>
                         </a>
                         <a href="{{ route('items.index', array_merge(request()->except('mode', 'page'), ['mode' => 'gratis'])) }}"
-                           class="px-3 py-1.5 rounded-xl font-bold transition-all {{ request('mode') === 'gratis' ? 'bg-emerald-800 text-white shadow-xs' : 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100' }}">
+                           class="px-3.5 py-1.5 rounded-xl font-bold transition-all {{ request('mode') === 'gratis' ? 'bg-emerald-800 text-white shadow-xs' : 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100' }}">
                             🎁 Gratis <span class="text-[10px] opacity-80">({{ $gratisCount }})</span>
                         </a>
                         <a href="{{ route('items.index', array_merge(request()->except('mode', 'page'), ['mode' => 'harga_pas'])) }}"
-                           class="px-3 py-1.5 rounded-xl font-bold transition-all {{ request('mode') === 'harga_pas' ? 'bg-amber-600 text-white shadow-xs' : 'bg-amber-50 text-amber-800 hover:bg-amber-100' }}">
+                           class="px-3.5 py-1.5 rounded-xl font-bold transition-all {{ request('mode') === 'harga_pas' ? 'bg-amber-600 text-white shadow-xs' : 'bg-amber-50 text-amber-800 hover:bg-amber-100' }}">
                             🏷️ Harga Pas <span class="text-[10px] opacity-80">({{ $hargaPasCount }})</span>
                         </a>
                         <a href="{{ route('items.index', array_merge(request()->except('mode', 'page'), ['mode' => 'barter'])) }}"
-                           class="px-3 py-1.5 rounded-xl font-bold transition-all {{ request('mode') === 'barter' ? 'bg-teal-700 text-white shadow-xs' : 'bg-teal-50 text-teal-800 hover:bg-teal-100' }}">
+                           class="px-3.5 py-1.5 rounded-xl font-bold transition-all {{ request('mode') === 'barter' ? 'bg-teal-700 text-white shadow-xs' : 'bg-teal-50 text-teal-800 hover:bg-teal-100' }}">
                             🔄 Barter <span class="text-[10px] opacity-80">({{ $barterCount }})</span>
                         </a>
                     </div>
 
                     <!-- Dropdown Kategori & Kondisi & Checkbox -->
                     <div class="flex flex-wrap items-center gap-2">
-                        <select name="category" onchange="this.form.submit()" class="py-1.5 px-3 text-xs rounded-xl border-gray-200 focus:border-emerald-700 focus:ring-emerald-700 bg-gray-50">
+                        <select name="category" onchange="this.form.submit()" class="py-1.5 px-3 text-xs rounded-xl border-gray-200 focus:border-emerald-700 focus:ring-emerald-700 bg-gray-50 font-medium">
                             <option value="Semua">Semua Kategori</option>
-                            <option value="Buku" {{ request('category') === 'Buku' ? 'selected' : '' }}>Buku & Modul</option>
+                            <option value="Buku & Modul" {{ request('category') === 'Buku & Modul' ? 'selected' : '' }}>Buku & Modul</option>
                             <option value="Elektronik" {{ request('category') === 'Elektronik' ? 'selected' : '' }}>Elektronik</option>
-                            <option value="Perlengkapan" {{ request('category') === 'Perlengkapan' ? 'selected' : '' }}>Perlengkapan Kuliah</option>
-                            <option value="Fashion" {{ request('category') === 'Fashion' ? 'selected' : '' }}>Fashion & Jaket</option>
-                            <option value="Praktikum" {{ request('category') === 'Praktikum' ? 'selected' : '' }}>Alat Praktikum</option>
+                            <option value="Perlengkapan Kuliah" {{ request('category') === 'Perlengkapan Kuliah' ? 'selected' : '' }}>Perlengkapan Kuliah</option>
+                            <option value="Fashion & Jaket" {{ request('category') === 'Fashion & Jaket' ? 'selected' : '' }}>Fashion & Jaket</option>
+                            <option value="Alat Praktikum" {{ request('category') === 'Alat Praktikum' ? 'selected' : '' }}>Alat Praktikum</option>
+                            <option value="Lainnya" {{ request('category') === 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
                         </select>
 
-                        <select name="condition" onchange="this.form.submit()" class="py-1.5 px-3 text-xs rounded-xl border-gray-200 focus:border-emerald-700 focus:ring-emerald-700 bg-gray-50">
+                        <select name="condition" onchange="this.form.submit()" class="py-1.5 px-3 text-xs rounded-xl border-gray-200 focus:border-emerald-700 focus:ring-emerald-700 bg-gray-50 font-medium">
                             <option value="Semua">Semua Kondisi</option>
                             <option value="Baru (Gress)" {{ request('condition') === 'Baru (Gress)' ? 'selected' : '' }}>Baru (Gress)</option>
                             <option value="Seperti Baru" {{ request('condition') === 'Seperti Baru' ? 'selected' : '' }}>Seperti Baru</option>
@@ -108,11 +109,11 @@
                             <option value="Ada Kekurangan" {{ request('condition') === 'Ada Kekurangan' ? 'selected' : '' }}>Ada Kekurangan</option>
                         </select>
 
-                        <label class="inline-flex items-center cursor-pointer ml-1">
+                        <label class="inline-flex items-center cursor-pointer ml-1 select-none">
                             <input type="checkbox" name="available_only" value="1" onchange="this.form.submit()"
                                    {{ request('available_only') ? 'checked' : '' }}
-                                   class="rounded border-gray-300 text-emerald-800 shadow-xs focus:ring-emerald-700">
-                            <span class="ms-1.5 text-xs text-gray-700 font-medium">Hanya yang Tersedia</span>
+                                   class="rounded border-gray-300 text-emerald-800 shadow-2xs focus:ring-emerald-700">
+                            <span class="ms-1.5 text-xs text-gray-700 font-semibold">Tersedia Saja</span>
                         </label>
                     </div>
 
@@ -122,9 +123,9 @@
 
         <!-- 3. Status Hasil Pencarian & Sorting -->
         <div class="flex items-center justify-between text-xs text-gray-500 font-medium px-1">
-            <div class="flex items-center space-x-1">
+            <div class="flex items-center space-x-1.5">
                 <span>📦</span>
-                <span>Menampilkan <strong class="text-gray-900">{{ $items->total() }}</strong> barang aktif</span>
+                <span>Menampilkan <strong class="text-gray-900 font-bold">{{ $items->total() }}</strong> barang di kampus</span>
             </div>
 
             <!-- Sorting Dropdown -->
@@ -142,17 +143,21 @@
         </div>
 
         <!-- 4. Grid Kartu Barang -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse ($items as $item)
                 <x-item-card :item="$item" />
             @empty
-                <div class="col-span-3 text-center py-16 bg-white rounded-3xl border border-dashed border-gray-200">
-                    <div class="text-4xl mb-2">🔍</div>
-                    <h4 class="font-bold text-gray-800 text-base">Tidak ada barang yang cocok</h4>
-                    <p class="text-xs text-gray-500 mt-1">Coba gunakan kata kunci lain atau reset filter pencarian kamu.</p>
-                    <a href="{{ route('items.index') }}" class="inline-block mt-4 px-4 py-2 bg-emerald-800 text-white font-bold text-xs rounded-xl shadow-xs">
-                        Reset Semua Filter
-                    </a>
+                <div class="col-span-3 text-center py-16 bg-white rounded-3xl border border-dashed border-gray-300 space-y-2">
+                    <span class="text-4xl block">🔍</span>
+                    <h4 class="font-bold text-gray-900 text-base">Tidak ada barang yang cocok</h4>
+                    <p class="text-xs text-gray-500 max-w-sm mx-auto">
+                        Coba gunakan kata kunci pencarian yang lebih umum atau reset filter yang sedang aktif.
+                    </p>
+                    <div class="pt-2">
+                        <a href="{{ route('items.index') }}" class="inline-flex items-center px-4 py-2 bg-emerald-800 text-white font-bold text-xs rounded-xl shadow-xs hover:bg-emerald-900 transition-colors">
+                            Reset Semua Filter
+                        </a>
+                    </div>
                 </div>
             @endforelse
         </div>
@@ -163,21 +168,21 @@
         </div>
 
         <!-- 6. Bottom Banner CTA -->
-        <div class="bg-gradient-to-r from-emerald-800 to-teal-900 rounded-3xl p-6 sm:p-8 text-white shadow-md flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div class="bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 rounded-3xl p-6 sm:p-8 text-white shadow-md flex flex-col sm:flex-row items-center justify-between gap-6">
             <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur flex items-center justify-center text-2xl shrink-0">
+                <div class="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur flex items-center justify-center text-3xl shrink-0">
                     ♻️
                 </div>
-                <div>
-                    <h3 class="font-bold text-base sm:text-lg">Punya barang yang nganggur di kosan?</h3>
-                    <p class="text-xs sm:text-sm text-emerald-100 mt-0.5">
-                        Bantu teman kampusmu yang sedang butuh alat praktikum, buku, atau perabotan. Pasang sekarang dalam 1 menit!
+                <div class="space-y-1">
+                    <h3 class="font-black text-base sm:text-lg">Punya barang kuliah nganggur di kosan?</h3>
+                    <p class="text-xs sm:text-sm text-emerald-100/90 leading-relaxed max-w-xl">
+                        Bantu teman kampusmu yang sedang butuh alat praktikum, buku, atau perlengkapan kuliah. Pasang sekarang dalam hitungan menit!
                     </p>
                 </div>
             </div>
             <a href="{{ Route::has('items.create') ? route('items.create') : '#' }}" 
-               class="px-6 py-3 bg-white hover:bg-emerald-50 text-emerald-900 font-bold text-xs sm:text-sm rounded-xl shadow-xs transition-colors shrink-0 flex items-center space-x-2">
-                <span>➕</span>
+               class="px-6 py-3.5 bg-white hover:bg-emerald-50 text-emerald-900 font-black text-xs sm:text-sm rounded-2xl shadow-xs transition-colors shrink-0 flex items-center space-x-2">
+                <span>+</span>
                 <span>Pasang Barang Sekarang</span>
             </a>
         </div>
