@@ -27,8 +27,15 @@ class ItemImage extends Model
 
     public function getUrlAttribute(): string
     {
-        return str_starts_with($this->image_path, 'http')
-            ? $this->image_path
-            : asset('storage/' . $this->image_path);
+        if (empty($this->image_path)) {
+            return asset('images/placeholders/default.svg');
+        }
+        if (str_starts_with($this->image_path, 'http://') || str_starts_with($this->image_path, 'https://')) {
+            return $this->image_path;
+        }
+        if (str_starts_with($this->image_path, 'images/')) {
+            return asset($this->image_path);
+        }
+        return asset('storage/' . $this->image_path);
     }
 }

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <pattern id="calc2-dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.5" fill="#e2e8f0" />
+    </pattern>
+  </defs>
+  <rect width="800" height="600" fill="#f8fafc" />
+  <rect width="800" height="600" fill="url(#calc2-dots)" />
+
+  <ellipse cx="400" cy="510" rx="190" ry="20" fill="#cbd5e1" opacity="0.5" />
+
+  <!-- Close-up angled view of Casio Display & Keys -->
+  <g transform="translate(200, 100)">
+    <!-- Protective Hard Slip-on Cover -->
+    <rect x="-40" y="40" width="200" height="340" rx="28" fill="#334155" transform="rotate(-10)" stroke="#1e293b" stroke-width="3" />
+    <text x="30" y="200" font-family="'Plus Jakarta Sans', monospace" font-size="20" font-weight="800" fill="#64748b" transform="rotate(-10)">CLASSWIZ</text>
+
+    <!-- Main Unit -->
+    <rect x="120" y="0" width="250" height="400" rx="30" fill="#0f172a" stroke="#020617" stroke-width="3" />
+    
+    <!-- LCD Screen -->
+    <rect x="140" y="40" width="210" height="75" rx="8" fill="#f8fafc" stroke="#334155" stroke-width="2" />
+    <text x="155" y="70" font-family="monospace" font-size="12" fill="#64748b">STAT-GRAPH-MATRIX</text>
+    <text x="335" y="102" font-family="monospace" font-size="22" font-weight="800" fill="#0f172a" text-anchor="end">X = 3.14159</text>
+
+    <!-- Key cluster -->
+    <g fill="#475569">
+      <circle cx="160" cy="150" r="12" />
+      <circle cx="195" cy="150" r="12" />
+      <circle cx="230" cy="150" r="12" />
+      <circle cx="265" cy="150" r="12" />
+      <circle cx="300" cy="150" r="12" />
+      <circle cx="330" cy="150" r="12" />
+    </g>
+    <g fill="#f1f5f9">
+      <rect x="150" y="180" width="36" height="24" rx="4" />
+      <rect x="195" y="180" width="36" height="24" rx="4" />
+      <rect x="240" y="180" width="36" height="24" rx="4" />
+      <rect x="285" y="180" width="36" height="24" rx="4" fill="#0284c7" />
+
+      <rect x="150" y="215" width="36" height="24" rx="4" />
+      <rect x="195" y="215" width="36" height="24" rx="4" />
+      <rect x="240" y="215" width="36" height="24" rx="4" />
+      <rect x="285" y="215" width="36" height="24" rx="4" fill="#334155" />
+
+      <rect x="150" y="250" width="36" height="24" rx="4" />
+      <rect x="195" y="250" width="36" height="24" rx="4" />
+      <rect x="240" y="250" width="36" height="24" rx="4" />
+      <rect x="285" y="250" width="36" height="24" rx="4" fill="#15803d" />
+    </g>
+  </g>
+</svg>

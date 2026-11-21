@@ -13,6 +13,8 @@
         <img src="{{ $item->primary_image_url }}" 
              alt="{{ $item->title }}"
              loading="lazy"
+             referrerpolicy="no-referrer"
+             onerror="this.onerror=null; this.src='{{ asset('images/placeholders/default.svg') }}';"
              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 {{ !$isAvailable ? 'grayscale-[40%]' : '' }}">
 
         <!-- Overlay Gelap Tipis Gradasi Bawah -->

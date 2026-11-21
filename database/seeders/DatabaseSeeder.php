@@ -116,12 +116,12 @@ class DatabaseSeeder extends Seeder
         ]);
         ItemImage::create([
             'item_id' => $itemCasio->id,
-            'image_path' => 'https://images.unsplash.com/photo-1594980596870-8aa52a78d8cd?auto=format&fit=crop&q=80&w=800',
+            'image_path' => 'images/items/kalkulator.svg',
             'is_primary' => true,
         ]);
         ItemImage::create([
             'item_id' => $itemCasio->id,
-            'image_path' => 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=800',
+            'image_path' => 'images/items/kalkulator-2.svg',
             'is_primary' => false,
         ]);
 
@@ -141,7 +141,7 @@ class DatabaseSeeder extends Seeder
         ]);
         ItemImage::create([
             'item_id' => $itemHeadset->id,
-            'image_path' => 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=800',
+            'image_path' => 'images/items/headset.svg',
             'is_primary' => true,
         ]);
 
@@ -161,7 +161,7 @@ class DatabaseSeeder extends Seeder
         ]);
         ItemImage::create([
             'item_id' => $itemBuku->id,
-            'image_path' => 'https://images.unsplash.com/photo-1532012164546-f432f2e3777a?auto=format&fit=crop&q=80&w=800',
+            'image_path' => 'images/items/buku.svg',
             'is_primary' => true,
         ]);
 
@@ -181,7 +181,7 @@ class DatabaseSeeder extends Seeder
         ]);
         ItemImage::create([
             'item_id' => $itemJaket->id,
-            'image_path' => 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&q=80&w=800',
+            'image_path' => 'images/items/jaket.svg',
             'is_primary' => true,
         ]);
 
@@ -201,7 +201,7 @@ class DatabaseSeeder extends Seeder
         ]);
         ItemImage::create([
             'item_id' => $itemBiologi->id,
-            'image_path' => 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&q=80&w=800',
+            'image_path' => 'images/items/biologi.svg',
             'is_primary' => true,
         ]);
 
@@ -221,7 +221,7 @@ class DatabaseSeeder extends Seeder
         ]);
         ItemImage::create([
             'item_id' => $itemTas->id,
-            'image_path' => 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&q=80&w=800',
+            'image_path' => 'images/items/tas.svg',
             'is_primary' => true,
         ]);
 
@@ -241,7 +241,7 @@ class DatabaseSeeder extends Seeder
         ]);
         ItemImage::create([
             'item_id' => $itemModul->id,
-            'image_path' => 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&q=80&w=800',
+            'image_path' => 'images/items/modul.svg',
             'is_primary' => true,
         ]);
 

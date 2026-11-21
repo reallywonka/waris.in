@@ -11,8 +11,9 @@
 
     <div x-data="{ 
             activeImageIndex: 0, 
-            images: {{ json_encode($allImages) }},
+            images: {{ \Illuminate\Support\Js::from($allImages) }},
             copied: false,
+            fallbackImage: '{{ asset('images/placeholders/default.svg') }}',
             copyUrl() {
                 navigator.clipboard.writeText(window.location.href);
                 this.copied = true;
@@ -61,9 +62,13 @@
             <div class="lg:col-span-6 lg:sticky lg:top-28 space-y-4">
                 
                 <!-- Frame Gambar Utama Solid -->
-                <div class="relative bg-white rounded-3xl overflow-hidden border border-gray-200 shadow-2xs aspect-4/3 flex items-center justify-center group">
-                    <img :src="images[activeImageIndex]" 
+                <div class="relative bg-white rounded-3xl overflow-hidden border border-gray-200 shadow-2xs aspect-[4/3] min-h-[300px] sm:min-h-[420px] flex items-center justify-center group">
+                    <img src="{{ $item->primary_image_url }}"
+                         :src="images[activeImageIndex]" 
                          alt="{{ $item->title }}" 
+                         referrerpolicy="no-referrer"
+                         x-on:error="$event.target.src = fallbackImage"
+                         onerror="this.onerror=null; this.src='{{ asset('images/placeholders/default.svg') }}';"
                          class="w-full h-full object-cover transition-all duration-300 group-hover:scale-[1.02] {{ !$isAvailable ? 'grayscale-[35%]' : '' }}">
 
                     <!-- Overlay Mode Badge (Kiri Atas) -->
@@ -109,34 +114,41 @@
                     </div>
 
                     <!-- Tombol Navigasi Prev/Next Foto (Jika lebih dari 1 foto) -->
-                    <template x-if="images.length > 1">
+                    @if ($item->images->count() > 1)
                         <div>
-                            <button @click="activeImageIndex = (activeImageIndex === 0) ? images.length - 1 : activeImageIndex - 1"
+                            <button type="button"
+                                    @click="activeImageIndex = (activeImageIndex === 0) ? images.length - 1 : activeImageIndex - 1"
                                     aria-label="Foto Sebelumnya"
                                     class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors focus:outline-none">
                                 <x-icon name="arrow-left" class="w-4 h-4 text-white" />
                             </button>
-                            <button @click="activeImageIndex = (activeImageIndex === images.length - 1) ? 0 : activeImageIndex + 1"
+                            <button type="button"
+                                    @click="activeImageIndex = (activeImageIndex === images.length - 1) ? 0 : activeImageIndex + 1"
                                     aria-label="Foto Berikutnya"
                                     class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors focus:outline-none">
                                 <x-icon name="arrow-right" class="w-4 h-4 text-white" />
                             </button>
                         </div>
-                    </template>
+                    @endif
                 </div>
 
                 <!-- Thumbnail Reel Solid di Bawah Gambar Utama -->
-                <template x-if="images.length > 1">
+                @if ($item->images->count() > 1)
                     <div class="flex items-center space-x-3 overflow-x-auto pb-1 scrollbar-none">
-                        <template x-for="(img, idx) in images" :key="idx">
-                            <button @click="activeImageIndex = idx"
+                        @foreach ($item->images as $idx => $img)
+                            <button type="button"
+                                    @click="activeImageIndex = {{ $idx }}"
                                     class="relative w-20 h-20 rounded-2xl overflow-hidden border-2 transition-all shrink-0 focus:outline-none"
-                                    :class="activeImageIndex === idx ? 'border-emerald-700 ring-2 ring-emerald-600/30 scale-105' : 'border-gray-200 hover:border-gray-300 opacity-70 hover:opacity-100'">
-                                <img :src="img" alt="Thumbnail" class="w-full h-full object-cover">
+                                    :class="activeImageIndex === {{ $idx }} ? 'border-emerald-700 ring-2 ring-emerald-600/30 scale-105' : 'border-gray-200 hover:border-gray-300 opacity-70 hover:opacity-100'">
+                                <img src="{{ $img->url }}" 
+                                     alt="Thumbnail {{ $idx + 1 }}" 
+                                     referrerpolicy="no-referrer"
+                                     onerror="this.onerror=null; this.src='{{ asset('images/placeholders/default.svg') }}';"
+                                     class="w-full h-full object-cover">
                             </button>
-                        </template>
+                        @endforeach
                     </div>
-                </template>
+                @endif
             </div>
 
             <!-- Sisi Kanan (Col 12 -> Col 6): Rincian Spesifikasi, Profil & Aksi Transaksi -->

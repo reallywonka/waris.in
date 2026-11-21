@@ -47,6 +47,8 @@
                             <!-- Avatar -->
                             <img class="w-8 h-8 rounded-full object-cover border border-emerald-700/20" 
                                  src="{{ Auth::user()->avatar ?? 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name).'&background=144d37&color=ffffff' }}" 
+                                 referrerpolicy="no-referrer"
+                                 onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=144d37&color=ffffff';"
                                  alt="{{ Auth::user()->name }}">
                             
                             <!-- Nama & Fakultas -->
@@ -219,6 +221,8 @@
                 <div class="flex items-center space-x-3 px-3 py-2.5 bg-gray-50 rounded-2xl mb-2">
                     <img class="w-10 h-10 rounded-full object-cover border border-emerald-700/20 shrink-0" 
                          src="{{ Auth::user()->avatar ?? 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name).'&background=144d37&color=ffffff' }}" 
+                         referrerpolicy="no-referrer"
+                         onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=144d37&color=ffffff';"
                          alt="{{ Auth::user()->name }}">
                     <div class="truncate">
                         <div class="font-bold text-gray-900 text-sm truncate">{{ Auth::user()->name }}</div>
