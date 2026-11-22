@@ -17,6 +17,7 @@ Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
 // Katalog Jelajahi Barang
 Route::get('/jelajahi', [ItemController::class, 'index'])->name('items.index');
+Route::get('/barang/{item}', [ItemController::class, 'show'])->name('items.show');
 
 // Rute yang membutuhkan Login Mahasiswa
 Route::middleware(['auth'])->group(function () {

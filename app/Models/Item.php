@@ -77,11 +77,15 @@ class Item extends Model
     public function getPrimaryImageUrlAttribute(): string
     {
         $primary = $this->images->firstWhere('is_primary', true) ?? $this->images->first();
-        if ($primary) {
-            return str_starts_with($primary->image_path, 'http')
-                ? $primary->image_path
-                : asset('storage/' . $primary->image_path);
+        if ($primary && !empty($primary->image_path)) {
+            if (str_starts_with($primary->image_path, 'http://') || str_starts_with($primary->image_path, 'https://')) {
+                return $primary->image_path;
+            }
+            if (str_starts_with($primary->image_path, 'images/')) {
+                return asset($primary->image_path);
+            }
+            return asset('storage/' . $primary->image_path);
         }
-        return 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=800';
+        return asset('images/placeholders/default.svg');
     }
 }

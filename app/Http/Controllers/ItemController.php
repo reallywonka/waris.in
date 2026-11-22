@@ -83,4 +83,40 @@ class ItemController extends Controller
             'faculties'
         ));
     }
+
+    /**
+     * Tampilkan detail barang lengkap dengan galeri foto, profil pemilik, dan status aksi.
+     */
+    public function show(Item $item)
+    {
+        $item->load(['user', 'images', 'claims']);
+
+        // Cek apakah mahasiswa yang sedang login sudah pernah mengajukan klaim untuk barang ini
+        $userClaim = auth()->check()
+            ? $item->claims->firstWhere('claimant_id', auth()->id())
+            : null;
+
+        // Ambil barang terkait dari kategori yang sama
+        $relatedItems = Item::with(['user', 'primaryImage', 'images'])
+            ->where('id', '!=', $item->id)
+            ->where('status', 'available')
+            ->where('category', $item->category)
+            ->latest()
+            ->take(3)
+            ->get();
+
+        // Jika barang dalam kategori yang sama kurang dari 3, lengkapi dengan barang terbaru lainnya
+        if ($relatedItems->count() < 3) {
+            $excludeIds = $relatedItems->pluck('id')->push($item->id);
+            $additionalItems = Item::with(['user', 'primaryImage', 'images'])
+                ->whereNotIn('id', $excludeIds)
+                ->where('status', 'available')
+                ->latest()
+                ->take(3 - $relatedItems->count())
+                ->get();
+            $relatedItems = $relatedItems->concat($additionalItems);
+        }
+
+        return view('items.show', compact('item', 'userClaim', 'relatedItems'));
+    }
 }

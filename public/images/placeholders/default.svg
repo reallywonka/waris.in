@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <pattern id="dot-pattern" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.5" fill="#e2e8f0" />
+    </pattern>
+  </defs>
+  <!-- Background Solid -->
+  <rect width="800" height="600" fill="#f8fafc" />
+  <rect width="800" height="600" fill="url(#dot-pattern)" />
+  
+  <!-- Subtle Framing Container -->
+  <rect x="250" y="150" width="300" height="300" rx="24" fill="#ffffff" stroke="#e2e8f0" stroke-width="2" />
+  
+  <!-- Vector Package Icon -->
+  <g transform="translate(350, 220)">
+    <path d="M50 10 L90 32 L50 54 L10 32 Z" fill="#e6f4ea" stroke="#137333" stroke-width="3" stroke-linejoin="round" />
+    <path d="M10 32 L10 75 L50 97 L50 54 Z" fill="#ceead6" stroke="#137333" stroke-width="3" stroke-linejoin="round" />
+    <path d="M90 32 L90 75 L50 97 L50 54 Z" fill="#a8dab5" stroke="#137333" stroke-width="3" stroke-linejoin="round" />
+    <path d="M50 54 L50 97" stroke="#137333" stroke-width="3" />
+  </g>
+  
+  <!-- Text Label -->
+  <text x="400" y="380" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="18" font-weight="800" fill="#0f172a" text-anchor="middle">
+    waris.in
+  </text>
+  <text x="400" y="410" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="13" font-weight="600" fill="#64748b" text-anchor="middle">
+    Foto Barang Mahasiswa
+  </text>
+</svg>
