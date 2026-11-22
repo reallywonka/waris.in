@@ -59,6 +59,15 @@
                             <x-icon name="plus" class="w-4 h-4" />
                             <span>Pasang Barang</span>
                         </a>
+
+                        @if (Auth::user()->isAdmin())
+                            <!-- Portal Admin Moderasi -->
+                            <a href="{{ route('admin.dashboard') }}" 
+                               class="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl text-xs font-black transition-all duration-150 {{ request()->routeIs('admin*') ? 'bg-amber-100 text-amber-900 border border-amber-300 shadow-2xs' : 'bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200' }}">
+                                <x-icon name="shield" class="w-3.5 h-3.5 text-amber-700" />
+                                <span>Portal Admin</span>
+                            </a>
+                        @endif
                     @endauth
                 </div>
             </div>
@@ -154,6 +163,17 @@
                                         </div>
                                         <x-icon name="chevron-right" class="w-3.5 h-3.5 text-gray-400" />
                                     </a>
+
+                                    @if (Auth::user()->isAdmin())
+                                        <a href="{{ route('admin.dashboard') }}" 
+                                           class="w-full text-left px-3 py-2 text-xs font-bold text-amber-800 bg-amber-50/70 hover:bg-amber-100 rounded-xl flex items-center justify-between transition-colors">
+                                            <div class="flex items-center space-x-2">
+                                                <x-icon name="shield" class="w-4 h-4 text-amber-700" />
+                                                <span>Portal Moderasi Admin</span>
+                                            </div>
+                                            <x-icon name="chevron-right" class="w-3.5 h-3.5 text-amber-500" />
+                                        </a>
+                                    @endif
                                 </div>
 
                                 <!-- Tombol Keluar Sesi -->
@@ -242,6 +262,14 @@
                     <x-icon name="clock" class="w-4 h-4 text-amber-600" />
                     <span>Pengajuan Saya</span>
                 </a>
+
+                @if (Auth::user()->isAdmin())
+                    <a href="{{ route('admin.dashboard') }}" 
+                       class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl text-amber-900 bg-amber-50 hover:bg-amber-100 border border-amber-200 font-bold transition-colors">
+                        <x-icon name="shield" class="w-4 h-4 text-amber-700" />
+                        <span>Portal Moderasi Admin</span>
+                    </a>
+                @endif
             @endauth
         </div>
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
@@ -47,6 +48,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Portal Moderasi Admin Kampus (Task 10 - FR-10 & FR-11)
+    Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+        Route::delete('/barang/{item}', [AdminController::class, 'destroyItem'])->name('items.destroy');
+        Route::post('/pengguna/{user}/suspend', [AdminController::class, 'suspendUser'])->name('users.suspend');
+        Route::post('/pengguna/{user}/activate', [AdminController::class, 'activateUser'])->name('users.activate');
+    });
 });
 
 require __DIR__.'/auth.php';

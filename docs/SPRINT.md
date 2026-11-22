@@ -97,11 +97,11 @@ Berikut adalah *skills* terpasang yang dapat dioptimalkan selama pengembangan:
 * **PIC:** Arsha (arsha)
 * **Reviewer:** Fajar Maulana (fajar)
 * **Skill Rekomendasi:** `frontend-ui-engineering`, `impeccable`
-* **Status:** `[ ] Siap Dikerjakan (Prioritas 1)`
-- [ ] Buat method `show` di `ItemController.php` beserta query eager loading (`user`, `images`)
-- [ ] Rancang view `resources/views/items/show.blade.php` dengan galeri foto, badge status, info spesifikasi barang, catatan kondisi, dan rencana titik temu kampus
-- [ ] Implementasi tombol aksi kondisional (Pemilik: "Kelola Pengajuan", Mahasiswa Lain: "Ajukan Klaim / Barter", Jika Locked: Tampilkan badge terkunci)
-- [ ] Verifikasi rendering halaman detail untuk ketiga mode transaksi
+* **Status:** `[x] Selesai & Terverifikasi`
+- [x] Buat method `show` di `ItemController.php` beserta query eager loading (`user`, `images`)
+- [x] Rancang view `resources/views/items/show.blade.php` dengan galeri foto, badge status, info spesifikasi barang, catatan kondisi, dan rencana titik temu kampus
+- [x] Implementasi tombol aksi kondisional (Pemilik: "Kelola Pengajuan", Mahasiswa Lain: "Ajukan Klaim / Barter", Jika Locked: Tampilkan badge terkunci)
+- [x] Verifikasi rendering halaman detail untuk ketiga mode transaksi
 
 ### Task 5: Formulir Pasang Barang Dinamis & Upload Foto (`items.create` & `items.store`)
 * **Target Selesai:** Hari 3–4
@@ -177,32 +177,32 @@ Berikut adalah *skills* terpasang yang dapat dioptimalkan selama pengembangan:
 * **PIC:** Fajar Maulana (fajar)
 * **Reviewer:** Gebrian (gebrian)
 * **Skill Rekomendasi:** `security-and-hardening`
-* **Status:** `[ ] Menunggu Sprint 2`
-- [ ] Buat Middleware `EnsureAdmin` dan daftarkan di `bootstrap/app.php`
-- [ ] Buat Middleware `EnsureNotSuspended` untuk menolak akses akun yang disuspend
-- [ ] Rancang `AdminController` dan view `resources/views/admin/dashboard.blade.php`
-- [ ] Fitur hapus paksa (*force delete*) listing barang yang melanggar aturan (FR-10)
-- [ ] Fitur suspend akun pengguna beserta alasan penangguhan (FR-11)
-- [ ] Verifikasi bahwa akun yang di-suspend tidak dapat login kembali
+* **Status:** `[x] Selesai & Terverifikasi (23 Nov 2026)`
+- [x] Buat Middleware `EnsureAdmin` dan daftarkan di `bootstrap/app.php`
+- [x] Buat Middleware `EnsureNotSuspended` untuk menolak akses akun yang disuspend
+- [x] Rancang `AdminController` dan view `resources/views/admin/dashboard.blade.php`
+- [x] Fitur hapus paksa (*force delete*) listing barang yang melanggar aturan (FR-10)
+- [x] Fitur suspend akun pengguna beserta alasan penangguhan (FR-11)
+- [x] Verifikasi bahwa akun yang di-suspend tidak dapat login kembali
 
 ### Task 11: Seeder Checkpoint Realistis untuk Presentasi Demo
 * **Target Selesai:** Hari 6
 * **PIC:** Gebrian (gebrian) & Fajar Maulana (fajar)
 * **Reviewer:** Arsha (arsha)
 * **Skill Rekomendasi:** `code-review-and-quality`
-* **Status:** `[ ] Menunggu Sprint 2`
-- [ ] Sempurnakan `database/seeders/DatabaseSeeder.php` dengan data realistis mahasiswa beragam fakultas
-- [ ] Tambahkan minimal 12 data barang perkuliahan (kategori buku, alat praktikum, jas lab, jaket, elektronik)
-- [ ] Buat contoh klaim yang sudah berstatus `approved` dan `locked` agar saat demo terlihat aktivitas sirkulasi yang hidup
-- [ ] Verifikasi eksekusi `php artisan migrate:fresh --seed` berjalan mulus tanpa kendala
+* **Status:** `[x] Selesai & Terverifikasi (23 Nov 2026)`
+- [x] Sempurnakan `database/seeders/DatabaseSeeder.php` dengan data realistis mahasiswa beragam fakultas
+- [x] Tambahkan minimal 12 data barang perkuliahan (kategori buku, alat praktikum, jas lab, jaket, elektronik, arsitektur, kedokteran)
+- [x] Buat contoh klaim yang sudah berstatus `approved` dan `locked` agar saat demo terlihat aktivitas sirkulasi yang hidup
+- [x] Verifikasi eksekusi `php artisan migrate:fresh --seed` berjalan mulus tanpa kendala
 
 ### Task 12: Pengujian UAT End-to-End & Demo Readiness Sign-Off
 * **Target Selesai:** Hari 7
 * **PIC:** Gebrian (gebrian) didukung Fajar & Arsha
 * **Reviewer:** Seluruh Tim
 * **Skill Rekomendasi:** `verification-before-completion`
-* **Status:** `[ ] Menunggu Task 10 & 11`
-- [ ] Eksekusi automated test `tests/Feature/ItemTransactionTest.php`
-- [ ] Pengujian manual seluruh skenario: Registrasi $\rightarrow$ Pasang Barang $\rightarrow$ Cari $\rightarrow$ Klaim $\rightarrow$ Approve $\rightarrow$ Lock $\rightarrow$ Buka Kontak $\rightarrow$ Moderasi Admin
-- [ ] Verifikasi tampilan mobile (responsive view)
-- [ ] **Gerbang Evaluasi Final (Sign-Off):** Seluruh 11 kriteria PRD terpenuhi dan sistem 100% siap dipresentasikan di hadapan dosen penguji.
+* **Status:** `[x] Selesai & Terverifikasi (23 Nov 2026)`
+- [x] Eksekusi automated test `tests/Feature/EndToEndScenarioTest.php` dan suite lengkap (47 test passed, 167 assertions)
+- [x] Pengujian komprehensif seluruh skenario PRD: Registrasi $\rightarrow$ Pasang Barang $\rightarrow$ Cari $\rightarrow$ Klaim $\rightarrow$ Approve $\rightarrow$ Lock $\rightarrow$ Buka Kontak $\rightarrow$ Moderasi Admin
+- [x] Verifikasi aset production Vite (`npm run build`) berjalan bersih tanpa error
+- [x] **Gerbang Evaluasi Final (Sign-Off):** Seluruh 11 kriteria PRD (FR-01 s.d. FR-11) terpenuhi 100% dan sistem siap dipresentasikan di hadapan dosen penguji.

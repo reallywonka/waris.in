@@ -17,8 +17,6 @@ class ItemCreateTest extends TestCase
         $response = $this->actingAs($user)->get(route('items.create'));
 
         $response->assertStatus(200);
-        $content = $response->getContent();
-        file_put_contents(base_path('scratch_create.html'), $content);
-        $this->assertStringContainsString('x-data="{', $content);
+        $this->assertStringContainsString('x-data="{', $response->getContent());
     }
 }
