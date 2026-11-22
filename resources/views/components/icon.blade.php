@@ -169,6 +169,10 @@
             <path d="m6 9 6 6 6-6"></path>
             @break
 
+        @case('chevron-right')
+            <path d="m9 18 6-6-6-6"></path>
+            @break
+
         @case('graduation-cap')
             <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path>
             <path d="M22 10v6"></path>

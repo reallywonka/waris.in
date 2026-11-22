@@ -41,6 +41,126 @@
                     </a>
                 </div>
             </div>
+
+            <!-- Section Progres & Barang Milik Kamu (Task 6 & Tracking Kebaikan) -->
+            <div class="bg-white rounded-3xl p-6 border border-gray-200/90 shadow-2xs space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-gray-100">
+                    <div class="flex items-center space-x-2.5">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center border border-emerald-100">
+                            <x-icon name="package" class="w-4 h-4 text-emerald-800" />
+                        </div>
+                        <div>
+                            <h3 class="text-sm sm:text-base font-black text-gray-900 tracking-tight">
+                                Barang yang Sedang Kamu Tawarkan / Jual
+                            </h3>
+                            <p class="text-[11px] text-gray-500">
+                                Pantau ketersediaan dan minat mahasiswa lain terhadap barang kuliahmu.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-2">
+                        <a href="{{ route('claims.incoming') }}" 
+                           class="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-50 text-amber-900 border border-amber-200 hover:bg-amber-100 transition-colors">
+                            <x-icon name="inbox" class="w-3.5 h-3.5 text-amber-700" />
+                            <span>Pengajuan Masuk ({{ $myPendingClaimsCount }})</span>
+                        </a>
+                        <a href="{{ route('items.my') }}" 
+                           class="inline-flex items-center space-x-1 px-3 py-1.5 rounded-xl text-xs font-bold text-emerald-800 hover:bg-emerald-50 transition-colors">
+                            <span>Buka Semua Barang Saya</span>
+                            <x-icon name="arrow-right" class="w-3.5 h-3.5" />
+                        </a>
+                    </div>
+                </div>
+
+                @if ($myItems->count() > 0)
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        @foreach ($myItems as $myItem)
+                            @php
+                                $pendingClaims = $myItem->claims->where('status', 'pending')->count();
+                            @endphp
+                            <div class="bg-gray-50/70 hover:bg-white rounded-2xl p-3.5 border border-gray-200 hover:border-emerald-300 transition-all flex flex-col justify-between group">
+                                <div class="space-y-3">
+                                    <div class="relative w-full aspect-4/3 rounded-xl overflow-hidden bg-gray-100 border border-gray-200/80">
+                                        <img src="{{ $myItem->primary_image_url }}" 
+                                             alt="{{ $myItem->title }}"
+                                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                             onerror="this.onerror=null; this.src='{{ asset('images/placeholders/default.svg') }}';">
+                                        
+                                        <!-- Badge Status -->
+                                        <div class="absolute top-2 left-2">
+                                            @if ($myItem->status === 'available')
+                                                <span class="inline-flex items-center space-x-1 text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-800 text-white shadow-2xs">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse"></span>
+                                                    <span>Tersedia</span>
+                                                </span>
+                                            @else
+                                                <span class="inline-flex items-center space-x-1 text-[10px] font-bold px-2 py-0.5 rounded-md bg-gray-800 text-white shadow-2xs">
+                                                    <x-icon name="lock" class="w-2.5 h-2.5" />
+                                                    <span>Terkunci</span>
+                                                </span>
+                                            @endif
+                                        </div>
+
+                                        <!-- Badge Mode Transaksi -->
+                                        <div class="absolute bottom-2 right-2">
+                                            <span class="text-[10px] font-black px-2 py-0.5 rounded-md shadow-2xs {{ $myItem->mode === 'harga_pas' ? 'bg-amber-100 text-amber-900 border border-amber-200' : ($myItem->mode === 'barter' ? 'bg-teal-100 text-teal-900 border border-teal-200' : 'bg-emerald-100 text-emerald-900 border border-emerald-200') }}">
+                                                {{ $myItem->formatted_price }}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <a href="{{ route('items.show', $myItem) }}" class="text-xs font-black text-gray-900 line-clamp-1 hover:text-emerald-800 transition-colors">
+                                            {{ $myItem->title }}
+                                        </a>
+                                        <div class="flex items-center justify-between text-[11px] text-gray-500 mt-1">
+                                            <span>{{ $myItem->category }}</span>
+                                            <span>{{ $myItem->condition }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-3 pt-2.5 border-t border-gray-200/80 flex items-center justify-between gap-2">
+                                    @if ($pendingClaims > 0)
+                                        <a href="{{ route('claims.incoming', ['item_id' => $myItem->id]) }}" 
+                                           class="inline-flex items-center space-x-1 text-[11px] font-bold text-amber-800 bg-amber-100/90 hover:bg-amber-200 px-2.5 py-1 rounded-lg transition-colors">
+                                            <x-icon name="users" class="w-3 h-3 text-amber-700" />
+                                            <span>{{ $pendingClaims }} Peminat Baru</span>
+                                        </a>
+                                    @else
+                                        <span class="text-[10px] text-gray-400">
+                                            {{ $myItem->claims->count() > 0 ? $myItem->claims->count() . ' Riwayat Permohonan' : 'Belum ada peminat' }}
+                                        </span>
+                                    @endif
+
+                                    <a href="{{ route('items.show', $myItem) }}" 
+                                       class="text-[11px] font-bold text-emerald-800 hover:text-emerald-950 transition-colors">
+                                        Detail &rarr;
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="p-4 bg-emerald-50/60 rounded-2xl border border-emerald-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-xl bg-white text-emerald-800 flex items-center justify-center shrink-0 border border-emerald-200">
+                                <x-icon name="package" class="w-5 h-5 text-emerald-700" />
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-gray-900">Kamu belum memasang barang kuliah</h4>
+                                <p class="text-[11px] text-gray-500">Punya buku modul, kalkulator, atau alat praktikum yang tak terpakai? Pasang sekarang!</p>
+                            </div>
+                        </div>
+                        <a href="{{ route('items.create') }}" 
+                           class="inline-flex items-center space-x-1.5 px-3.5 py-2 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-xs font-bold transition-colors shrink-0">
+                            <x-icon name="plus" class="w-3.5 h-3.5" />
+                            <span>Pasang Barang Sekarang</span>
+                        </a>
+                    </div>
+                @endif
+            </div>
         @endauth
 
         <!-- 2. Hero Section: Hub Komunitas Estafet Kampus (Solid Modern + Pattern) -->
