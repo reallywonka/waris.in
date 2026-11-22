@@ -1,39 +1,5 @@
 <x-app-layout>
-    <div x-data="{
-        title: {{ \Illuminate\Support\Js::from(old('title', '')) }},
-        category: {{ \Illuminate\Support\Js::from(old('category', 'Elektronik & Gadget Belajar')) }},
-        condition: {{ \Illuminate\Support\Js::from(old('condition', 'Bekas Layak Pakai')) }},
-        description: {{ \Illuminate\Support\Js::from(old('description', '')) }},
-        mode: {{ \Illuminate\Support\Js::from(old('mode', 'harga_pas')) }},
-        price: {{ (float) old('price', 45000) }},
-        barter_request: {{ \Illuminate\Support\Js::from(old('barter_request', '')) }},
-        photoPreview1: null,
-        photoPreview2: null,
-        photoPreview3: null,
-        formatPrice(val) {
-            if (!val) return '0';
-            return new Intl.NumberFormat('id-ID').format(val);
-        },
-        handleImage(e, slot) {
-            const file = e.target.files && e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    if (slot === 1) this.photoPreview1 = event.target.result;
-                    if (slot === 2) this.photoPreview2 = event.target.result;
-                    if (slot === 3) this.photoPreview3 = event.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        },
-        removeImage(slot) {
-            if (slot === 1) this.photoPreview1 = null;
-            if (slot === 2) this.photoPreview2 = null;
-            if (slot === 3) this.photoPreview3 = null;
-            const input = document.getElementById('photoInput' + slot);
-            if (input) input.value = '';
-        }
-    }" class="w-full space-y-6">
+    <div x-data="itemCreateForm()" class="w-full space-y-6">
 
         <!-- Header Halaman -->
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2">
@@ -432,6 +398,9 @@
                                     Judul barang akan muncul di sini...
                                 </h4>
 
+                                <p class="text-[11px] text-gray-500 line-clamp-2 mt-1.5 leading-relaxed" 
+                                   x-text="description && description.trim() ? description : 'Deskripsi singkat barang akan tampil di sini saat kamu mengetik...'"></p>
+
                                 <div class="mt-2 flex flex-wrap gap-1 text-[10px]">
                                     <span class="px-2 py-0.5 rounded-md bg-gray-100 text-gray-700 flex items-center space-x-1">
                                         <x-icon name="check" class="w-3 h-3 text-emerald-700" />
@@ -480,4 +449,52 @@
         </div>
 
     </div>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            if (window.Alpine) {
+                Alpine.data('itemCreateForm', () => itemCreateFormState());
+            }
+        });
+
+        function itemCreateFormState() {
+            return {
+                title: @json(old('title', '')),
+                category: @json(old('category', 'Elektronik & Gadget Belajar')),
+                condition: @json(old('condition', 'Bekas Layak Pakai')),
+                description: @json(old('description', '')),
+                mode: @json(old('mode', 'harga_pas')),
+                price: @json((float) old('price', 45000)),
+                barter_request: @json(old('barter_request', '')),
+                photoPreview1: null,
+                photoPreview2: null,
+                photoPreview3: null,
+                formatPrice(val) {
+                    if (!val) return '0';
+                    return new Intl.NumberFormat('id-ID').format(val);
+                },
+                handleImage(e, slot) {
+                    const files = e.target.files;
+                    if (files && files.length > 0) {
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            if (slot === 1) this.photoPreview1 = event.target.result;
+                            if (slot === 2) this.photoPreview2 = event.target.result;
+                            if (slot === 3) this.photoPreview3 = event.target.result;
+                        };
+                        reader.readAsDataURL(files[0]);
+                    }
+                },
+                removeImage(slot) {
+                    if (slot === 1) this.photoPreview1 = null;
+                    if (slot === 2) this.photoPreview2 = null;
+                    if (slot === 3) this.photoPreview3 = null;
+                    const input = document.getElementById('photoInput' + slot);
+                    if (input) input.value = '';
+                }
+            };
+        }
+
+        window.itemCreateForm = itemCreateFormState;
+    </script>
 </x-app-layout>
