@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
@@ -21,6 +22,27 @@ Route::get('/barang/{item}', [ItemController::class, 'show'])->name('items.show'
 
 // Rute yang membutuhkan Login Mahasiswa
 Route::middleware(['auth'])->group(function () {
+    // Pasang Barang (Create & Store - Task 5)
+    Route::get('/pasang-barang', [ItemController::class, 'create'])->name('items.create');
+    Route::post('/pasang-barang', [ItemController::class, 'store'])->name('items.store');
+
+    // Manajemen Barang Saya (Task 6)
+    Route::get('/barang-saya', [ItemController::class, 'myItems'])->name('items.my');
+    Route::get('/barang/{item}/edit', [ItemController::class, 'edit'])->name('items.edit');
+    Route::put('/barang/{item}', [ItemController::class, 'update'])->name('items.update');
+    Route::delete('/barang/{item}', [ItemController::class, 'destroy'])->name('items.destroy');
+
+    // Pengajuan Klaim & Tawaran Barter (Task 7)
+    Route::post('/barang/{item}/klaim', [ClaimController::class, 'store'])->name('claims.store');
+
+    // Dashboard Pengajuan Masuk & Approval Atomic (Task 8)
+    Route::get('/pengajuan-masuk', [ClaimController::class, 'incoming'])->name('claims.incoming');
+    Route::post('/pengajuan/{claim}/setujui', [ClaimController::class, 'approve'])->name('claims.approve');
+    Route::post('/pengajuan/{claim}/tolak', [ClaimController::class, 'reject'])->name('claims.reject');
+
+    // Dashboard Pengajuan Saya & Unlocked Contact (Task 9)
+    Route::get('/pengajuan-saya', [ClaimController::class, 'myClaims'])->name('claims.my');
+
     // Pengaturan Profil
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -45,6 +45,18 @@
             </div>
         @endif
 
+        @if (session('info'))
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 w-full">
+                <div class="bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded-2xl flex items-center justify-between shadow-xs">
+                    <div class="flex items-center space-x-2">
+                        <span>ℹ️</span>
+                        <span class="text-sm font-medium">{{ session('info') }}</span>
+                    </div>
+                    <button onclick="this.parentElement.remove()" class="text-blue-600 hover:text-blue-900 text-sm font-bold">&times;</button>
+                </div>
+            </div>
+        @endif
+
         <!-- Konten Halaman Dinamis -->
         <main class="flex-grow py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             {{ $slot }}

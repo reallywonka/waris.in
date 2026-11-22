@@ -13,6 +13,7 @@
             activeImageIndex: 0, 
             images: {{ \Illuminate\Support\Js::from($allImages) }},
             copied: false,
+            claimModalOpen: {{ $errors->any() ? 'true' : 'false' }},
             fallbackImage: '{{ asset('images/placeholders/default.svg') }}',
             copyUrl() {
                 navigator.clipboard.writeText(window.location.href);
@@ -370,7 +371,7 @@
                         @auth
                             <div class="space-y-2.5">
                                 <button type="button"
-                                        onclick="alert('Fitur Formulir Pengajuan Klaim / Barter siap dihubungkan pada Task 7!')"
+                                        @click="claimModalOpen = true"
                                         class="w-full py-4 px-6 bg-emerald-800 hover:bg-emerald-900 text-white font-black text-sm rounded-2xl shadow-2xs hover:shadow-xs transition-all flex items-center justify-center space-x-2">
                                     <span>{{ $item->mode === 'barter' ? 'Ajukan Tawaran Barter' : ($item->mode === 'gratis' ? 'Ajukan Klaim Gratis' : 'Ajukan Pembelian Harga Pas') }}</span>
                                     <x-icon name="arrow-right" class="w-4 h-4" />
@@ -452,7 +453,7 @@
                 @else
                     @auth
                         <button type="button" 
-                                onclick="alert('Fitur Formulir Pengajuan Klaim / Barter siap dihubungkan pada Task 7!')"
+                                @click="claimModalOpen = true"
                                 class="inline-flex items-center space-x-1.5 px-5 py-2.5 bg-emerald-800 text-white font-black text-xs rounded-xl shadow-2xs">
                             <span>Ajukan {{ $item->mode === 'barter' ? 'Barter' : 'Klaim' }}</span>
                             <x-icon name="arrow-right" class="w-3.5 h-3.5" />
@@ -466,6 +467,161 @@
                 @endif
             </div>
         </div>
+
+        <!-- 5. Modal Pop-up Formulir Pengajuan Klaim / Barter (Task 7) -->
+        @auth
+            <div x-show="claimModalOpen" 
+                 x-cloak
+                 style="display: none;"
+                 class="fixed inset-0 z-50 overflow-y-auto" 
+                 aria-labelledby="modal-title" 
+                 role="dialog" 
+                 aria-modal="true">
+                
+                <!-- Backdrop Gelap Bergradasi -->
+                <div x-show="claimModalOpen"
+                     x-transition:enter="ease-out duration-300"
+                     x-transition:enter-start="opacity-0"
+                     x-transition:enter-end="opacity-100"
+                     x-transition:exit="ease-in duration-200"
+                     x-transition:exit-start="opacity-100"
+                     x-transition:exit-end="opacity-0"
+                     class="fixed inset-0 bg-gray-900/60 backdrop-blur-xs transition-opacity"
+                     @click="claimModalOpen = false"></div>
+
+                <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+                    <div x-show="claimModalOpen"
+                         x-transition:enter="ease-out duration-300"
+                         x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                         x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                         x-transition:exit="ease-in duration-200"
+                         x-transition:exit-start="opacity-100 translate-y-0 sm:scale-100"
+                         x-transition:exit-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                         class="relative transform overflow-hidden rounded-3xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-lg border border-gray-100">
+                        
+                        <!-- Header Modal Solid -->
+                        <div class="px-6 pt-6 pb-4 border-b border-gray-100 flex items-start justify-between">
+                            <div>
+                                <div class="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-lg text-[11px] font-black {{ $item->mode === 'barter' ? 'bg-teal-50 text-teal-800 border border-teal-200' : ($item->mode === 'harga_pas' ? 'bg-amber-50 text-amber-800 border border-amber-200' : 'bg-emerald-50 text-emerald-800 border border-emerald-200') }}">
+                                    <x-icon name="{{ $item->mode === 'barter' ? 'repeat' : ($item->mode === 'harga_pas' ? 'tag' : 'gift') }}" class="w-3.5 h-3.5" />
+                                    <span>Formulir Permohonan {{ $item->mode === 'barter' ? 'Tukar Barter' : ($item->mode === 'harga_pas' ? 'Beli Harga Pas' : 'Klaim Hibah') }}</span>
+                                </div>
+                                <h3 class="text-lg font-black text-gray-900 tracking-tight mt-1.5" id="modal-title">
+                                    {{ $item->title }}
+                                </h3>
+                                <p class="text-xs text-gray-500 mt-0.5">
+                                    Pemilik: <span class="font-bold text-gray-700">{{ $item->user->name }}</span> ({{ $item->user->faculty ?? 'Mahasiswa' }})
+                                </p>
+                            </div>
+                            <button type="button" 
+                                    @click="claimModalOpen = false" 
+                                    class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-700 flex items-center justify-center transition-colors focus:outline-none">
+                                <span class="text-base font-bold leading-none">&times;</span>
+                            </button>
+                        </div>
+
+                        <!-- Form Isi Pengajuan -->
+                        <form method="POST" action="{{ route('claims.store', $item) }}" class="p-6 space-y-4">
+                            @csrf
+
+                            @if ($item->mode === 'barter')
+                                <!-- Info Khusus Mode Barter -->
+                                <div class="p-3.5 bg-teal-50 rounded-2xl border border-teal-200 space-y-1">
+                                    <span class="text-[10px] font-bold text-teal-800 uppercase tracking-wider block">Permintaan Barter Pemilik:</span>
+                                    <p class="text-xs font-semibold text-teal-950 italic">
+                                        "{{ $item->barter_request ?? 'Terbuka tawaran barang kuliah sepadan' }}"
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <label for="offered_item_desc" class="block text-xs font-bold text-gray-700 mb-1">
+                                        Barang yang Anda Tawarkan untuk Ditukar <span class="text-rose-500">*</span>
+                                    </label>
+                                    <textarea id="offered_item_desc" 
+                                              name="offered_item_desc" 
+                                              rows="2" 
+                                              required
+                                              placeholder="Sebutkan nama barang, kondisi, dan kelengkapannya..."
+                                              class="w-full text-xs rounded-xl border-gray-300 focus:border-emerald-700 focus:ring-emerald-700 shadow-2xs">{{ old('offered_item_desc') }}</textarea>
+                                    @error('offered_item_desc')
+                                        <p class="text-[11px] text-rose-600 mt-1 font-medium">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            @elseif ($item->mode === 'harga_pas')
+                                <div class="p-3 bg-amber-50 rounded-2xl border border-amber-200 flex items-center justify-between text-xs">
+                                    <span class="text-amber-800 font-semibold">Nominal Bayar Tunai (COD):</span>
+                                    <span class="text-sm font-black text-amber-950">Rp {{ number_format($item->price, 0, ',', '.') }}</span>
+                                </div>
+                            @endif
+
+                            <!-- Kontak WhatsApp -->
+                            <div>
+                                <label for="contact_info" class="block text-xs font-bold text-gray-700 mb-1">
+                                    Nomor Kontak / WhatsApp Anda <span class="text-rose-500">*</span>
+                                </label>
+                                <div class="relative">
+                                    <input type="text" 
+                                           id="contact_info" 
+                                           name="contact_info" 
+                                           required
+                                           value="{{ old('contact_info', auth()->user()->phone ?? '') }}"
+                                           placeholder="Contoh: 08123456789 atau wa.me/628123456789"
+                                           class="w-full text-xs rounded-xl border-gray-300 focus:border-emerald-700 focus:ring-emerald-700 shadow-2xs">
+                                </div>
+                                <p class="text-[10px] text-gray-400 mt-1">
+                                    🔒 Aman: Nomor kontak hanya akan dibuka ke pemilik jika pengajuan disetujui.
+                                </p>
+                                @error('contact_info')
+                                    <p class="text-[11px] text-rose-600 mt-1 font-medium">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Pesan Singkat -->
+                            <div>
+                                <label for="message" class="block text-xs font-bold text-gray-700 mb-1">
+                                    Pesan Singkat / Alasan Kebutuhan <span class="text-rose-500">*</span>
+                                </label>
+                                <textarea id="message" 
+                                          name="message" 
+                                          rows="3" 
+                                          required
+                                          placeholder="Ceritakan singkat mengapa Anda membutuhkan barang ini atau waktu luang Anda untuk ketemuan COD di kampus..."
+                                          class="w-full text-xs rounded-xl border-gray-300 focus:border-emerald-700 focus:ring-emerald-700 shadow-2xs">{{ old('message') }}</textarea>
+                                @error('message')
+                                    <p class="text-[11px] text-rose-600 mt-1 font-medium">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Notice Komitmen COD Kampus -->
+                            <div class="p-3 bg-gray-50 rounded-xl border border-gray-200 text-[11px] text-gray-500 space-y-1">
+                                <span class="font-bold text-gray-700 flex items-center space-x-1">
+                                    <x-icon name="map-pin" class="w-3.5 h-3.5 text-emerald-800" />
+                                    <span>Rencana Titik Temu: {{ $item->meetup_location ?? 'Sekitar Kampus' }}</span>
+                                </span>
+                                <p class="leading-relaxed text-[10px]">
+                                    Pastikan pertemuan dilakukan di area kampus umum pada jam kuliah untuk keamanan bersama.
+                                </p>
+                            </div>
+
+                            <!-- Tombol Aksi Modal -->
+                            <div class="pt-2 flex items-center justify-end space-x-2">
+                                <button type="button" 
+                                        @click="claimModalOpen = false"
+                                        class="px-4 py-2.5 rounded-xl border border-gray-300 text-xs font-bold text-gray-700 hover:bg-gray-100 transition-colors">
+                                    Batal
+                                </button>
+                                <button type="submit" 
+                                        class="px-5 py-2.5 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-black shadow-2xs hover:shadow-xs transition-colors flex items-center space-x-1.5">
+                                    <span>Kirim Permohonan</span>
+                                    <x-icon name="arrow-right" class="w-3.5 h-3.5" />
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        @endauth
 
     </div>
 </x-app-layout>

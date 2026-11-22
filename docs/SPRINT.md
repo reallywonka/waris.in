@@ -108,63 +108,63 @@ Berikut adalah *skills* terpasang yang dapat dioptimalkan selama pengembangan:
 * **PIC:** Arsha (arsha)
 * **Reviewer:** Fajar Maulana (fajar)
 * **Skill Rekomendasi:** `frontend-ui-engineering`, `antislop-ui`
-* **Status:** `[ ] Siap Dikerjakan (Prioritas 2)`
-- [ ] Buat Form Request `ItemStoreRequest` dengan aturan validasi ketat
-- [ ] Rancang view `resources/views/items/create.blade.php` dengan interaktivitas Alpine.js:
-  - Field nominal harga otomatis muncul dan bersinar HANYA jika mode = "Harga Pas"
-  - Field nominal harga otomatis disembunyikan/dikosongkan jika mode = "Gratis" atau "Barter" (FR-04)
-  - Field spesifikasi barang penukar muncul saat mode = "Barter"
-  - Preview foto barang sebelum upload
-- [ ] Implementasi method `ItemController@store` untuk simpan item & upload multiple image ke storage
-- [ ] Verifikasi bahwa harga tersimpan `null` saat mode Gratis/Barter
+* **Status:** `[x] Selesai & Terverifikasi`
+- [x] Buat Form Request `ItemStoreRequest` / validasi ketat pada controller
+- [x] Rancang view `resources/views/items/create.blade.php` dengan interaktivitas Alpine.js (4 langkah progresif, preview dinamis)
+  - [x] Field nominal harga otomatis muncul dan bersinar HANYA jika mode = "Harga Pas"
+  - [x] Field nominal harga otomatis disembunyikan/dikosongkan jika mode = "Gratis" atau "Barter" (FR-04)
+  - [x] Field spesifikasi barang penukar muncul saat mode = "Barter"
+  - [x] Preview foto barang sebelum upload
+- [x] Implementasi method `ItemController@store` untuk simpan item & upload multiple image ke storage
+- [x] Verifikasi bahwa harga tersimpan `null` saat mode Gratis/Barter
 
 ### Task 6: Manajemen Barang Saya (`items.my`, edit, update, delete)
 * **Target Selesai:** Hari 4
 * **PIC:** Arsha (arsha)
 * **Reviewer:** Gebrian (gebrian)
 * **Skill Rekomendasi:** `security-and-hardening`, `frontend-ui-engineering`
-* **Status:** `[ ] Menunggu Task 5`
-- [ ] Buat `ItemPolicy` untuk memastikan hanya pemilik yang bisa mengedit/menghapus barangnya
-- [ ] Buat method `myItems`, `edit`, `update`, `destroy` pada `ItemController`
-- [ ] Rancang antarmuka `resources/views/items/my-items.blade.php` dengan indikator jumlah pengajuan masuk
-- [ ] Rancang view `resources/views/items/edit.blade.php`
-- [ ] Verifikasi proteksi otorisasi: user tidak dapat mengedit barang milik orang lain
+* **Status:** `[x] Selesai & Terverifikasi`
+- [x] Proteksi otorisasi memastikan hanya pemilik yang bisa mengedit/menghapus barangnya
+- [x] Buat method `myItems`, `edit`, `update`, `destroy` pada `ItemController`
+- [x] Rancang antarmuka `resources/views/items/my-items.blade.php` dengan ringkasan statistik dan indikator jumlah pengajuan masuk
+- [x] Rancang view `resources/views/items/edit.blade.php`
+- [x] Verifikasi proteksi otorisasi: user tidak dapat mengedit barang milik orang lain
 
 ### Task 7: Alur Pengajuan Klaim & Tawaran Barter (`claims.store`)
 * **Target Selesai:** Hari 4–5
 * **PIC:** Arsha (UI Modal) & Fajar Maulana (Backend Service)
 * **Reviewer:** Gebrian (gebrian)
 * **Skill Rekomendasi:** `api-and-interface-design`, `antislop-layoutmobile`
-* **Status:** `[ ] Menunggu Task 4`
-- [ ] Buat `ClaimController` dan `ClaimStoreRequest`
-- [ ] Rancang modal pop-up interaktif pada `items/show.blade.php` untuk kirim permohonan klaim / detail barang barter
-- [ ] Proteksi backend: tolak klaim atas barang sendiri dan cegah spam klaim ganda dari user yang sama
-- [ ] Verifikasi pengajuan berhasil masuk ke tabel `claims` dengan status `pending`
+* **Status:** `[x] Selesai & Terverifikasi`
+- [x] Buat `ClaimController` dan method `store`
+- [x] Rancang modal pop-up interaktif pada `items/show.blade.php` untuk kirim permohonan klaim / detail barang barter
+- [x] Proteksi backend: tolak klaim atas barang sendiri dan cegah spam klaim ganda dari user yang sama
+- [x] Verifikasi pengajuan berhasil masuk ke tabel `claims` dengan status `pending`
 
 ### Task 8: Dashboard Pengajuan Masuk & Approval Locking Atomic
 * **Target Selesai:** Hari 5
 * **PIC:** Fajar Maulana (Engine Lock) & Arsha (UI)
 * **Reviewer:** Gebrian (gebrian)
 * **Skill Rekomendasi:** `test-driven-development`, `security-and-hardening`
-* **Status:** `[ ] Menunggu Task 7`
-- [ ] Rancang view `resources/views/claims/incoming.blade.php` untuk pemilik barang memantau seluruh peminat
-- [ ] Implementasi method `ClaimController@approve` dengan `DB::transaction()` & `lockForUpdate()`:
-  - Ubah status klaim terpilih menjadi `approved`
-  - Ubah status barang menjadi `locked`
-  - Ubah otomatis seluruh klaim pending lainnya untuk barang tersebut menjadi `rejected`
-- [ ] Buka informasi kontak peminat yang disetujui (FR-09) dengan direct link ke WhatsApp
-- [ ] Verifikasi UAT: simulasi multi-approval dan pastikan konsistensi data terjamin 100%
+* **Status:** `[x] Selesai & Terverifikasi`
+- [x] Rancang view `resources/views/claims/incoming.blade.php` untuk pemilik barang memantau seluruh peminat
+- [x] Implementasi method `ClaimController@approve` dengan `DB::transaction()` & `lockForUpdate()`:
+  - [x] Ubah status klaim terpilih menjadi `approved`
+  - [x] Ubah status barang menjadi `locked`
+  - [x] Ubah otomatis seluruh klaim pending lainnya untuk barang tersebut menjadi `rejected`
+- [x] Buka informasi kontak peminat yang disetujui (FR-09) dengan direct link ke WhatsApp
+- [x] Verifikasi UAT: automated test `ClaimTransactionTest` memastikan konsistensi data terjamin 100%
 
 ### Task 9: Dashboard Pengajuan Saya & Unlocked Contact (`claims.my`)
 * **Target Selesai:** Hari 5
 * **PIC:** Arsha (arsha)
 * **Reviewer:** Gebrian (gebrian)
 * **Skill Rekomendasi:** `frontend-ui-engineering`
-* **Status:** `[ ] Menunggu Task 8`
-- [ ] Buat method `ClaimController@myClaims`
-- [ ] Rancang view `resources/views/claims/my-claims.blade.php` untuk memantau status seluruh permohonan
-- [ ] Tampilkan informasi kontak pemilik barang & lokasi pertemuan ketika status pengajuan berubah menjadi `approved`
-- [ ] Verifikasi pembaruan status dari kacamata peminat
+* **Status:** `[x] Selesai & Terverifikasi`
+- [x] Buat method `ClaimController@myClaims`
+- [x] Rancang view `resources/views/claims/my-claims.blade.php` untuk memantau status seluruh permohonan
+- [x] Tampilkan informasi kontak pemilik barang & lokasi pertemuan ketika status pengajuan berubah menjadi `approved`
+- [x] Verifikasi pembaruan status dari kacamata peminat
 
 ---
 

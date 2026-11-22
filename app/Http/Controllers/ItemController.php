@@ -119,4 +119,206 @@ class ItemController extends Controller
 
         return view('items.show', compact('item', 'userClaim', 'relatedItems'));
     }
+
+    /**
+     * Tampilkan form pasang barang baru.
+     */
+    public function create()
+    {
+        $categories = [
+            'Elektronik & Gadget Belajar',
+            'Buku & Modul',
+            'Perlengkapan Kuliah',
+            'Fashion & Jaket',
+            'Alat Praktikum',
+            'Lainnya',
+        ];
+
+        $conditions = [
+            'Baru (Gress)' => 'Belum pernah dibuka/dipakai, segel masih utuh.',
+            'Seperti Baru' => 'Hanya dipakai beberapa kali, mulus tanpa cacat.',
+            'Bekas Layak Pakai' => 'Fungsi 100% normal, ada tanda pemakaian wajar.',
+            'Ada Kekurangan' => 'Ada baret atau fungsi sampingan yang minus tapi masih bisa pakai.',
+        ];
+
+        return view('items.create', compact('categories', 'conditions'));
+    }
+
+    /**
+     * Simpan barang baru ke database dan upload foto.
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'category' => ['required', 'string', 'max:100'],
+            'condition' => ['required', 'string', 'in:Baru (Gress),Seperti Baru,Bekas Layak Pakai,Ada Kekurangan'],
+            'description' => ['required', 'string', 'max:1000'],
+            'mode' => ['required', 'in:gratis,harga_pas,barter'],
+            'price' => ['nullable', 'required_if:mode,harga_pas', 'numeric', 'min:0'],
+            'barter_request' => ['nullable', 'required_if:mode,barter', 'string', 'max:255'],
+            'contact_info' => ['required', 'string', 'max:500'],
+            'meetup_location' => ['nullable', 'string', 'max:255'],
+            'time_handover' => ['nullable', 'string', 'max:255'],
+            'photos' => ['nullable', 'array', 'max:3'],
+            'photos.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+        ], [
+            'title.required' => 'Judul barang wajib diisi.',
+            'category.required' => 'Pilih kategori barang.',
+            'condition.required' => 'Pilih kondisi barang.',
+            'description.required' => 'Deskripsi barang wajib diisi.',
+            'mode.required' => 'Pilih format transaksi (Gratis / Harga Pas / Barter).',
+            'price.required_if' => 'Nominal harga wajib diisi jika memilih mode Harga Pas.',
+            'barter_request.required_if' => 'Tuliskan barang yang ingin kamu tukar jika memilih mode Barter.',
+            'contact_info.required' => 'Informasi kontak & lokasi COD wajib diisi.',
+            'photos.max' => 'Maksimal 3 foto yang dapat diunggah.',
+            'photos.*.image' => 'File harus berupa gambar (JPG, PNG, atau WEBP).',
+            'photos.*.max' => 'Ukuran setiap foto maksimal 2MB.',
+        ]);
+
+        $item = auth()->user()->items()->create([
+            'title' => $validated['title'],
+            'category' => $validated['category'],
+            'condition' => $validated['condition'],
+            'description' => $validated['description'],
+            'mode' => $validated['mode'],
+            'price' => $validated['mode'] === 'harga_pas' ? $validated['price'] : null,
+            'barter_request' => $validated['mode'] === 'barter' ? $validated['barter_request'] : null,
+            'contact_info' => $validated['contact_info'],
+            'meetup_location' => $validated['meetup_location'] ?? null,
+            'time_handover' => $validated['time_handover'] ?? null,
+            'status' => 'available',
+        ]);
+
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $index => $photo) {
+                $path = $photo->store('items', 'public');
+                $item->images()->create([
+                    'image_path' => $path,
+                    'is_primary' => $index === 0,
+                ]);
+            }
+        } else {
+            // Gunakan SVG default dari tema waris.in
+            $item->images()->create([
+                'image_path' => 'images/placeholders/default.svg',
+                'is_primary' => true,
+            ]);
+        }
+
+        return redirect()->route('items.show', $item)
+            ->with('success', 'Barang berhasil dipublikasikan ke katalog waris.in!');
+    }
+
+    /**
+     * Tampilkan daftar barang milik pengguna yang sedang login (Task 6).
+     */
+    public function myItems(Request $request)
+    {
+        $query = auth()->user()->items()->with(['images', 'primaryImage', 'claims']);
+
+        if ($request->filled('status') && in_array($request->status, ['available', 'locked'])) {
+            $query->where('status', $request->status);
+        }
+
+        $items = $query->latest()->paginate(8)->withQueryString();
+
+        $totalItems = auth()->user()->items()->count();
+        $availableItems = auth()->user()->items()->where('status', 'available')->count();
+        $lockedItems = auth()->user()->items()->where('status', 'locked')->count();
+        $totalClaimsReceived = \App\Models\Claim::whereIn('item_id', auth()->user()->items()->pluck('id'))->count();
+
+        return view('items.my-items', compact(
+            'items',
+            'totalItems',
+            'availableItems',
+            'lockedItems',
+            'totalClaimsReceived'
+        ));
+    }
+
+    /**
+     * Tampilkan formulir edit barang (Task 6).
+     */
+    public function edit(Item $item)
+    {
+        if ($item->user_id !== auth()->id()) {
+            abort(403, 'Anda tidak berhak mengedit barang milik pengguna lain.');
+        }
+
+        $categories = [
+            'Elektronik & Gadget Belajar',
+            'Buku & Modul',
+            'Perlengkapan Kuliah',
+            'Fashion & Jaket',
+            'Alat Praktikum',
+            'Lainnya',
+        ];
+
+        $conditions = [
+            'Baru (Gress)' => 'Belum pernah dibuka/dipakai, segel masih utuh.',
+            'Seperti Baru' => 'Hanya dipakai beberapa kali, mulus tanpa cacat.',
+            'Bekas Layak Pakai' => 'Fungsi 100% normal, ada tanda pemakaian wajar.',
+            'Ada Kekurangan' => 'Ada baret atau fungsi sampingan yang minus tapi masih bisa pakai.',
+        ];
+
+        return view('items.edit', compact('item', 'categories', 'conditions'));
+    }
+
+    /**
+     * Perbarui data barang (Task 6).
+     */
+    public function update(Request $request, Item $item)
+    {
+        if ($item->user_id !== auth()->id()) {
+            abort(403, 'Anda tidak berhak mengedit barang milik pengguna lain.');
+        }
+
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'category' => ['required', 'string', 'max:100'],
+            'condition' => ['required', 'string', 'in:Baru (Gress),Seperti Baru,Bekas Layak Pakai,Ada Kekurangan'],
+            'condition_note' => ['nullable', 'string', 'max:500'],
+            'description' => ['required', 'string', 'max:1000'],
+            'mode' => ['required', 'in:gratis,harga_pas,barter'],
+            'price' => ['nullable', 'required_if:mode,harga_pas', 'numeric', 'min:0'],
+            'barter_request' => ['nullable', 'required_if:mode,barter', 'string', 'max:255'],
+            'contact_info' => ['required', 'string', 'max:500'],
+            'meetup_location' => ['nullable', 'string', 'max:255'],
+            'time_handover' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $item->update([
+            'title' => $validated['title'],
+            'category' => $validated['category'],
+            'condition' => $validated['condition'],
+            'condition_note' => $validated['condition_note'] ?? null,
+            'description' => $validated['description'],
+            'mode' => $validated['mode'],
+            'price' => $validated['mode'] === 'harga_pas' ? $validated['price'] : null,
+            'barter_request' => $validated['mode'] === 'barter' ? $validated['barter_request'] : null,
+            'contact_info' => $validated['contact_info'],
+            'meetup_location' => $validated['meetup_location'] ?? null,
+            'time_handover' => $validated['time_handover'] ?? null,
+        ]);
+
+        return redirect()->route('items.my')
+            ->with('success', 'Data barang berhasil diperbarui!');
+    }
+
+    /**
+     * Hapus barang milik pengguna (Task 6).
+     */
+    public function destroy(Item $item)
+    {
+        if ($item->user_id !== auth()->id()) {
+            abort(403, 'Anda tidak berhak menghapus barang milik pengguna lain.');
+        }
+
+        // Hapus barang beserta relasi foto cascade
+        $item->delete();
+
+        return redirect()->route('items.my')
+            ->with('success', 'Barang berhasil dihapus dari daftar barang Anda.');
+    }
 }
