@@ -40,23 +40,10 @@
             <!-- 2. Sisi Kanan: Akun Mahasiswa / Tombol Masuk Desktop -->
             <div class="hidden md:flex items-center space-x-3">
                 @auth
-                    <!-- Pill Profile Dropdown -->
-                    <div class="relative" 
-                         x-data="{ 
-                             isOpen: false,
-                             timeout: null,
-                             show() {
-                                 clearTimeout(this.timeout);
-                                 this.isOpen = true;
-                             },
-                             hide() {
-                                 this.timeout = setTimeout(() => {
-                                     this.isOpen = false;
-                                 }, 150);
-                             }
-                         }" 
-                         @mouseenter="show()" 
-                         @mouseleave="hide()" 
+                    <!-- Pill Profile Dropdown (Hover & Click Friendly) -->
+                    <div class="relative group" 
+                         x-data="{ isOpen: false }" 
+                         @mouseleave="isOpen = false"
                          @click.outside="isOpen = false"
                          @keydown.escape.window="isOpen = false">
                         <button type="button" 
@@ -81,22 +68,13 @@
 
                             <!-- Panah Bawah -->
                             <x-icon name="chevron-down" 
-                                    class="w-3.5 h-3.5 text-gray-400 transition-transform duration-200" 
+                                    class="w-3.5 h-3.5 text-gray-400 transition-transform duration-200 group-hover:rotate-180" 
                                     ::class="isOpen ? 'rotate-180 text-emerald-700' : ''" />
                         </button>
 
-                        <!-- Menu Dropdown Simpel (Menempel tanpa celah agar kursor mulus) -->
-                        <div x-show="isOpen"
-                             x-cloak
-                             x-transition:enter="transition ease-out duration-150"
-                             x-transition:enter-start="transform opacity-0 scale-95 -translate-y-1"
-                             x-transition:enter-end="transform opacity-100 scale-100 translate-y-0"
-                             x-transition:exit="transition ease-in duration-100"
-                             x-transition:exit-start="transform opacity-100 scale-100 translate-y-0"
-                             x-transition:exit-end="transform opacity-0 scale-95 -translate-y-1"
-                             @mouseenter="show()"
-                             @mouseleave="hide()"
-                             class="absolute right-0 top-full pt-1.5 w-64 z-50">
+                        <!-- Menu Dropdown: Terbuka saat group di-hover (CSS) ATAU saat isOpen=true (Klik) -->
+                        <div class="absolute right-0 top-full pt-1.5 w-64 z-50 transition-all duration-150"
+                             :class="isOpen ? 'block' : 'hidden group-hover:block'">
                             
                             <div class="bg-white rounded-2xl shadow-xl border border-gray-200 py-2 divide-y divide-gray-100">
                                 <!-- Ringkasan Info Mahasiswa -->
