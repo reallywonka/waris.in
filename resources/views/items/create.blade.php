@@ -1,12 +1,12 @@
 <x-app-layout>
     <div x-data="{
-        title: '{{ old('title', '') }}',
-        category: '{{ old('category', 'Elektronik & Gadget Belajar') }}',
-        condition: '{{ old('condition', 'Bekas Layak Pakai') }}',
-        description: '{{ old('description', '') }}',
-        mode: '{{ old('mode', 'harga_pas') }}',
-        price: '{{ old('price', 45000) }}',
-        barter_request: '{{ old('barter_request', '') }}',
+        title: {{ \Illuminate\Support\Js::from(old('title', '')) }},
+        category: {{ \Illuminate\Support\Js::from(old('category', 'Elektronik & Gadget Belajar')) }},
+        condition: {{ \Illuminate\Support\Js::from(old('condition', 'Bekas Layak Pakai')) }},
+        description: {{ \Illuminate\Support\Js::from(old('description', '')) }},
+        mode: {{ \Illuminate\Support\Js::from(old('mode', 'harga_pas')) }},
+        price: {{ (float) old('price', 45000) }},
+        barter_request: {{ \Illuminate\Support\Js::from(old('barter_request', '')) }},
         photoPreview1: null,
         photoPreview2: null,
         photoPreview3: null,
@@ -15,7 +15,7 @@
             return new Intl.NumberFormat('id-ID').format(val);
         },
         handleImage(e, slot) {
-            const file = e.target.files[0];
+            const file = e.target.files && e.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = (event) => {
@@ -25,6 +25,13 @@
                 };
                 reader.readAsDataURL(file);
             }
+        },
+        removeImage(slot) {
+            if (slot === 1) this.photoPreview1 = null;
+            if (slot === 2) this.photoPreview2 = null;
+            if (slot === 3) this.photoPreview3 = null;
+            const input = document.getElementById('photoInput' + slot);
+            if (input) input.value = '';
         }
     }" class="w-full space-y-6">
 
@@ -114,19 +121,20 @@
                         </label>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             @foreach ($conditions as $cKey => $cDesc)
-                                <label class="relative flex flex-col p-3.5 rounded-2xl border cursor-pointer transition-all text-xs"
-                                       :class="condition === '{{ $cKey }}' ? 'bg-emerald-50/80 border-emerald-600 shadow-2xs ring-1 ring-emerald-600' : 'bg-gray-50/50 border-gray-200 hover:bg-gray-50'">
-                                    <input type="radio" name="condition" value="{{ $cKey }}" x-model="condition" class="sr-only">
+                                <div @click="condition = '{{ $cKey }}'"
+                                     class="relative flex flex-col p-3.5 rounded-2xl border cursor-pointer transition-all text-xs select-none"
+                                     :class="condition === '{{ $cKey }}' ? 'bg-emerald-50/80 border-emerald-600 shadow-2xs ring-2 ring-emerald-600' : 'bg-gray-50/50 border-gray-200 hover:bg-gray-50'">
+                                    <input type="radio" name="condition" value="{{ $cKey }}" :checked="condition === '{{ $cKey }}'" class="sr-only">
                                     <div class="flex items-center justify-between mb-1">
                                         <span class="font-bold text-gray-900" :class="condition === '{{ $cKey }}' ? 'text-emerald-900' : ''">
                                             {{ $cKey }}
                                         </span>
-                                        <span x-show="condition === '{{ $cKey }}'" class="text-emerald-700 font-bold">
+                                        <span x-show="condition === '{{ $cKey }}'" x-cloak class="text-emerald-700 font-bold">
                                             <x-icon name="check" class="w-4 h-4 text-emerald-700 inline" />
                                         </span>
                                     </div>
                                     <span class="text-[11px] text-gray-500 leading-tight">{{ $cDesc }}</span>
-                                </label>
+                                </div>
                             @endforeach
                         </div>
                     </div>
@@ -157,45 +165,48 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <!-- Slot Foto 1 (Utama) -->
-                        <div class="relative border-2 border-dashed border-gray-200 rounded-2xl p-2 text-center hover:border-emerald-500 transition-colors bg-gray-50/50 h-36 flex flex-col items-center justify-center overflow-hidden">
-                            <template x-if="photoPreview1">
-                                <img :src="photoPreview1" class="absolute inset-0 w-full h-full object-cover">
-                            </template>
-                            <div x-show="!photoPreview1" class="space-y-1.5 flex flex-col items-center">
+                        <div class="relative border-2 border-dashed border-gray-200 rounded-2xl p-2 text-center hover:border-emerald-500 transition-colors bg-gray-50/50 h-36 flex flex-col items-center justify-center overflow-hidden group">
+                            <img x-show="photoPreview1" x-cloak :src="photoPreview1" class="absolute inset-0 w-full h-full object-cover">
+                            <div x-show="!photoPreview1" class="space-y-1.5 flex flex-col items-center pointer-events-none">
                                 <x-icon name="camera" class="w-6 h-6 text-gray-400" />
                                 <p class="text-xs font-bold text-gray-700">Foto Utama</p>
                                 <p class="text-[10px] text-gray-400">Klik untuk upload</p>
                             </div>
-                            <input type="file" name="photos[]" accept="image/*" @change="handleImage($event, 1)" class="absolute inset-0 opacity-0 cursor-pointer">
-                            <span x-show="photoPreview1" class="absolute top-1.5 left-1.5 bg-emerald-800 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow-2xs">
+                            <input type="file" id="photoInput1" name="photos[]" accept="image/*" @change="handleImage($event, 1)" class="absolute inset-0 opacity-0 cursor-pointer" :class="photoPreview1 ? 'pointer-events-none' : ''">
+                            <span x-show="photoPreview1" x-cloak class="absolute top-1.5 left-1.5 bg-emerald-800 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow-2xs z-10">
                                 Utama
                             </span>
+                            <button type="button" x-show="photoPreview1" x-cloak @click="removeImage(1)" class="absolute top-1.5 right-1.5 bg-red-600 hover:bg-red-700 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center shadow-2xs z-10 cursor-pointer">
+                                &times;
+                            </button>
                         </div>
 
                         <!-- Slot Foto 2 -->
-                        <div class="relative border-2 border-dashed border-gray-200 rounded-2xl p-2 text-center hover:border-emerald-500 transition-colors bg-gray-50/50 h-36 flex flex-col items-center justify-center overflow-hidden">
-                            <template x-if="photoPreview2">
-                                <img :src="photoPreview2" class="absolute inset-0 w-full h-full object-cover">
-                            </template>
-                            <div x-show="!photoPreview2" class="space-y-1.5 flex flex-col items-center">
+                        <div class="relative border-2 border-dashed border-gray-200 rounded-2xl p-2 text-center hover:border-emerald-500 transition-colors bg-gray-50/50 h-36 flex flex-col items-center justify-center overflow-hidden group">
+                            <img x-show="photoPreview2" x-cloak :src="photoPreview2" class="absolute inset-0 w-full h-full object-cover">
+                            <div x-show="!photoPreview2" class="space-y-1.5 flex flex-col items-center pointer-events-none">
                                 <x-icon name="image" class="w-6 h-6 text-gray-400" />
                                 <p class="text-xs font-bold text-gray-700">Foto 2 (Detail)</p>
                                 <p class="text-[10px] text-gray-400">Tampak Layar / Minus</p>
                             </div>
-                            <input type="file" name="photos[]" accept="image/*" @change="handleImage($event, 2)" class="absolute inset-0 opacity-0 cursor-pointer">
+                            <input type="file" id="photoInput2" name="photos[]" accept="image/*" @change="handleImage($event, 2)" class="absolute inset-0 opacity-0 cursor-pointer" :class="photoPreview2 ? 'pointer-events-none' : ''">
+                            <button type="button" x-show="photoPreview2" x-cloak @click="removeImage(2)" class="absolute top-1.5 right-1.5 bg-red-600 hover:bg-red-700 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center shadow-2xs z-10 cursor-pointer">
+                                &times;
+                            </button>
                         </div>
 
                         <!-- Slot Foto 3 -->
-                        <div class="relative border-2 border-dashed border-gray-200 rounded-2xl p-2 text-center hover:border-emerald-500 transition-colors bg-gray-50/50 h-36 flex flex-col items-center justify-center overflow-hidden">
-                            <template x-if="photoPreview3">
-                                <img :src="photoPreview3" class="absolute inset-0 w-full h-full object-cover">
-                            </template>
-                            <div x-show="!photoPreview3" class="space-y-1.5 flex flex-col items-center">
+                        <div class="relative border-2 border-dashed border-gray-200 rounded-2xl p-2 text-center hover:border-emerald-500 transition-colors bg-gray-50/50 h-36 flex flex-col items-center justify-center overflow-hidden group">
+                            <img x-show="photoPreview3" x-cloak :src="photoPreview3" class="absolute inset-0 w-full h-full object-cover">
+                            <div x-show="!photoPreview3" class="space-y-1.5 flex flex-col items-center pointer-events-none">
                                 <x-icon name="image" class="w-6 h-6 text-gray-400" />
                                 <p class="text-xs font-bold text-gray-700">Foto 3 (Pelengkap)</p>
                                 <p class="text-[10px] text-gray-400">Cover / Aksesoris</p>
                             </div>
-                            <input type="file" name="photos[]" accept="image/*" @change="handleImage($event, 3)" class="absolute inset-0 opacity-0 cursor-pointer">
+                            <input type="file" id="photoInput3" name="photos[]" accept="image/*" @change="handleImage($event, 3)" class="absolute inset-0 opacity-0 cursor-pointer" :class="photoPreview3 ? 'pointer-events-none' : ''">
+                            <button type="button" x-show="photoPreview3" x-cloak @click="removeImage(3)" class="absolute top-1.5 right-1.5 bg-red-600 hover:bg-red-700 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center shadow-2xs z-10 cursor-pointer">
+                                &times;
+                            </button>
                         </div>
                     </div>
 
@@ -220,62 +231,65 @@
                     <!-- 3 Pilihan Mode (Cards) -->
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <!-- Mode Gratis -->
-                        <label class="relative flex flex-col justify-between p-4 rounded-2xl border cursor-pointer transition-all"
-                               :class="mode === 'gratis' ? 'bg-emerald-50/80 border-emerald-600 ring-2 ring-emerald-600 shadow-2xs' : 'bg-gray-50/50 border-gray-200 hover:bg-gray-50'">
-                            <input type="radio" name="mode" value="gratis" x-model="mode" class="sr-only">
+                        <div @click="mode = 'gratis'" 
+                             class="relative flex flex-col justify-between p-4 rounded-2xl border cursor-pointer transition-all select-none"
+                             :class="mode === 'gratis' ? 'bg-emerald-50/80 border-emerald-600 ring-2 ring-emerald-600 shadow-2xs' : 'bg-gray-50/50 border-gray-200 hover:bg-gray-50'">
+                            <input type="radio" name="mode" value="gratis" :checked="mode === 'gratis'" class="sr-only">
                             <div>
                                 <div class="flex items-center justify-between mb-1">
                                     <span class="text-xs font-bold text-emerald-800 flex items-center space-x-1">
                                         <x-icon name="gift" class="w-3.5 h-3.5 text-emerald-800" />
                                         <span>Gratis</span>
                                     </span>
-                                    <span x-show="mode === 'gratis'" class="text-emerald-700 font-bold text-xs">●</span>
+                                    <span x-show="mode === 'gratis'" x-cloak class="text-emerald-700 font-bold text-xs">●</span>
                                 </div>
                                 <h3 class="font-bold text-xs text-gray-900">Pahala & Bersih</h3>
                                 <p class="text-[10px] text-gray-500 mt-1 leading-tight">Bebaskan barang tanpa biaya sepeserpun untuk yang paling butuh.</p>
                             </div>
                             <span class="mt-3 text-xs font-black text-emerald-800">Rp 0</span>
-                        </label>
+                        </div>
 
                         <!-- Mode Harga Pas -->
-                        <label class="relative flex flex-col justify-between p-4 rounded-2xl border cursor-pointer transition-all"
-                               :class="mode === 'harga_pas' ? 'bg-amber-50/80 border-amber-600 ring-2 ring-amber-600 shadow-2xs' : 'bg-gray-50/50 border-gray-200 hover:bg-gray-50'">
-                            <input type="radio" name="mode" value="harga_pas" x-model="mode" class="sr-only">
+                        <div @click="mode = 'harga_pas'" 
+                             class="relative flex flex-col justify-between p-4 rounded-2xl border cursor-pointer transition-all select-none"
+                             :class="mode === 'harga_pas' ? 'bg-amber-50/80 border-amber-600 ring-2 ring-amber-600 shadow-2xs' : 'bg-gray-50/50 border-gray-200 hover:bg-gray-50'">
+                            <input type="radio" name="mode" value="harga_pas" :checked="mode === 'harga_pas'" class="sr-only">
                             <div>
                                 <div class="flex items-center justify-between mb-1">
                                     <span class="text-xs font-bold text-amber-800 flex items-center space-x-1">
                                         <x-icon name="tag" class="w-3.5 h-3.5 text-amber-800" />
                                         <span>Harga Pas</span>
                                     </span>
-                                    <span x-show="mode === 'harga_pas'" class="text-amber-700 font-bold text-xs">●</span>
+                                    <span x-show="mode === 'harga_pas'" x-cloak class="text-amber-700 font-bold text-xs">●</span>
                                 </div>
                                 <h3 class="font-bold text-xs text-gray-900">Jual Santai Mahasiswa</h3>
                                 <p class="text-[10px] text-gray-500 mt-1 leading-tight">Tetapkan nominal terjangkau tanpa drama tawar-menawar berbelit.</p>
                             </div>
                             <span class="mt-3 text-xs font-black text-amber-800">Tetap & Pas!</span>
-                        </label>
+                        </div>
 
                         <!-- Mode Barter -->
-                        <label class="relative flex flex-col justify-between p-4 rounded-2xl border cursor-pointer transition-all"
-                               :class="mode === 'barter' ? 'bg-teal-50/80 border-teal-600 ring-2 ring-teal-600 shadow-2xs' : 'bg-gray-50/50 border-gray-200 hover:bg-gray-50'">
-                            <input type="radio" name="mode" value="barter" x-model="mode" class="sr-only">
+                        <div @click="mode = 'barter'" 
+                             class="relative flex flex-col justify-between p-4 rounded-2xl border cursor-pointer transition-all select-none"
+                             :class="mode === 'barter' ? 'bg-teal-50/80 border-teal-600 ring-2 ring-teal-600 shadow-2xs' : 'bg-gray-50/50 border-gray-200 hover:bg-gray-50'">
+                            <input type="radio" name="mode" value="barter" :checked="mode === 'barter'" class="sr-only">
                             <div>
                                 <div class="flex items-center justify-between mb-1">
                                     <span class="text-xs font-bold text-teal-800 flex items-center space-x-1">
                                         <x-icon name="repeat" class="w-3.5 h-3.5 text-teal-800" />
                                         <span>Barter</span>
                                     </span>
-                                    <span x-show="mode === 'barter'" class="text-teal-700 font-bold text-xs">●</span>
+                                    <span x-show="mode === 'barter'" x-cloak class="text-teal-700 font-bold text-xs">●</span>
                                 </div>
                                 <h3 class="font-bold text-xs text-gray-900">Tukar Guling</h3>
                                 <p class="text-[10px] text-gray-500 mt-1 leading-tight">Tukar dengan perlengkapan atau modul matkul lain yang kamu perlukan.</p>
                             </div>
                             <span class="mt-3 text-xs font-black text-teal-800">Tukar Barang</span>
-                        </label>
+                        </div>
                     </div>
 
                     <!-- Field Dinamis 1: Nominal Harga Pas (HANYA AKTIF JIKA HARGA PAS DIPILIH) -->
-                    <div x-show="mode === 'harga_pas'" x-transition class="space-y-2 p-4 rounded-2xl bg-amber-50/70 border border-amber-200">
+                    <div x-show="mode === 'harga_pas'" x-cloak x-transition class="space-y-2 p-4 rounded-2xl bg-amber-50/70 border border-amber-200">
                         <label for="price" class="block text-xs font-bold text-amber-900">
                             Nominal Harga Pas (IDR) <span class="text-red-500">*</span>
                         </label>
@@ -293,7 +307,7 @@
                     </div>
 
                     <!-- Field Dinamis 2: Deskripsi Barang Penukar (HANYA AKTIF JIKA BARTER DIPILIH) -->
-                    <div x-show="mode === 'barter'" x-transition class="space-y-2 p-4 rounded-2xl bg-teal-50/70 border border-teal-200">
+                    <div x-show="mode === 'barter'" x-cloak x-transition class="space-y-2 p-4 rounded-2xl bg-teal-50/70 border border-teal-200">
                         <label for="barter_request" class="block text-xs font-bold text-teal-900">
                             Barang yang Kamu Cari untuk Ditukar <span class="text-red-500">*</span>
                         </label>
@@ -368,42 +382,40 @@
                         
                         <!-- Gambar & Badge -->
                         <div class="relative w-full h-44 bg-gray-100 overflow-hidden">
-                            <template x-if="photoPreview1">
-                                <img :src="photoPreview1" class="w-full h-full object-cover">
-                            </template>
+                            <img x-show="photoPreview1" x-cloak :src="photoPreview1" class="w-full h-full object-cover">
                             <div x-show="!photoPreview1" class="w-full h-full flex flex-col items-center justify-center bg-emerald-50/40 text-emerald-700/60 p-4 text-center">
                                 <x-icon name="package" class="w-10 h-10 mb-1 text-emerald-700/50" />
                                 <span class="text-[10px] font-bold uppercase tracking-wider">Foto Barang Kamu</span>
                             </div>
 
                             <!-- Overlay Gelap Tipis -->
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none"></div>
 
                             <!-- Badge Mode (Kiri Atas) -->
-                            <div class="absolute top-2.5 left-2.5">
-                                <span x-show="mode === 'harga_pas'" class="inline-flex items-center px-2 py-0.5 rounded-lg text-[11px] font-bold bg-amber-500 text-white shadow-2xs">
+                            <div class="absolute top-2.5 left-2.5 z-10">
+                                <span x-show="mode === 'harga_pas'" x-cloak class="inline-flex items-center px-2 py-0.5 rounded-lg text-[11px] font-bold bg-amber-500 text-white shadow-2xs">
                                     <x-icon name="tag" class="w-3 h-3 text-white me-1 inline" />
                                     <span>Rp <span x-text="formatPrice(price)"></span></span>
                                 </span>
-                                <span x-show="mode === 'gratis'" class="inline-flex items-center px-2 py-0.5 rounded-lg text-[11px] font-bold bg-emerald-700 text-white shadow-2xs">
+                                <span x-show="mode === 'gratis'" x-cloak class="inline-flex items-center px-2 py-0.5 rounded-lg text-[11px] font-bold bg-emerald-700 text-white shadow-2xs">
                                     <x-icon name="gift" class="w-3 h-3 text-white me-1 inline" />
                                     <span>Gratis</span>
                                 </span>
-                                <span x-show="mode === 'barter'" class="inline-flex items-center px-2 py-0.5 rounded-lg text-[11px] font-bold bg-teal-700 text-white shadow-2xs">
+                                <span x-show="mode === 'barter'" x-cloak class="inline-flex items-center px-2 py-0.5 rounded-lg text-[11px] font-bold bg-teal-700 text-white shadow-2xs">
                                     <x-icon name="repeat" class="w-3 h-3 text-white me-1 inline" />
                                     <span>Barter</span>
                                 </span>
                             </div>
 
                             <!-- Badge Ketersediaan (Kanan Atas) -->
-                            <div class="absolute top-2.5 right-2.5">
+                            <div class="absolute top-2.5 right-2.5 z-10">
                                 <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-semibold bg-white/95 text-emerald-800 shadow-2xs border border-emerald-100">
                                     ● Tersedia
                                 </span>
                             </div>
 
                             <!-- Pita Barter Request -->
-                            <div x-show="mode === 'barter' && barter_request" class="absolute bottom-2 left-2 right-2 bg-black/75 backdrop-blur-xs text-white text-[10px] py-1 px-2 rounded-md truncate">
+                            <div x-show="mode === 'barter' && barter_request" x-cloak class="absolute bottom-2 left-2 right-2 bg-black/75 backdrop-blur-xs text-white text-[10px] py-1 px-2 rounded-md truncate z-10">
                                 <span class="text-teal-300 font-bold">⇄ Tukar:</span> <span x-text="barter_request"></span>
                             </div>
                         </div>
@@ -416,7 +428,9 @@
                                     <span>Baru saja</span>
                                 </div>
 
-                                <h4 class="font-bold text-gray-900 text-xs line-clamp-1" x-text="title || 'Judul barang akan muncul di sini...'"></h4>
+                                <h4 class="font-bold text-gray-900 text-xs line-clamp-1" x-text="title && title.trim() ? title : 'Judul barang akan muncul di sini...'">
+                                    Judul barang akan muncul di sini...
+                                </h4>
 
                                 <div class="mt-2 flex flex-wrap gap-1 text-[10px]">
                                     <span class="px-2 py-0.5 rounded-md bg-gray-100 text-gray-700 flex items-center space-x-1">
