@@ -2,10 +2,10 @@
     <div class="w-full bg-white rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-12 border border-emerald-900/10 max-h-[92vh]">
         
         <!-- Sisi Kiri: Banner Komunitas Hijau -->
-        <div class="md:col-span-5 bg-gradient-to-br from-emerald-50/80 via-emerald-100/40 to-teal-50/60 p-6 lg:p-8 flex flex-col justify-between border-b md:border-b-0 md:border-r border-emerald-900/10">
+        <div class="md:col-span-5 bg-emerald-50/80 p-6 lg:p-8 flex flex-col justify-between border-b md:border-b-0 md:border-r border-emerald-900/10">
             <div>
-                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-800 text-white text-[11px] font-semibold tracking-wide uppercase shadow-xs">
-                    <span>🌱</span>
+                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-800 text-white text-[11px] font-semibold tracking-wide uppercase shadow-2xs">
+                    <x-icon name="leaf" class="w-3.5 h-3.5 text-emerald-200" />
                     <span>Circular Campus Economy</span>
                 </div>
 
@@ -18,9 +18,9 @@
 
                 <!-- Nilai Tambah Komunitas -->
                 <div class="mt-5 space-y-2.5">
-                    <div class="bg-white/95 backdrop-blur rounded-2xl p-3 border border-emerald-900/10 shadow-xs flex items-center space-x-3">
+                    <div class="bg-white rounded-2xl p-3 border border-emerald-900/10 shadow-2xs flex items-center space-x-3">
                         <div class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-base shrink-0">
-                            👥
+                            <x-icon name="users" class="w-4 h-4 text-emerald-800" />
                         </div>
                         <div>
                             <h4 class="font-bold text-xs text-gray-900">3.800+ Mahasiswa</h4>
@@ -28,9 +28,9 @@
                         </div>
                     </div>
 
-                    <div class="bg-white/95 backdrop-blur rounded-2xl p-3 border border-emerald-900/10 shadow-xs flex items-center space-x-3">
+                    <div class="bg-white rounded-2xl p-3 border border-emerald-900/10 shadow-2xs flex items-center space-x-3">
                         <div class="w-8 h-8 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-base shrink-0">
-                            🛡️
+                            <x-icon name="shield" class="w-4 h-4 text-amber-800" />
                         </div>
                         <div>
                             <h4 class="font-bold text-xs text-gray-900">Bebas Akses Akun Pribadi</h4>
@@ -40,8 +40,9 @@
                 </div>
             </div>
 
-            <div class="mt-6 pt-3 border-t border-emerald-900/10 text-[11px] text-gray-500">
-                🌿 waris.in &copy; Komunitas Hijau Kampus Mahasiswa
+            <div class="mt-6 pt-3 border-t border-emerald-900/10 text-[11px] text-gray-500 flex items-center space-x-1.5">
+                <x-icon name="leaf" class="w-3.5 h-3.5 text-emerald-700" />
+                <span>waris.in &copy; Komunitas Hijau Kampus Mahasiswa</span>
             </div>
         </div>
 
@@ -54,8 +55,9 @@
                         <img src="{{ asset('images/letter-w_g.png') }}" alt="waris.in logo" class="w-8 h-8 object-contain">
                         <span class="text-xl font-black tracking-tight text-gray-900">waris<span class="text-emerald-700">.in</span></span>
                     </div>
-                    <span class="inline-flex items-center text-[10px] font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-                        ⚡ Registrasi Cepat
+                    <span class="inline-flex items-center text-[10px] font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                        <x-icon name="zap" class="w-3 h-3 text-emerald-700 me-1" />
+                        <span>Registrasi Cepat</span>
                     </span>
                 </div>
 
@@ -83,6 +85,28 @@
                                    placeholder="13521098"
                                    class="w-full text-xs rounded-xl border-gray-200 focus:border-emerald-700 focus:ring-emerald-700 py-2 px-3 bg-gray-50/50">
                             <x-input-error :messages="$errors->get('nim')" class="mt-0.5 text-[10px]" />
+                        </div>
+                    </div>
+
+                    <!-- Baris: Program Studi & Semester -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                        <div class="sm:col-span-2">
+                            <label for="study_program" class="block text-[11px] font-semibold text-gray-700 mb-0.5">Program Studi / Jurusan <span class="text-red-500">*</span></label>
+                            <input id="study_program" type="text" name="study_program" :value="old('study_program')" required
+                                   placeholder="Contoh: Farmasi, Teknik Informatika"
+                                   class="w-full text-xs rounded-xl border-gray-200 focus:border-emerald-700 focus:ring-emerald-700 py-2 px-3 bg-gray-50/50">
+                            <x-input-error :messages="$errors->get('study_program')" class="mt-0.5 text-[10px]" />
+                        </div>
+                        <div>
+                            <label for="semester" class="block text-[11px] font-semibold text-gray-700 mb-0.5">Semester <span class="text-red-500">*</span></label>
+                            <select id="semester" name="semester" required
+                                    class="w-full text-xs rounded-xl border-gray-200 focus:border-emerald-700 focus:ring-emerald-700 py-2 px-3 bg-gray-50/50">
+                                @for ($i = 1; $i <= 8; $i++)
+                                    <option value="{{ $i }}" {{ old('semester', 1) == $i ? 'selected' : '' }}>Semester {{ $i }}</option>
+                                @endfor
+                                <option value="9" {{ old('semester') >= 9 ? 'selected' : '' }}>Semester 8+</option>
+                            </select>
+                            <x-input-error :messages="$errors->get('semester')" class="mt-0.5 text-[10px]" />
                         </div>
                     </div>
 

@@ -19,8 +19,8 @@
                             </span>
                         </div>
                         <p class="text-xs text-gray-500 mt-0.5 flex items-center space-x-1.5">
-                            <x-icon name="building" class="w-3.5 h-3.5 text-gray-400" />
-                            <span>{{ Auth::user()->faculty ?? 'Civitas Akademika' }} &bull; Angkatan {{ Auth::user()->batch ?? 'Kampus' }}</span>
+                            <x-icon name="graduation-cap" class="w-3.5 h-3.5 text-emerald-700" />
+                            <span>{{ Auth::user()->study_program ?? Auth::user()->faculty ?? 'Program Studi' }} &bull; Semester {{ Auth::user()->semester ?? '1' }}</span>
                         </p>
                     </div>
                 </div>

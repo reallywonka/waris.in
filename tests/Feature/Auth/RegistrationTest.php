@@ -21,6 +21,8 @@ class RegistrationTest extends TestCase
         $response = $this->post('/register', [
             'name' => 'Test User',
             'nim' => '13521099',
+            'study_program' => 'Teknik Informatika',
+            'semester' => 4,
             'email' => 'test@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
@@ -28,5 +30,9 @@ class RegistrationTest extends TestCase
 
         $this->assertAuthenticated();
         $response->assertRedirect(route('dashboard', absolute: false));
+
+        $user = \App\Models\User::where('email', 'test@example.com')->first();
+        $this->assertEquals('Teknik Informatika', $user->study_program);
+        $this->assertEquals(4, $user->semester);
     }
 }
