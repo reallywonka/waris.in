@@ -1,4 +1,4 @@
-<nav x-data="{ open: false, userDropdown: false }" class="bg-white border-b border-gray-200/80 sticky top-0 z-50">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-200/80 sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
             
@@ -43,24 +43,24 @@
                     <!-- Pill Profile Dropdown -->
                     <div class="relative" 
                          x-data="{ 
-                             userDropdown: false,
+                             isOpen: false,
                              timeout: null,
-                             open() {
+                             show() {
                                  clearTimeout(this.timeout);
-                                 this.userDropdown = true;
+                                 this.isOpen = true;
                              },
-                             close() {
+                             hide() {
                                  this.timeout = setTimeout(() => {
-                                     this.userDropdown = false;
+                                     this.isOpen = false;
                                  }, 150);
                              }
                          }" 
-                         @mouseenter="open()" 
-                         @mouseleave="close()" 
-                         @click.outside="userDropdown = false"
-                         @keydown.escape.window="userDropdown = false">
+                         @mouseenter="show()" 
+                         @mouseleave="hide()" 
+                         @click.outside="isOpen = false"
+                         @keydown.escape.window="isOpen = false">
                         <button type="button" 
-                                @click="userDropdown = !userDropdown" 
+                                @click="isOpen = !isOpen" 
                                 class="flex items-center space-x-3 p-1.5 pe-4 bg-gray-50 hover:bg-emerald-50 border border-gray-200 hover:border-emerald-300 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 cursor-pointer">
                             <!-- Avatar -->
                             <img class="w-8 h-8 rounded-full object-cover border border-emerald-700/20" 
@@ -82,11 +82,11 @@
                             <!-- Panah Bawah -->
                             <x-icon name="chevron-down" 
                                     class="w-3.5 h-3.5 text-gray-400 transition-transform duration-200" 
-                                    ::class="userDropdown ? 'rotate-180 text-emerald-700' : ''" />
+                                    ::class="isOpen ? 'rotate-180 text-emerald-700' : ''" />
                         </button>
 
                         <!-- Menu Dropdown Simpel (Menempel tanpa celah agar kursor mulus) -->
-                        <div x-show="userDropdown"
+                        <div x-show="isOpen"
                              x-cloak
                              x-transition:enter="transition ease-out duration-150"
                              x-transition:enter-start="transform opacity-0 scale-95 -translate-y-1"
@@ -94,8 +94,8 @@
                              x-transition:exit="transition ease-in duration-100"
                              x-transition:exit-start="transform opacity-100 scale-100 translate-y-0"
                              x-transition:exit-end="transform opacity-0 scale-95 -translate-y-1"
-                             @mouseenter="open()"
-                             @mouseleave="close()"
+                             @mouseenter="show()"
+                             @mouseleave="hide()"
                              class="absolute right-0 top-full pt-1.5 w-64 z-50">
                             
                             <div class="bg-white rounded-2xl shadow-xl border border-gray-200 py-2 divide-y divide-gray-100">
@@ -160,14 +160,14 @@
 
     <!-- 4. Menu Drawer Mobile & Tablet (Responsive & Thumb-Friendly) -->
     <div x-show="open" 
+         x-cloak
          x-transition:enter="transition ease-out duration-200"
          x-transition:enter-start="opacity-0 -translate-y-2"
          x-transition:enter-end="opacity-100 translate-y-0"
          x-transition:exit="transition ease-in duration-150"
          x-transition:exit-start="opacity-100 translate-y-0"
          x-transition:exit-end="opacity-0 -translate-y-2"
-         class="md:hidden border-t border-gray-200 bg-white px-4 pt-3 pb-6 space-y-2 shadow-lg"
-         style="display: none;">
+         class="md:hidden border-t border-gray-200 bg-white px-4 pt-3 pb-6 space-y-2 shadow-lg">
         
         <div class="space-y-1 text-sm font-medium">
             <a href="{{ route('dashboard') }}" 
