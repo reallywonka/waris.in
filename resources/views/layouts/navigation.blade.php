@@ -41,7 +41,24 @@
             <div class="hidden md:flex items-center space-x-3">
                 @auth
                     <!-- Pill Profile Dropdown -->
-                    <div class="relative" x-data="{ userDropdown: false }" @click.outside="userDropdown = false">
+                    <div class="relative" 
+                         x-data="{ 
+                             userDropdown: false,
+                             timeout: null,
+                             open() {
+                                 clearTimeout(this.timeout);
+                                 this.userDropdown = true;
+                             },
+                             close() {
+                                 this.timeout = setTimeout(() => {
+                                     this.userDropdown = false;
+                                 }, 150);
+                             }
+                         }" 
+                         @mouseenter="open()" 
+                         @mouseleave="close()" 
+                         @click.outside="userDropdown = false"
+                         @keydown.escape.window="userDropdown = false">
                         <button type="button" 
                                 @click="userDropdown = !userDropdown" 
                                 class="flex items-center space-x-3 p-1.5 pe-4 bg-gray-50 hover:bg-emerald-50 border border-gray-200 hover:border-emerald-300 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 cursor-pointer">
@@ -68,7 +85,7 @@
                                     ::class="userDropdown ? 'rotate-180 text-emerald-700' : ''" />
                         </button>
 
-                        <!-- Menu Dropdown Simpel -->
+                        <!-- Menu Dropdown Simpel (Menempel tanpa celah agar kursor mulus) -->
                         <div x-show="userDropdown"
                              x-cloak
                              x-transition:enter="transition ease-out duration-150"
@@ -77,35 +94,39 @@
                              x-transition:exit="transition ease-in duration-100"
                              x-transition:exit-start="transform opacity-100 scale-100 translate-y-0"
                              x-transition:exit-end="transform opacity-0 scale-95 -translate-y-1"
-                             class="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-200 py-2 z-50 divide-y divide-gray-100">
+                             @mouseenter="open()"
+                             @mouseleave="close()"
+                             class="absolute right-0 top-full pt-1.5 w-64 z-50">
                             
-                            <!-- Ringkasan Info Mahasiswa -->
-                            <div class="px-4 py-3 bg-gray-50/70">
-                                <p class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Akun Mahasiswa</p>
-                                <p class="text-xs font-bold text-gray-900 truncate mt-0.5">{{ Auth::user()->name }}</p>
-                                <p class="text-[11px] text-gray-500 truncate">{{ Auth::user()->email }}</p>
-                                <div class="flex flex-wrap gap-1 mt-2">
-                                    <span class="inline-flex items-center text-[10px] font-bold text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded-md">
-                                        {{ Auth::user()->study_program ?? 'Program Studi' }} &bull; Smt {{ Auth::user()->semester ?? 1 }}
-                                    </span>
-                                    @if(Auth::user()->nim)
-                                        <span class="inline-flex items-center text-[10px] font-semibold text-gray-600 bg-gray-200/80 px-2 py-0.5 rounded-md">
-                                            NIM: {{ Auth::user()->nim }}
+                            <div class="bg-white rounded-2xl shadow-xl border border-gray-200 py-2 divide-y divide-gray-100">
+                                <!-- Ringkasan Info Mahasiswa -->
+                                <div class="px-4 py-3 bg-gray-50/70">
+                                    <p class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Akun Mahasiswa</p>
+                                    <p class="text-xs font-bold text-gray-900 truncate mt-0.5">{{ Auth::user()->name }}</p>
+                                    <p class="text-[11px] text-gray-500 truncate">{{ Auth::user()->email }}</p>
+                                    <div class="flex flex-wrap gap-1 mt-2">
+                                        <span class="inline-flex items-center text-[10px] font-bold text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded-md">
+                                            {{ Auth::user()->study_program ?? 'Program Studi' }} &bull; Smt {{ Auth::user()->semester ?? 1 }}
                                         </span>
-                                    @endif
+                                        @if(Auth::user()->nim)
+                                            <span class="inline-flex items-center text-[10px] font-semibold text-gray-600 bg-gray-200/80 px-2 py-0.5 rounded-md">
+                                                NIM: {{ Auth::user()->nim }}
+                                            </span>
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!-- Tombol Aksi Dropdown: Simpel Logout Sesuai Permintaan -->
-                            <div class="p-1.5">
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" 
-                                            class="w-full text-left px-3.5 py-2.5 text-xs font-bold text-rose-600 hover:bg-rose-50 rounded-xl flex items-center space-x-2.5 transition-colors cursor-pointer">
-                                        <x-icon name="log-out" class="w-4 h-4 text-rose-600" />
-                                        <span>Keluar Sesi</span>
-                                    </button>
-                                </form>
+                                <!-- Tombol Aksi Dropdown: Simpel Logout Sesuai Permintaan -->
+                                <div class="p-1.5">
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" 
+                                                class="w-full text-left px-3.5 py-2.5 text-xs font-bold text-rose-600 hover:bg-rose-50 rounded-xl flex items-center space-x-2.5 transition-colors cursor-pointer">
+                                            <x-icon name="log-out" class="w-4 h-4 text-rose-600" />
+                                            <span>Keluar Sesi</span>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
