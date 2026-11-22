@@ -64,4 +64,59 @@ class ItemDetailTest extends TestCase
         $response->assertSee('Barang Anda Sendiri');
         $response->assertSee('Kelola Barang Saya');
     }
+
+    public function test_non_owner_sees_claim_modal_and_cta_button(): void
+    {
+        $owner = User::factory()->create(['name' => 'Pemilik']);
+        $buyer = User::factory()->create(['name' => 'Pembeli']);
+        $item = Item::create([
+            'user_id' => $owner->id,
+            'title' => 'Jas Lab Farmasi Ukuran L',
+            'category' => 'Alat Praktikum',
+            'condition' => 'Bekas Layak Pakai',
+            'description' => 'Dipakai saat praktikum biologi farmasi.',
+            'mode' => 'harga_pas',
+            'price' => 35000,
+            'contact_info' => '08123456789',
+            'status' => 'available',
+        ]);
+
+        $response = $this->actingAs($buyer)->get(route('items.show', $item));
+
+        $response->assertStatus(200);
+        $response->assertSee('Ajukan Pembelian Harga Pas');
+        $response->assertSee('Formulir Permohonan Beli Harga Pas');
+        $response->assertSee(route('claims.store', $item));
+        $response->assertDontSee('style="display: none;" class="fixed inset-0 z-50 overflow-y-auto"', false);
+    }
+
+    public function test_authenticated_user_sees_navigation_and_dashboard_my_items(): void
+    {
+        $user = User::factory()->create([
+            'name' => 'Arsha Student',
+            'study_program' => 'Farmasi',
+            'semester' => 5,
+        ]);
+
+        $item = Item::create([
+            'user_id' => $user->id,
+            'title' => 'Mikroskop Mini Mahasiswa',
+            'category' => 'Alat Praktikum',
+            'condition' => 'Seperti Baru',
+            'description' => 'Barang praktikum pribadi.',
+            'mode' => 'harga_pas',
+            'price' => 50000,
+            'contact_info' => '0811223344',
+            'status' => 'available',
+        ]);
+
+        $response = $this->actingAs($user)->get(route('dashboard'));
+
+        $response->assertStatus(200);
+        $response->assertSee('Barang Saya');
+        $response->assertSee('Pengajuan Masuk');
+        $response->assertSee('Pengajuan Saya');
+        $response->assertSee('Barang yang Sedang Kamu Tawarkan / Jual');
+        $response->assertSee('Mikroskop Mini Mahasiswa');
+    }
 }

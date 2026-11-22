@@ -1,4 +1,4 @@
-<nav x-data="{ open: false, userDropdown: false }" class="bg-white border-b border-gray-200/80 sticky top-0 z-50">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-200/80 sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
             
@@ -27,9 +27,35 @@
                     </a>
 
                     @auth
+                        <!-- Barang Saya (Task 6) -->
+                        <a href="{{ route('items.my') }}" 
+                           class="px-3.5 py-2 rounded-xl transition-all duration-150 {{ request()->routeIs('items.my*') ? 'bg-emerald-50 text-emerald-800 font-bold' : 'text-gray-600 hover:text-emerald-800 hover:bg-gray-50' }}">
+                            Barang Saya
+                        </a>
+
+                        <!-- Pengajuan Masuk (Task 8) -->
+                        @php
+                            $unreadIncomingCount = \App\Models\Claim::whereHas('item', fn($q) => $q->where('user_id', auth()->id()))->where('status', 'pending')->count();
+                        @endphp
+                        <a href="{{ route('claims.incoming') }}" 
+                           class="relative px-3.5 py-2 rounded-xl transition-all duration-150 flex items-center space-x-1.5 {{ request()->routeIs('claims.incoming*') ? 'bg-emerald-50 text-emerald-800 font-bold' : 'text-gray-600 hover:text-emerald-800 hover:bg-gray-50' }}">
+                            <span>Pengajuan Masuk</span>
+                            @if ($unreadIncomingCount > 0)
+                                <span class="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-black leading-none text-white bg-amber-500 rounded-full">
+                                    {{ $unreadIncomingCount }}
+                                </span>
+                            @endif
+                        </a>
+
+                        <!-- Pengajuan Saya (Task 9) -->
+                        <a href="{{ route('claims.my') }}" 
+                           class="px-3.5 py-2 rounded-xl transition-all duration-150 {{ request()->routeIs('claims.my*') ? 'bg-emerald-50 text-emerald-800 font-bold' : 'text-gray-600 hover:text-emerald-800 hover:bg-gray-50' }}">
+                            Pengajuan Saya
+                        </a>
+
                         <!-- Pasang Barang (Solid Accent Button) -->
                         <a href="{{ Route::has('items.create') ? route('items.create') : '#' }}" 
-                           class="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl transition-all duration-150 {{ request()->routeIs('items.create') ? 'bg-emerald-800 text-white font-bold' : 'text-emerald-800 hover:bg-emerald-50 font-bold' }}">
+                           class="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl transition-all duration-150 {{ request()->routeIs('items.create') ? 'bg-emerald-900 text-white font-bold' : 'bg-emerald-800 hover:bg-emerald-900 text-white font-bold shadow-2xs' }}">
                             <x-icon name="plus" class="w-4 h-4" />
                             <span>Pasang Barang</span>
                         </a>
@@ -40,10 +66,15 @@
             <!-- 2. Sisi Kanan: Akun Mahasiswa / Tombol Masuk Desktop -->
             <div class="hidden md:flex items-center space-x-3">
                 @auth
-                    <!-- Pill Profile Dropdown -->
-                    <div class="relative" @click.outside="userDropdown = false">
-                        <button @click="userDropdown = !userDropdown" 
-                                class="flex items-center space-x-3 p-1.5 pe-4 bg-gray-50 hover:bg-emerald-50 border border-gray-200 hover:border-emerald-300 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700">
+                    <!-- Pill Profile Dropdown (Hover & Click Friendly) -->
+                    <div class="relative group" 
+                         x-data="{ isOpen: false }" 
+                         @mouseleave="isOpen = false"
+                         @click.outside="isOpen = false"
+                         @keydown.escape.window="isOpen = false">
+                        <button type="button" 
+                                @click="isOpen = !isOpen" 
+                                class="flex items-center space-x-3 p-1.5 pe-4 bg-gray-50 hover:bg-emerald-50 border border-gray-200 hover:border-emerald-300 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 cursor-pointer">
                             <!-- Avatar -->
                             <img class="w-8 h-8 rounded-full object-cover border border-emerald-700/20" 
                                  src="{{ Auth::user()->avatar ?? 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name).'&background=144d37&color=ffffff' }}" 
@@ -51,93 +82,91 @@
                                  onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=144d37&color=ffffff';"
                                  alt="{{ Auth::user()->name }}">
                             
-                            <!-- Nama & Fakultas -->
+                            <!-- Nama & Program Studi -->
                             <div class="text-left text-xs">
                                 <div class="font-bold text-gray-900 leading-tight truncate max-w-36">
                                     {{ Auth::user()->name }}
                                 </div>
                                 <div class="text-emerald-700 font-medium text-[10px] truncate max-w-36">
-                                    {{ Auth::user()->role === 'admin' ? 'Admin Kampus' : (Auth::user()->faculty ?? 'Mahasiswa') }}
+                                    {{ Auth::user()->study_program ?? (Auth::user()->role === 'admin' ? 'Admin Kampus' : 'Mahasiswa') }}
                                 </div>
                             </div>
 
                             <!-- Panah Bawah -->
                             <x-icon name="chevron-down" 
-                                    class="w-3.5 h-3.5 text-gray-400 transition-transform duration-200" 
-                                    ::class="userDropdown ? 'rotate-180 text-emerald-700' : ''" />
+                                    class="w-3.5 h-3.5 text-gray-400 transition-transform duration-200 group-hover:rotate-180" 
+                                    ::class="isOpen ? 'rotate-180 text-emerald-700' : ''" />
                         </button>
 
-                        <!-- Menu Dropdown -->
-                        <div x-show="userDropdown"
-                             x-transition:enter="transition ease-out duration-150"
-                             x-transition:enter-start="transform opacity-0 scale-95 -translate-y-1"
-                             x-transition:enter-end="transform opacity-100 scale-100 translate-y-0"
-                             x-transition:exit="transition ease-in duration-100"
-                             x-transition:exit-start="transform opacity-100 scale-100 translate-y-0"
-                             x-transition:exit-end="transform opacity-0 scale-95 -translate-y-1"
-                             class="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-200 py-2 z-50 divide-y divide-gray-100"
-                             style="display: none;">
+                        <!-- Menu Dropdown: Terbuka saat group di-hover (CSS) ATAU saat isOpen=true (Klik) -->
+                        <div class="absolute right-0 top-full pt-1.5 w-64 z-50 transition-all duration-150"
+                             :class="isOpen ? 'block' : 'hidden group-hover:block'">
                             
-                            <!-- Ringkasan Info Mahasiswa -->
-                            <div class="px-4 py-3 bg-gray-50/70">
-                                <p class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Akun Mahasiswa</p>
-                                <p class="text-xs font-bold text-gray-900 truncate mt-0.5">{{ Auth::user()->name }}</p>
-                                <p class="text-[11px] text-gray-500 truncate">{{ Auth::user()->email }}</p>
-                                @if(Auth::user()->nim)
-                                    <span class="inline-flex items-center text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-md mt-1.5">
-                                        NIM: {{ Auth::user()->nim }}
-                                    </span>
-                                @endif
-                            </div>
+                            <div class="bg-white rounded-2xl shadow-xl border border-gray-200 py-2 divide-y divide-gray-100">
+                                <!-- Ringkasan Info Mahasiswa -->
+                                <div class="px-4 py-3 bg-gray-50/70">
+                                    <p class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Akun Mahasiswa</p>
+                                    <p class="text-xs font-bold text-gray-900 truncate mt-0.5">{{ Auth::user()->name }}</p>
+                                    <p class="text-[11px] text-gray-500 truncate">{{ Auth::user()->email }}</p>
+                                    <div class="flex flex-wrap gap-1 mt-2">
+                                        <span class="inline-flex items-center text-[10px] font-bold text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded-md">
+                                            {{ Auth::user()->study_program ?? 'Program Studi' }} &bull; Smt {{ Auth::user()->semester ?? 1 }}
+                                        </span>
+                                        @if(Auth::user()->nim)
+                                            <span class="inline-flex items-center text-[10px] font-semibold text-gray-600 bg-gray-200/80 px-2 py-0.5 rounded-md">
+                                                NIM: {{ Auth::user()->nim }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
 
-                            <!-- Menu Utama Mahasiswa -->
-                            <div class="py-1.5 text-xs font-medium">
-                                <a href="{{ Route::has('claims.incoming') ? route('claims.incoming') : '#' }}" 
-                                   class="flex items-center space-x-2.5 px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors">
-                                    <x-icon name="inbox" class="w-4 h-4 text-emerald-700" />
-                                    <span>Pengajuan Masuk</span>
-                                </a>
-
-                                <a href="{{ Route::has('items.my') ? route('items.my') : '#' }}" 
-                                   class="flex items-center space-x-2.5 px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors">
-                                    <x-icon name="package" class="w-4 h-4 text-emerald-700" />
-                                    <span>Barang Saya</span>
-                                </a>
-
-                                <a href="{{ Route::has('claims.my') ? route('claims.my') : '#' }}" 
-                                   class="flex items-center space-x-2.5 px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors">
-                                    <x-icon name="clock" class="w-4 h-4 text-amber-600" />
-                                    <span>Pengajuan Saya</span>
-                                </a>
-                            </div>
-
-                            <!-- Menu Pengaturan & Admin -->
-                            <div class="py-1.5 text-xs font-medium">
-                                @if(Auth::user()->role === 'admin')
-                                    <a href="{{ Route::has('admin.dashboard') ? route('admin.dashboard') : '#' }}" 
-                                       class="flex items-center space-x-2.5 px-4 py-2 text-amber-800 hover:bg-amber-50 font-bold transition-colors">
-                                        <x-icon name="shield" class="w-4 h-4 text-amber-700" />
-                                        <span>Portal Moderasi Admin</span>
+                                <!-- Menu Akses Cepat Transaksi & Listing -->
+                                <div class="p-1.5 space-y-0.5">
+                                    <a href="{{ route('items.my') }}" 
+                                       class="w-full text-left px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 rounded-xl flex items-center justify-between transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <x-icon name="package" class="w-4 h-4 text-emerald-700" />
+                                            <span>Barang Saya</span>
+                                        </div>
+                                        <x-icon name="chevron-right" class="w-3.5 h-3.5 text-gray-400" />
                                     </a>
-                                @endif
 
-                                <a href="{{ route('profile.edit') }}" 
-                                   class="flex items-center space-x-2.5 px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 transition-colors">
-                                    <x-icon name="settings" class="w-4 h-4 text-gray-500" />
-                                    <span>Pengaturan Profil</span>
-                                </a>
-                            </div>
+                                    <a href="{{ route('claims.incoming') }}" 
+                                       class="w-full text-left px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 rounded-xl flex items-center justify-between transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <x-icon name="inbox" class="w-4 h-4 text-emerald-700" />
+                                            <span>Pengajuan Masuk</span>
+                                        </div>
+                                        @if (isset($unreadIncomingCount) && $unreadIncomingCount > 0)
+                                            <span class="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-black leading-none text-white bg-amber-500 rounded-full">
+                                                {{ $unreadIncomingCount }}
+                                            </span>
+                                        @else
+                                            <x-icon name="chevron-right" class="w-3.5 h-3.5 text-gray-400" />
+                                        @endif
+                                    </a>
 
-                            <!-- Logout Sesi -->
-                            <div class="py-1">
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" 
-                                            class="w-full text-left px-4 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 flex items-center space-x-2.5 transition-colors">
-                                        <x-icon name="log-out" class="w-4 h-4 text-rose-600" />
-                                        <span>Keluar Sesi</span>
-                                    </button>
-                                </form>
+                                    <a href="{{ route('claims.my') }}" 
+                                       class="w-full text-left px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 rounded-xl flex items-center justify-between transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <x-icon name="clock" class="w-4 h-4 text-emerald-700" />
+                                            <span>Pengajuan Saya</span>
+                                        </div>
+                                        <x-icon name="chevron-right" class="w-3.5 h-3.5 text-gray-400" />
+                                    </a>
+                                </div>
+
+                                <!-- Tombol Keluar Sesi -->
+                                <div class="p-1.5">
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" 
+                                                class="w-full text-left px-3.5 py-2.5 text-xs font-bold text-rose-600 hover:bg-rose-50 rounded-xl flex items-center space-x-2.5 transition-colors cursor-pointer">
+                                            <x-icon name="log-out" class="w-4 h-4 text-rose-600" />
+                                            <span>Keluar Sesi</span>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -171,14 +200,14 @@
 
     <!-- 4. Menu Drawer Mobile & Tablet (Responsive & Thumb-Friendly) -->
     <div x-show="open" 
+         x-cloak
          x-transition:enter="transition ease-out duration-200"
          x-transition:enter-start="opacity-0 -translate-y-2"
          x-transition:enter-end="opacity-100 translate-y-0"
          x-transition:exit="transition ease-in duration-150"
          x-transition:exit-start="opacity-100 translate-y-0"
          x-transition:exit-end="opacity-0 -translate-y-2"
-         class="md:hidden border-t border-gray-200 bg-white px-4 pt-3 pb-6 space-y-2 shadow-lg"
-         style="display: none;">
+         class="md:hidden border-t border-gray-200 bg-white px-4 pt-3 pb-6 space-y-2 shadow-lg">
         
         <div class="space-y-1 text-sm font-medium">
             <a href="{{ route('dashboard') }}" 
@@ -226,7 +255,7 @@
                          alt="{{ Auth::user()->name }}">
                     <div class="truncate">
                         <div class="font-bold text-gray-900 text-sm truncate">{{ Auth::user()->name }}</div>
-                        <div class="text-xs text-emerald-700 truncate">{{ Auth::user()->faculty ?? 'Mahasiswa Kampus' }}</div>
+                        <div class="text-xs text-emerald-700 truncate">{{ Auth::user()->study_program ?? Auth::user()->faculty ?? 'Mahasiswa Kampus' }} &bull; Semester {{ Auth::user()->semester ?? 1 }}</div>
                     </div>
                 </div>
 

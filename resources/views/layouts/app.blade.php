@@ -14,6 +14,9 @@
 
         <!-- Scripts & Tailwind CSS -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <style>
+            [x-cloak] { display: none !important; }
+        </style>
     </head>
     <body class="font-sans antialiased text-gray-800 bg-[#F4F9F5] flex flex-col min-h-screen">
         

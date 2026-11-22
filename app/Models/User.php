@@ -26,6 +26,8 @@ class User extends Authenticatable
         'avatar',
         'phone',
         'faculty',
+        'study_program',
+        'semester',
         'batch',
         'role',
         'status',

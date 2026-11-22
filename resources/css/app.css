@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Alpine.js x-cloak: Mencegah elemen tersembunyi muncul sebelum Alpine diinisialisasi */
+[x-cloak] {
+    display: none !important;
+}
+
