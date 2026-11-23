@@ -320,12 +320,12 @@
                             </div>
 
                             <div class="flex flex-col sm:flex-row items-center gap-2.5">
-                                <a href="{{ Route::has('claims.incoming') ? route('claims.incoming') : '#' }}" 
-                                   class="w-full sm:flex-1 py-3 px-4 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl transition-colors text-center">
+                                <a href="{{ route('claims.incoming') }}" 
+                                   class="w-full sm:flex-1 py-3 px-4 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl transition-colors text-center shadow-2xs">
                                     Lihat Pengajuan Masuk ({{ $item->claims->count() }})
                                 </a>
-                                <a href="{{ Route::has('items.my') ? route('items.my') : '#' }}" 
-                                   class="w-full sm:w-auto py-3 px-5 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold text-xs rounded-xl transition-colors text-center">
+                                <a href="{{ route('items.my') }}" 
+                                   class="w-full sm:w-auto py-3 px-5 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold text-xs rounded-xl transition-colors text-center border border-gray-200">
                                     Kelola Barang Saya
                                 </a>
                             </div>
@@ -360,7 +360,7 @@
                                 @endif
                             </p>
                             <div class="pt-1">
-                                <a href="{{ Route::has('claims.my') ? route('claims.my') : '#' }}" class="inline-flex items-center text-xs font-bold underline">
+                                <a href="{{ route('claims.my') }}" class="inline-flex items-center text-xs font-bold text-emerald-800 hover:underline">
                                     Buka Menu Pengajuan Saya &rarr;
                                 </a>
                             </div>
@@ -436,7 +436,7 @@
 
             <div class="shrink-0">
                 @if ($isOwner)
-                    <a href="{{ Route::has('claims.incoming') ? route('claims.incoming') : '#' }}" 
+                    <a href="{{ route('claims.incoming') }}" 
                        class="inline-flex items-center px-4 py-2.5 bg-emerald-800 text-white font-bold text-xs rounded-xl shadow-2xs">
                         Lihat Pengajuan ({{ $item->claims->count() }})
                     </a>
@@ -446,8 +446,8 @@
                         <span>Terkunci</span>
                     </button>
                 @elseif ($userClaim)
-                    <a href="{{ Route::has('claims.my') ? route('claims.my') : '#' }}" 
-                       class="inline-flex items-center px-4 py-2.5 bg-amber-500 text-white font-bold text-xs rounded-xl shadow-2xs">
+                    <a href="{{ route('claims.my') }}" 
+                       class="inline-flex items-center px-4 py-2.5 bg-amber-600 text-white font-bold text-xs rounded-xl shadow-2xs">
                         Status Pengajuan
                     </a>
                 @else

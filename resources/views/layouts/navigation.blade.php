@@ -6,9 +6,9 @@
             <div class="flex items-center space-x-8">
                 <!-- Brand Logo -->
                 <a href="{{ route('dashboard') }}" class="flex items-center space-x-2.5 group focus:outline-none">
-                    <img src="{{ asset('images/letter-w_g.png') }}" alt="waris.in" class="w-9 h-9 object-contain group-hover:scale-105 transition-transform duration-200">
-                    <span class="text-2xl font-black tracking-tight text-gray-900">
-                        waris<span class="text-emerald-700">.in</span>
+                    <img src="{{ asset('images/letter-w_g.png') }}" alt="waris.in" class="w-8 h-8 object-contain group-hover:scale-105 transition-transform duration-200">
+                    <span class="text-xl font-bold tracking-tight text-gray-900">
+                        waris<span class="text-emerald-800">.in</span>
                     </span>
                 </a>
 
@@ -53,9 +53,9 @@
                             Pengajuan Saya
                         </a>
 
-                        <!-- Pasang Barang (Solid Accent Button) -->
-                        <a href="{{ Route::has('items.create') ? route('items.create') : '#' }}" 
-                           class="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl transition-all duration-150 {{ request()->routeIs('items.create') ? 'bg-emerald-900 text-white font-bold' : 'bg-emerald-800 hover:bg-emerald-900 text-white font-bold shadow-2xs' }}">
+                        <!-- Pasang Barang (Warm Amber Accent CTA) -->
+                        <a href="{{ route('items.create') }}" 
+                           class="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl transition-all duration-150 font-semibold text-xs {{ request()->routeIs('items.create') ? 'bg-amber-700 text-white shadow-xs' : 'bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white shadow-2xs' }}">
                             <x-icon name="plus" class="w-4 h-4" />
                             <span>Pasang Barang</span>
                         </a>
@@ -63,7 +63,7 @@
                         @if (Auth::user()->isAdmin())
                             <!-- Portal Admin Moderasi -->
                             <a href="{{ route('admin.dashboard') }}" 
-                               class="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl text-xs font-black transition-all duration-150 {{ request()->routeIs('admin*') ? 'bg-amber-100 text-amber-900 border border-amber-300 shadow-2xs' : 'bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200' }}">
+                               class="inline-flex items-center space-x-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all duration-150 {{ request()->routeIs('admin*') ? 'bg-amber-100 text-amber-900 border border-amber-300 shadow-2xs' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200' }}">
                                 <x-icon name="shield" class="w-3.5 h-3.5 text-amber-700" />
                                 <span>Portal Admin</span>
                             </a>
@@ -242,22 +242,22 @@
             </a>
             
             @auth
-                <a href="{{ Route::has('items.create') ? route('items.create') : '#' }}" 
-                   class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl text-emerald-800 font-bold hover:bg-emerald-50 transition-colors">
-                    <x-icon name="plus" class="w-4 h-4 text-emerald-800" />
+                <a href="{{ route('items.create') }}" 
+                   class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl bg-amber-50 text-amber-900 border border-amber-200/80 font-bold transition-colors">
+                    <x-icon name="plus" class="w-4 h-4 text-amber-700" />
                     <span>Pasang Barang Baru</span>
                 </a>
-                <a href="{{ Route::has('claims.incoming') ? route('claims.incoming') : '#' }}" 
+                <a href="{{ route('claims.incoming') }}" 
                    class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors">
                     <x-icon name="inbox" class="w-4 h-4 text-emerald-700" />
                     <span>Pengajuan Masuk</span>
                 </a>
-                <a href="{{ Route::has('items.my') ? route('items.my') : '#' }}" 
+                <a href="{{ route('items.my') }}" 
                    class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors">
                     <x-icon name="package" class="w-4 h-4 text-emerald-700" />
                     <span>Barang Saya</span>
                 </a>
-                <a href="{{ Route::has('claims.my') ? route('claims.my') : '#' }}" 
+                <a href="{{ route('claims.my') }}" 
                    class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors">
                     <x-icon name="clock" class="w-4 h-4 text-amber-600" />
                     <span>Pengajuan Saya</span>

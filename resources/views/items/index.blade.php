@@ -4,37 +4,37 @@
         <!-- 1. Header Katalog & Stats Counter -->
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-2">
             <div>
-                <span class="inline-flex items-center space-x-1.5 text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full mb-2">
-                    <x-icon name="building" class="w-3 h-3 text-emerald-800" />
-                    <span>Katalog Kampus Terpadu</span>
+                <span class="inline-flex items-center space-x-1.5 text-xs font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-3 py-1 rounded-full mb-2">
+                    <x-icon name="building" class="w-3.5 h-3.5 text-emerald-800" />
+                    <span>Katalog Kampus</span>
                 </span>
-                <h1 class="text-2xl sm:text-4xl font-black text-gray-900 tracking-tight">
+                <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
                     Cari Perlengkapan Kuliah
                 </h1>
                 <p class="text-xs sm:text-sm text-gray-600 mt-1 max-w-xl leading-relaxed">
-                    Jelajahi barang-barang perkuliahan dari mahasiswa di seluruh fakultas. Praktis, hemat, dan dukung sirkularitas kampus tanpa potongan komisi!
+                    Jelajahi perlengkapan kuliah dari sesama rekan kampus. Hibahkan, barter, atau beli barang ramah kantong langsung COD di kampus.
                 </p>
             </div>
 
-            <!-- Stats Bar Kanan (Solid Metric Ribbon) -->
-            <div class="flex items-center space-x-3 bg-white p-3.5 rounded-2xl border border-gray-200 shadow-2xs self-start lg:self-auto shrink-0">
-                <div class="text-center px-4 border-r border-gray-100">
-                    <span class="block text-xl font-black text-gray-900">{{ $totalListing }}</span>
-                    <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Total Listing</span>
+            <!-- Stats Bar Kanan -->
+            <div class="flex items-center space-x-3 bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-2xs self-start lg:self-auto shrink-0">
+                <div class="text-center px-4 border-r border-slate-100">
+                    <span class="block text-xl font-bold text-gray-900">{{ $totalListing }}</span>
+                    <span class="text-xs text-gray-400 font-medium">Total Listing</span>
                 </div>
-                <div class="text-center px-4 border-r border-gray-100">
-                    <span class="block text-xl font-black text-emerald-700">{{ $gratisCount }}</span>
-                    <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Gratis Tersedia</span>
+                <div class="text-center px-4 border-r border-slate-100">
+                    <span class="block text-xl font-bold text-emerald-700">{{ $gratisCount }}</span>
+                    <span class="text-xs text-gray-400 font-medium">Gratis</span>
                 </div>
                 <div class="text-center px-4">
-                    <span class="block text-xl font-black text-teal-700">{{ $fakultasCount }}</span>
-                    <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Fakultas Aktif</span>
+                    <span class="block text-xl font-bold text-teal-700">{{ $fakultasCount }}</span>
+                    <span class="text-xs text-gray-400 font-medium">Fakultas</span>
                 </div>
             </div>
         </div>
 
-        <!-- 2. Form Filter & Pencarian Lengkap Solid -->
-        <div class="bg-white rounded-3xl p-5 sm:p-6 border border-gray-200 shadow-2xs space-y-4">
+        <!-- 2. Form Filter & Pencarian Lengkap -->
+        <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-2xs space-y-4">
             <form action="{{ route('items.index') }}" method="GET" class="space-y-4">
                 
                 <!-- Baris 1: Search Bar + Filter Fakultas + Tombol Cari -->
@@ -174,25 +174,22 @@
             {{ $items->links() }}
         </div>
 
-        <!-- 6. Bottom Banner CTA (Solid Accent + Pattern) -->
-        <div class="relative bg-emerald-900 rounded-3xl p-7 sm:p-9 text-white overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-6">
-            <!-- Subtle Dot Matrix Pattern -->
-            <div class="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px] opacity-10 pointer-events-none"></div>
-
-            <div class="relative z-10 flex items-center space-x-4">
-                <div class="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center shrink-0 border border-white/20">
-                    <x-icon name="recycle" class="w-7 h-7 text-emerald-200" />
+        <!-- 6. Bottom Banner CTA -->
+        <div class="bg-emerald-900 rounded-2xl p-7 sm:p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center shrink-0 border border-white/20">
+                    <x-icon name="recycle" class="w-6 h-6 text-emerald-200" />
                 </div>
                 <div class="space-y-1">
-                    <h3 class="font-black text-base sm:text-lg">Punya barang kuliah nganggur di kosan?</h3>
+                    <h3 class="font-bold text-base sm:text-lg">Punya barang kuliah nganggur di kosan?</h3>
                     <p class="text-xs sm:text-sm text-emerald-100/90 leading-relaxed max-w-xl">
                         Bantu teman kampusmu yang sedang butuh alat praktikum, buku, atau perlengkapan kuliah. Pasang sekarang dalam hitungan menit!
                     </p>
                 </div>
             </div>
-            <a href="{{ Route::has('items.create') ? route('items.create') : '#' }}" 
-               class="relative z-10 px-6 py-3.5 bg-white hover:bg-emerald-50 text-emerald-950 font-black text-xs sm:text-sm rounded-2xl transition-colors shrink-0 flex items-center space-x-2">
-                <x-icon name="plus" class="w-4 h-4 text-emerald-900" />
+            <a href="{{ route('items.create') }}" 
+               class="px-5 py-3 bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white font-bold text-xs sm:text-sm rounded-xl transition-colors shrink-0 flex items-center space-x-2 shadow-xs cursor-pointer">
+                <x-icon name="plus" class="w-4 h-4 text-white" />
                 <span>Pasang Barang Sekarang</span>
             </a>
         </div>

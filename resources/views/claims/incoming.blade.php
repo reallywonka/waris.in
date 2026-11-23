@@ -371,7 +371,7 @@
                         <form :action="selectedClaim ? selectedClaim.actionUrl : '#'" method="POST">
                             @csrf
                             <button type="submit" 
-                                    class="px-5 py-2.5 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-black shadow-2xs hover:shadow-xs transition-colors">
+                                    class="px-5 py-2.5 rounded-xl bg-emerald-800 hover:bg-emerald-900 active:bg-emerald-950 text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer">
                                 Ya, Setujui Sekarang
                             </button>
                         </form>

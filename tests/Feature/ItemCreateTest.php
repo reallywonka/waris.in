@@ -17,6 +17,6 @@ class ItemCreateTest extends TestCase
         $response = $this->actingAs($user)->get(route('items.create'));
 
         $response->assertStatus(200);
-        $this->assertStringContainsString('x-data="{', $response->getContent());
+        $this->assertStringContainsString('x-data="itemCreateForm()"', $response->getContent());
     }
 }

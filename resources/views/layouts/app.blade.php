@@ -18,7 +18,7 @@
             [x-cloak] { display: none !important; }
         </style>
     </head>
-    <body class="font-sans antialiased text-gray-800 bg-[#F4F9F5] flex flex-col min-h-screen">
+    <body class="font-sans antialiased text-slate-800 bg-slate-50 flex flex-col min-h-screen selection:bg-emerald-100 selection:text-emerald-900">
         
         <!-- Navbar Atas -->
         @include('layouts.navigation')
@@ -26,36 +26,36 @@
         <!-- Flash Messages (Notifikasi Berhasil / Gagal) -->
         @if (session('success'))
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 w-full">
-                <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-2xl flex items-center justify-between shadow-xs">
-                    <div class="flex items-center space-x-2">
-                        <span>✅</span>
-                        <span class="text-sm font-medium">{{ session('success') }}</span>
+                <div class="bg-emerald-50 border border-emerald-200/80 text-emerald-900 px-4 py-3 rounded-xl flex items-center justify-between shadow-2xs">
+                    <div class="flex items-center space-x-2.5">
+                        <x-icon name="check-circle" class="w-4 h-4 text-emerald-700 shrink-0" />
+                        <span class="text-xs sm:text-sm font-medium">{{ session('success') }}</span>
                     </div>
-                    <button onclick="this.parentElement.remove()" class="text-emerald-600 hover:text-emerald-900 text-sm font-bold">&times;</button>
+                    <button onclick="this.parentElement.remove()" class="text-emerald-600 hover:text-emerald-900 text-sm font-bold cursor-pointer">&times;</button>
                 </div>
             </div>
         @endif
 
         @if (session('error'))
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 w-full">
-                <div class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-2xl flex items-center justify-between shadow-xs">
-                    <div class="flex items-center space-x-2">
-                        <span>⚠️</span>
-                        <span class="text-sm font-medium">{{ session('error') }}</span>
+                <div class="bg-rose-50 border border-rose-200/80 text-rose-900 px-4 py-3 rounded-xl flex items-center justify-between shadow-2xs">
+                    <div class="flex items-center space-x-2.5">
+                        <x-icon name="alert-triangle" class="w-4 h-4 text-rose-600 shrink-0" />
+                        <span class="text-xs sm:text-sm font-medium">{{ session('error') }}</span>
                     </div>
-                    <button onclick="this.parentElement.remove()" class="text-red-600 hover:text-red-900 text-sm font-bold">&times;</button>
+                    <button onclick="this.parentElement.remove()" class="text-rose-600 hover:text-rose-900 text-sm font-bold cursor-pointer">&times;</button>
                 </div>
             </div>
         @endif
 
         @if (session('info'))
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 w-full">
-                <div class="bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded-2xl flex items-center justify-between shadow-xs">
-                    <div class="flex items-center space-x-2">
-                        <span>ℹ️</span>
-                        <span class="text-sm font-medium">{{ session('info') }}</span>
+                <div class="bg-blue-50 border border-blue-200/80 text-blue-900 px-4 py-3 rounded-xl flex items-center justify-between shadow-2xs">
+                    <div class="flex items-center space-x-2.5">
+                        <x-icon name="info" class="w-4 h-4 text-blue-700 shrink-0" />
+                        <span class="text-xs sm:text-sm font-medium">{{ session('info') }}</span>
                     </div>
-                    <button onclick="this.parentElement.remove()" class="text-blue-600 hover:text-blue-900 text-sm font-bold">&times;</button>
+                    <button onclick="this.parentElement.remove()" class="text-blue-600 hover:text-blue-900 text-sm font-bold cursor-pointer">&times;</button>
                 </div>
             </div>
         @endif
