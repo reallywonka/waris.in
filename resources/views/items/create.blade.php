@@ -1,4 +1,191 @@
 <x-app-layout>
+    <script>
+        window.handleImageGlobal = function(event, slot) {
+            const input = event.target || event;
+            const files = input.files;
+            if (files && files.length > 0) {
+                const file = files[0];
+                const sizeKb = (file.size / 1024).toFixed(1);
+                console.log('Upload image success: ' + file.name + ' (' + sizeKb + ' KB) pada slot ' + slot);
+                console.log('[Foto Barang] Berhasil memilih file foto:', {
+                    slot: slot,
+                    nama: file.name,
+                    tipe: file.type,
+                    ukuran: sizeKb + ' KB'
+                });
+
+                const url = URL.createObjectURL(file);
+
+                // 1. Tampilkan container preview & sembunyikan placeholder
+                const container = document.getElementById('previewContainer' + slot);
+                if (container) {
+                    container.style.display = 'block';
+                    container.removeAttribute('x-cloak');
+                }
+                const placeholder = document.getElementById('placeholder' + slot);
+                if (placeholder) {
+                    placeholder.style.display = 'none';
+                }
+                const img = document.getElementById('previewImg' + slot);
+                if (img) {
+                    img.src = url;
+                }
+                const nameLabel = document.getElementById('photoNameLabel' + slot);
+                if (nameLabel) {
+                    nameLabel.textContent = file.name + ' (' + sizeKb + ' KB)';
+                }
+                const slotBox = document.getElementById('photoSlotBox' + slot);
+                if (slotBox) {
+                    slotBox.classList.remove('border-dashed', 'border-slate-300', 'bg-slate-50/60');
+                    slotBox.classList.add('border-emerald-500', 'bg-emerald-50/30', 'ring-2', 'ring-emerald-500/30');
+                }
+
+                // 2. Tampilkan Banner Notifikasi Sukses Unggah Foto
+                const notice = document.getElementById('photoSuccessNotification');
+                if (notice) {
+                    notice.style.display = 'flex';
+                    const noticeText = document.getElementById('photoSuccessText');
+                    if (noticeText) {
+                        noticeText.textContent = 'Foto "' + file.name + '" berhasil dipilih dan siap dipasang!';
+                    }
+                }
+
+                // 3. Sinkronkan ke Live Preview Feed Card (Kanan) jika Slot 1
+                if (slot === 1) {
+                    const feedImg = document.getElementById('feedCardPreviewImg');
+                    if (feedImg) {
+                        feedImg.src = url;
+                        feedImg.style.display = 'block';
+                        feedImg.removeAttribute('x-cloak');
+                    }
+                    const feedPlaceholder = document.getElementById('feedCardPreviewPlaceholder');
+                    if (feedPlaceholder) {
+                        feedPlaceholder.style.display = 'none';
+                    }
+                }
+
+                // 4. Sinkronkan ke Alpine.js component data jika aktif
+                try {
+                    const formEl = document.querySelector('[x-data]');
+                    if (formEl && window.Alpine && Alpine.$data) {
+                        const alpineData = Alpine.$data(formEl);
+                        if (alpineData) {
+                            if (slot === 1) {
+                                alpineData.photoPreview1 = url;
+                                alpineData.photoName1 = file.name;
+                            } else if (slot === 2) {
+                                alpineData.photoPreview2 = url;
+                                alpineData.photoName2 = file.name;
+                            } else if (slot === 3) {
+                                alpineData.photoPreview3 = url;
+                                alpineData.photoName3 = file.name;
+                            }
+                        }
+                    }
+                } catch (err) {
+                    console.warn('Alpine sync notice:', err);
+                }
+            }
+        };
+
+        window.removeImageGlobal = function(slot) {
+            console.log('[Foto Barang] Menghapus foto dari slot ' + slot);
+            const input = document.getElementById('photoInput' + slot);
+            if (input) input.value = '';
+
+            const container = document.getElementById('previewContainer' + slot);
+            if (container) container.style.display = 'none';
+
+            const placeholder = document.getElementById('placeholder' + slot);
+            if (placeholder) placeholder.style.display = 'flex';
+
+            const img = document.getElementById('previewImg' + slot);
+            if (img) img.src = '';
+
+            const slotBox = document.getElementById('photoSlotBox' + slot);
+            if (slotBox) {
+                slotBox.classList.add('border-dashed', 'border-slate-300', 'bg-slate-50/60');
+                slotBox.classList.remove('border-emerald-500', 'bg-emerald-50/30', 'ring-2', 'ring-emerald-500/30');
+            }
+
+            if (slot === 1) {
+                const feedImg = document.getElementById('feedCardPreviewImg');
+                if (feedImg) {
+                    feedImg.src = '';
+                    feedImg.style.display = 'none';
+                }
+                const feedPlaceholder = document.getElementById('feedCardPreviewPlaceholder');
+                if (feedPlaceholder) {
+                    feedPlaceholder.style.display = 'flex';
+                }
+            }
+
+            const p1 = document.getElementById('previewContainer1');
+            const p2 = document.getElementById('previewContainer2');
+            const p3 = document.getElementById('previewContainer3');
+            const hasAny = (p1 && p1.style.display !== 'none') || (p2 && p2.style.display !== 'none') || (p3 && p3.style.display !== 'none');
+            if (!hasAny) {
+                const notice = document.getElementById('photoSuccessNotification');
+                if (notice) notice.style.display = 'none';
+            }
+
+            try {
+                const formEl = document.querySelector('[x-data]');
+                if (formEl && window.Alpine && Alpine.$data) {
+                    const alpineData = Alpine.$data(formEl);
+                    if (alpineData) {
+                        if (slot === 1) {
+                            alpineData.photoPreview1 = null;
+                            alpineData.photoName1 = '';
+                        } else if (slot === 2) {
+                            alpineData.photoPreview2 = null;
+                            alpineData.photoName2 = '';
+                        } else if (slot === 3) {
+                            alpineData.photoPreview3 = null;
+                            alpineData.photoName3 = '';
+                        }
+                    }
+                }
+            } catch (err) {}
+        };
+
+        function itemCreateForm() {
+            return {
+                title: @js(old('title', '')),
+                category: @js(old('category', $categories[0] ?? 'Elektronik & Gadget Belajar')),
+                condition: @js(old('condition', 'Bekas Layak Pakai')),
+                description: @js(old('description', '')),
+                mode: @js(old('mode', 'harga_pas')),
+                price: @js(old('price', 45000)),
+                barter_request: @js(old('barter_request', '')),
+                photoPreview1: null,
+                photoPreview2: null,
+                photoPreview3: null,
+                photoName1: '',
+                photoName2: '',
+                photoName3: '',
+                formatPrice(val) {
+                    if (!val) return '0';
+                    return new Intl.NumberFormat('id-ID').format(val);
+                },
+                handleImage(e, slot) {
+                    window.handleImageGlobal(e, slot);
+                },
+                removeImage(slot) {
+                    window.removeImageGlobal(slot);
+                }
+            };
+        }
+        window.itemCreateForm = itemCreateForm;
+        if (window.Alpine) {
+            Alpine.data('itemCreateForm', itemCreateForm);
+        } else {
+            document.addEventListener('alpine:init', () => {
+                Alpine.data('itemCreateForm', itemCreateForm);
+            });
+        }
+    </script>
+
     <div x-data="itemCreateForm()" class="w-full space-y-6">
 
         <!-- Header Halaman -->
@@ -80,27 +267,43 @@
                         </select>
                     </div>
 
-                    <!-- Kondisi Barang (Radio Selection Jelas & Nyata) -->
+                    <!-- Kondisi Barang (Radio Selection dengan x-model langsung) -->
                     <div>
                         <label class="block text-xs font-semibold text-gray-800 mb-2">
                             Kondisi Barang <span class="text-rose-500">*</span>
                         </label>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             @foreach ($conditions as $cKey => $cDesc)
-                                <label @click="condition = '{{ $cKey }}'"
-                                       class="relative flex items-start p-3.5 rounded-xl border cursor-pointer transition-all text-xs select-none space-x-3"
+                                @php
+                                    $isDefault = old('condition', 'Bekas Layak Pakai') === $cKey;
+                                    $condId = 'condition_' . Str::slug($cKey);
+                                @endphp
+                                <label for="{{ $condId }}"
+                                       @click="condition = '{{ $cKey }}'"
+                                       class="group relative flex items-start p-3.5 rounded-xl border cursor-pointer transition-all text-xs select-none space-x-3 bg-slate-50/50 border-slate-200 hover:bg-slate-50 has-[:checked]:bg-emerald-50/70 has-[:checked]:border-emerald-600 has-[:checked]:ring-1 has-[:checked]:ring-emerald-600 has-[:checked]:shadow-2xs"
                                        :class="condition === '{{ $cKey }}' ? 'bg-emerald-50/70 border-emerald-600 ring-1 ring-emerald-600 shadow-2xs' : 'bg-slate-50/50 border-slate-200 hover:bg-slate-50'">
                                     
                                     <!-- Radio Circle Fisik Terlihat Nyata -->
-                                    <div class="w-4 h-4 rounded-full border flex items-center justify-center shrink-0 mt-0.5 transition-colors"
+                                    <div class="w-4 h-4 rounded-full border flex items-center justify-center shrink-0 mt-0.5 transition-colors group-has-[:checked]:border-emerald-700 group-has-[:checked]:bg-emerald-700"
                                          :class="condition === '{{ $cKey }}' ? 'border-emerald-700 bg-emerald-700' : 'border-slate-300 bg-white'">
-                                        <div class="w-1.5 h-1.5 rounded-full bg-white" x-show="condition === '{{ $cKey }}'"></div>
+                                        <div class="w-1.5 h-1.5 rounded-full bg-white transition-opacity group-has-[:checked]:opacity-100"
+                                             :class="condition === '{{ $cKey }}' ? 'opacity-100' : 'opacity-0'"
+                                             style="{{ $isDefault ? '' : 'display: none;' }}"
+                                             x-show="condition === '{{ $cKey }}'"></div>
                                     </div>
 
-                                    <input type="radio" name="condition" value="{{ $cKey }}" :checked="condition === '{{ $cKey }}'" class="sr-only">
+                                    <input type="radio" 
+                                           id="{{ $condId }}"
+                                           name="condition" 
+                                           value="{{ $cKey }}" 
+                                           {{ $isDefault ? 'checked' : '' }}
+                                           x-model="condition" 
+                                           @change="condition = $el.value"
+                                           class="sr-only">
 
                                     <div class="flex-1">
-                                        <span class="font-bold text-gray-900 block" :class="condition === '{{ $cKey }}' ? 'text-emerald-950' : ''">
+                                        <span class="font-bold text-gray-900 block group-has-[:checked]:text-emerald-950" 
+                                              :class="condition === '{{ $cKey }}' ? 'text-emerald-950' : ''">
                                             {{ $cKey }}
                                         </span>
                                         <span class="text-xs text-gray-500 leading-tight block mt-0.5">{{ $cDesc }}</span>
@@ -116,7 +319,7 @@
                             <label for="description" class="block text-xs font-semibold text-gray-800">
                                 Deskripsi Lengkap <span class="text-rose-500">*</span>
                             </label>
-                            <span class="text-xs text-gray-400 font-mono" x-text="description.length + '/500'"></span>
+                            <span class="text-xs text-gray-400 font-mono" x-text="(description || '').length + '/500'"></span>
                         </div>
                         <textarea id="description" name="description" x-model="description" rows="3" maxlength="500" required
                                   placeholder="Jelaskan riwayat pemakaian, kelengkapan (misal baterai/cover), atau kondisi minus jika ada..."
@@ -137,97 +340,158 @@
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         
                         <!-- Slot Foto 1 (Utama) -->
-                        <div class="relative border-2 rounded-xl p-2 text-center transition-all h-36 flex flex-col items-center justify-center overflow-hidden group"
+                        <div id="photoSlotBox1"
+                             class="relative border-2 rounded-xl p-2 text-center transition-all h-36 flex flex-col items-center justify-center overflow-hidden group cursor-pointer border-dashed border-slate-300 hover:border-emerald-500 bg-slate-50/60"
                              :class="photoPreview1 ? 'border-emerald-500 bg-emerald-50/20' : 'border-dashed border-slate-300 hover:border-emerald-500 bg-slate-50/60'">
                             
                             <!-- State Preview Saat File Sudah Dipilih -->
-                            <template x-if="photoPreview1">
-                                <div class="absolute inset-0 w-full h-full">
-                                    <img :src="photoPreview1" class="w-full h-full object-cover">
-                                    <span class="absolute top-1.5 left-1.5 bg-emerald-800 text-white text-[10px] font-semibold px-2 py-0.5 rounded shadow-2xs">
-                                        Foto Utama
+                            <div id="previewContainer1" 
+                                 x-show="photoPreview1" 
+                                 style="display: none;"
+                                 class="absolute inset-0 w-full h-full z-20">
+                                <img id="previewImg1" :src="photoPreview1" src="" class="w-full h-full object-cover">
+                                <div class="absolute top-1.5 left-1.5 flex items-center space-x-1 z-10">
+                                    <span class="bg-emerald-800 text-white text-[10px] font-semibold px-2 py-0.5 rounded shadow-2xs flex items-center space-x-1">
+                                        <x-icon name="check" class="w-3 h-3 text-emerald-300" />
+                                        <span>Foto Utama</span>
                                     </span>
-                                    <div class="absolute bottom-1.5 left-1.5 right-1.5 bg-black/70 backdrop-blur-xs text-white text-[10px] py-0.5 px-2 rounded truncate"
-                                         x-text="photoName1"></div>
-                                    <button type="button" @click="removeImage(1)" 
-                                            class="absolute top-1.5 right-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center shadow-2xs cursor-pointer z-10"
-                                            title="Hapus Foto">
-                                        &times;
-                                    </button>
                                 </div>
-                            </template>
+                                <div id="photoNameLabel1" 
+                                     class="absolute bottom-1.5 left-1.5 right-1.5 bg-black/75 backdrop-blur-xs text-white text-[10px] py-0.5 px-2 rounded truncate z-10 font-medium"
+                                     x-text="photoName1"></div>
+                                <button type="button" 
+                                        onclick="window.removeImageGlobal(1)"
+                                        @click.prevent.stop="removeImage(1)" 
+                                        class="absolute top-1.5 right-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center shadow-2xs cursor-pointer z-30"
+                                        title="Hapus Foto">
+                                    &times;
+                                </button>
+                            </div>
 
                             <!-- State Belum Ada File -->
-                            <div x-show="!photoPreview1" class="space-y-1.5 flex flex-col items-center pointer-events-none">
+                            <div id="placeholder1" 
+                                 x-show="!photoPreview1" 
+                                 class="space-y-1.5 flex flex-col items-center pointer-events-none z-0">
                                 <x-icon name="camera" class="w-6 h-6 text-slate-400" />
                                 <p class="text-xs font-semibold text-gray-800">Foto Utama</p>
                                 <span class="text-[11px] text-emerald-800 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-md font-medium">Pilih Berkas</span>
                             </div>
 
-                            <input type="file" id="photoInput1" name="photos[]" accept="image/*" @change="handleImage($event, 1)" 
-                                   class="absolute inset-0 opacity-0 cursor-pointer" :class="photoPreview1 ? 'pointer-events-none' : ''">
+                            <!-- Real Native Invisible File Input -->
+                            <input type="file" 
+                                   id="photoInput1" 
+                                   name="photos[]" 
+                                   accept="image/*" 
+                                   onchange="window.handleImageGlobal(event, 1)"
+                                   @change="handleImage($event, 1)" 
+                                   class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                                   :class="photoPreview1 ? 'pointer-events-none' : ''">
                         </div>
 
                         <!-- Slot Foto 2 (Detail) -->
-                        <div class="relative border-2 rounded-xl p-2 text-center transition-all h-36 flex flex-col items-center justify-center overflow-hidden group"
+                        <div id="photoSlotBox2"
+                             class="relative border-2 rounded-xl p-2 text-center transition-all h-36 flex flex-col items-center justify-center overflow-hidden group cursor-pointer border-dashed border-slate-300 hover:border-emerald-500 bg-slate-50/60"
                              :class="photoPreview2 ? 'border-emerald-500 bg-emerald-50/20' : 'border-dashed border-slate-300 hover:border-emerald-500 bg-slate-50/60'">
                             
-                            <template x-if="photoPreview2">
-                                <div class="absolute inset-0 w-full h-full">
-                                    <img :src="photoPreview2" class="w-full h-full object-cover">
-                                    <span class="absolute top-1.5 left-1.5 bg-slate-800 text-white text-[10px] font-semibold px-2 py-0.5 rounded shadow-2xs">
-                                        Foto Detail
+                            <!-- State Preview Saat File Sudah Dipilih -->
+                            <div id="previewContainer2" 
+                                 x-show="photoPreview2" 
+                                 style="display: none;"
+                                 class="absolute inset-0 w-full h-full z-20">
+                                <img id="previewImg2" :src="photoPreview2" src="" class="w-full h-full object-cover">
+                                <div class="absolute top-1.5 left-1.5 flex items-center space-x-1 z-10">
+                                    <span class="bg-emerald-800 text-white text-[10px] font-semibold px-2 py-0.5 rounded shadow-2xs flex items-center space-x-1">
+                                        <x-icon name="check" class="w-3 h-3 text-emerald-300" />
+                                        <span>Foto Detail</span>
                                     </span>
-                                    <div class="absolute bottom-1.5 left-1.5 right-1.5 bg-black/70 backdrop-blur-xs text-white text-[10px] py-0.5 px-2 rounded truncate"
-                                         x-text="photoName2"></div>
-                                    <button type="button" @click="removeImage(2)" 
-                                            class="absolute top-1.5 right-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center shadow-2xs cursor-pointer z-10"
-                                            title="Hapus Foto">
-                                        &times;
-                                    </button>
                                 </div>
-                            </template>
+                                <div id="photoNameLabel2" 
+                                     class="absolute bottom-1.5 left-1.5 right-1.5 bg-black/75 backdrop-blur-xs text-white text-[10px] py-0.5 px-2 rounded truncate z-10 font-medium"
+                                     x-text="photoName2"></div>
+                                <button type="button" 
+                                        onclick="window.removeImageGlobal(2)"
+                                        @click.prevent.stop="removeImage(2)" 
+                                        class="absolute top-1.5 right-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center shadow-2xs cursor-pointer z-30"
+                                        title="Hapus Foto">
+                                    &times;
+                                </button>
+                            </div>
 
-                            <div x-show="!photoPreview2" class="space-y-1.5 flex flex-col items-center pointer-events-none">
+                            <!-- State Belum Ada File -->
+                            <div id="placeholder2" 
+                                 x-show="!photoPreview2" 
+                                 class="space-y-1.5 flex flex-col items-center pointer-events-none z-0">
                                 <x-icon name="image" class="w-6 h-6 text-slate-400" />
                                 <p class="text-xs font-semibold text-gray-800">Foto 2 (Detail)</p>
                                 <span class="text-[11px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md font-medium">Opsional</span>
                             </div>
 
-                            <input type="file" id="photoInput2" name="photos[]" accept="image/*" @change="handleImage($event, 2)" 
-                                   class="absolute inset-0 opacity-0 cursor-pointer" :class="photoPreview2 ? 'pointer-events-none' : ''">
+                            <!-- Real Native Invisible File Input -->
+                            <input type="file" 
+                                   id="photoInput2" 
+                                   name="photos[]" 
+                                   accept="image/*" 
+                                   onchange="window.handleImageGlobal(event, 2)"
+                                   @change="handleImage($event, 2)" 
+                                   class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                                   :class="photoPreview2 ? 'pointer-events-none' : ''">
                         </div>
 
                         <!-- Slot Foto 3 (Pelengkap) -->
-                        <div class="relative border-2 rounded-xl p-2 text-center transition-all h-36 flex flex-col items-center justify-center overflow-hidden group"
+                        <div id="photoSlotBox3"
+                             class="relative border-2 rounded-xl p-2 text-center transition-all h-36 flex flex-col items-center justify-center overflow-hidden group cursor-pointer border-dashed border-slate-300 hover:border-emerald-500 bg-slate-50/60"
                              :class="photoPreview3 ? 'border-emerald-500 bg-emerald-50/20' : 'border-dashed border-slate-300 hover:border-emerald-500 bg-slate-50/60'">
                             
-                            <template x-if="photoPreview3">
-                                <div class="absolute inset-0 w-full h-full">
-                                    <img :src="photoPreview3" class="w-full h-full object-cover">
-                                    <span class="absolute top-1.5 left-1.5 bg-slate-800 text-white text-[10px] font-semibold px-2 py-0.5 rounded shadow-2xs">
-                                        Foto Pelengkap
+                            <!-- State Preview Saat File Sudah Dipilih -->
+                            <div id="previewContainer3" 
+                                 x-show="photoPreview3" 
+                                 style="display: none;"
+                                 class="absolute inset-0 w-full h-full z-20">
+                                <img id="previewImg3" :src="photoPreview3" src="" class="w-full h-full object-cover">
+                                <div class="absolute top-1.5 left-1.5 flex items-center space-x-1 z-10">
+                                    <span class="bg-emerald-800 text-white text-[10px] font-semibold px-2 py-0.5 rounded shadow-2xs flex items-center space-x-1">
+                                        <x-icon name="check" class="w-3 h-3 text-emerald-300" />
+                                        <span>Foto Pelengkap</span>
                                     </span>
-                                    <div class="absolute bottom-1.5 left-1.5 right-1.5 bg-black/70 backdrop-blur-xs text-white text-[10px] py-0.5 px-2 rounded truncate"
-                                         x-text="photoName3"></div>
-                                    <button type="button" @click="removeImage(3)" 
-                                            class="absolute top-1.5 right-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center shadow-2xs cursor-pointer z-10"
-                                            title="Hapus Foto">
-                                        &times;
-                                    </button>
                                 </div>
-                            </template>
+                                <div id="photoNameLabel3" 
+                                     class="absolute bottom-1.5 left-1.5 right-1.5 bg-black/75 backdrop-blur-xs text-white text-[10px] py-0.5 px-2 rounded truncate z-10 font-medium"
+                                     x-text="photoName3"></div>
+                                <button type="button" 
+                                        onclick="window.removeImageGlobal(3)"
+                                        @click.prevent.stop="removeImage(3)" 
+                                        class="absolute top-1.5 right-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center shadow-2xs cursor-pointer z-30"
+                                        title="Hapus Foto">
+                                    &times;
+                                </button>
+                            </div>
 
-                            <div x-show="!photoPreview3" class="space-y-1.5 flex flex-col items-center pointer-events-none">
+                            <!-- State Belum Ada File -->
+                            <div id="placeholder3" 
+                                 x-show="!photoPreview3" 
+                                 class="space-y-1.5 flex flex-col items-center pointer-events-none z-0">
                                 <x-icon name="image" class="w-6 h-6 text-slate-400" />
                                 <p class="text-xs font-semibold text-gray-800">Foto 3 (Pelengkap)</p>
                                 <span class="text-[11px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md font-medium">Opsional</span>
                             </div>
 
-                            <input type="file" id="photoInput3" name="photos[]" accept="image/*" @change="handleImage($event, 3)" 
-                                   class="absolute inset-0 opacity-0 cursor-pointer" :class="photoPreview3 ? 'pointer-events-none' : ''">
+                            <!-- Real Native Invisible File Input -->
+                            <input type="file" 
+                                   id="photoInput3" 
+                                   name="photos[]" 
+                                   accept="image/*" 
+                                   onchange="window.handleImageGlobal(event, 3)"
+                                   @change="handleImage($event, 3)" 
+                                   class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                                   :class="photoPreview3 ? 'pointer-events-none' : ''">
                         </div>
 
+                    </div>
+
+                    <!-- Banner Konfirmasi Berhasil Unggah Foto -->
+                    <div id="photoSuccessNotification" style="display: none;" class="p-3 bg-emerald-50 border border-emerald-200/90 rounded-xl flex items-center space-x-2 text-xs text-emerald-900 shadow-2xs transition-all">
+                        <x-icon name="check-circle" class="w-4 h-4 text-emerald-700 shrink-0" />
+                        <span id="photoSuccessText" class="font-medium">Foto berhasil dipilih dan siap dipasang!</span>
                     </div>
 
                     <p class="text-xs text-gray-500 flex items-center space-x-1.5">
@@ -246,23 +510,39 @@
                         <span class="text-xs text-gray-400">Pilih salah satu</span>
                     </div>
 
-                    <!-- 3 Pilihan Mode -->
+                    <!-- 3 Pilihan Mode (Radio Selection dengan x-model langsung) -->
+                    @php
+                        $isGratis = old('mode', 'harga_pas') === 'gratis';
+                        $isHargaPas = old('mode', 'harga_pas') === 'harga_pas';
+                        $isBarter = old('mode', 'harga_pas') === 'barter';
+                    @endphp
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         
                         <!-- Mode Gratis -->
-                        <label @click="mode = 'gratis'" 
-                               class="relative flex flex-col justify-between p-3.5 rounded-xl border cursor-pointer transition-all select-none space-y-3"
+                        <label for="mode_gratis"
+                               @click="mode = 'gratis'"
+                               class="group relative flex flex-col justify-between p-3.5 rounded-xl border cursor-pointer transition-all select-none space-y-3 bg-slate-50/50 border-slate-200 hover:bg-slate-50 has-[:checked]:bg-emerald-50/80 has-[:checked]:border-emerald-600 has-[:checked]:ring-1 has-[:checked]:ring-emerald-600 has-[:checked]:shadow-2xs"
                                :class="mode === 'gratis' ? 'bg-emerald-50/80 border-emerald-600 ring-1 ring-emerald-600 shadow-2xs' : 'bg-slate-50/50 border-slate-200 hover:bg-slate-50'">
-                            <input type="radio" name="mode" value="gratis" :checked="mode === 'gratis'" class="sr-only">
+                            <input type="radio" 
+                                   id="mode_gratis"
+                                   name="mode" 
+                                   value="gratis" 
+                                   {{ $isGratis ? 'checked' : '' }}
+                                   x-model="mode" 
+                                   @change="mode = $el.value"
+                                   class="sr-only">
                             <div>
                                 <div class="flex items-center justify-between mb-1.5">
                                     <span class="text-xs font-bold text-emerald-800 flex items-center space-x-1">
                                         <x-icon name="gift" class="w-3.5 h-3.5 text-emerald-800" />
                                         <span>Gratis</span>
                                     </span>
-                                    <div class="w-4 h-4 rounded-full border flex items-center justify-center"
+                                    <div class="w-4 h-4 rounded-full border flex items-center justify-center group-has-[:checked]:border-emerald-700 group-has-[:checked]:bg-emerald-700"
                                          :class="mode === 'gratis' ? 'border-emerald-700 bg-emerald-700' : 'border-slate-300 bg-white'">
-                                        <div class="w-1.5 h-1.5 rounded-full bg-white" x-show="mode === 'gratis'"></div>
+                                        <div class="w-1.5 h-1.5 rounded-full bg-white transition-opacity group-has-[:checked]:opacity-100" 
+                                             :class="mode === 'gratis' ? 'opacity-100' : 'opacity-0'"
+                                             style="{{ $isGratis ? '' : 'display: none;' }}"
+                                             x-show="mode === 'gratis'"></div>
                                     </div>
                                 </div>
                                 <h3 class="font-bold text-xs text-gray-900">Hibah Rekan Kampus</h3>
@@ -272,19 +552,30 @@
                         </label>
 
                         <!-- Mode Harga Pas -->
-                        <label @click="mode = 'harga_pas'" 
-                               class="relative flex flex-col justify-between p-3.5 rounded-xl border cursor-pointer transition-all select-none space-y-3"
+                        <label for="mode_harga_pas"
+                               @click="mode = 'harga_pas'"
+                               class="group relative flex flex-col justify-between p-3.5 rounded-xl border cursor-pointer transition-all select-none space-y-3 bg-slate-50/50 border-slate-200 hover:bg-slate-50 has-[:checked]:bg-amber-50/80 has-[:checked]:border-amber-600 has-[:checked]:ring-1 has-[:checked]:ring-amber-600 has-[:checked]:shadow-2xs"
                                :class="mode === 'harga_pas' ? 'bg-amber-50/80 border-amber-600 ring-1 ring-amber-600 shadow-2xs' : 'bg-slate-50/50 border-slate-200 hover:bg-slate-50'">
-                            <input type="radio" name="mode" value="harga_pas" :checked="mode === 'harga_pas'" class="sr-only">
+                            <input type="radio" 
+                                   id="mode_harga_pas"
+                                   name="mode" 
+                                   value="harga_pas" 
+                                   {{ $isHargaPas ? 'checked' : '' }}
+                                   x-model="mode" 
+                                   @change="mode = $el.value"
+                                   class="sr-only">
                             <div>
                                 <div class="flex items-center justify-between mb-1.5">
                                     <span class="text-xs font-bold text-amber-800 flex items-center space-x-1">
                                         <x-icon name="tag" class="w-3.5 h-3.5 text-amber-800" />
                                         <span>Harga Pas</span>
                                     </span>
-                                    <div class="w-4 h-4 rounded-full border flex items-center justify-center"
+                                    <div class="w-4 h-4 rounded-full border flex items-center justify-center group-has-[:checked]:border-amber-600 group-has-[:checked]:bg-amber-600"
                                          :class="mode === 'harga_pas' ? 'border-amber-600 bg-amber-600' : 'border-slate-300 bg-white'">
-                                        <div class="w-1.5 h-1.5 rounded-full bg-white" x-show="mode === 'harga_pas'"></div>
+                                        <div class="w-1.5 h-1.5 rounded-full bg-white transition-opacity group-has-[:checked]:opacity-100" 
+                                             :class="mode === 'harga_pas' ? 'opacity-100' : 'opacity-0'"
+                                             style="{{ $isHargaPas ? '' : 'display: none;' }}"
+                                             x-show="mode === 'harga_pas'"></div>
                                     </div>
                                 </div>
                                 <h3 class="font-bold text-xs text-gray-900">Jual Ramah Kantong</h3>
@@ -294,19 +585,30 @@
                         </label>
 
                         <!-- Mode Barter -->
-                        <label @click="mode = 'barter'" 
-                               class="relative flex flex-col justify-between p-3.5 rounded-xl border cursor-pointer transition-all select-none space-y-3"
+                        <label for="mode_barter"
+                               @click="mode = 'barter'"
+                               class="group relative flex flex-col justify-between p-3.5 rounded-xl border cursor-pointer transition-all select-none space-y-3 bg-slate-50/50 border-slate-200 hover:bg-slate-50 has-[:checked]:bg-teal-50/80 has-[:checked]:border-teal-600 has-[:checked]:ring-1 has-[:checked]:ring-teal-600 has-[:checked]:shadow-2xs"
                                :class="mode === 'barter' ? 'bg-teal-50/80 border-teal-600 ring-1 ring-teal-600 shadow-2xs' : 'bg-slate-50/50 border-slate-200 hover:bg-slate-50'">
-                            <input type="radio" name="mode" value="barter" :checked="mode === 'barter'" class="sr-only">
+                            <input type="radio" 
+                                   id="mode_barter"
+                                   name="mode" 
+                                   value="barter" 
+                                   {{ $isBarter ? 'checked' : '' }}
+                                   x-model="mode" 
+                                   @change="mode = $el.value"
+                                   class="sr-only">
                             <div>
                                 <div class="flex items-center justify-between mb-1.5">
                                     <span class="text-xs font-bold text-teal-800 flex items-center space-x-1">
                                         <x-icon name="repeat" class="w-3.5 h-3.5 text-teal-800" />
                                         <span>Barter</span>
                                     </span>
-                                    <div class="w-4 h-4 rounded-full border flex items-center justify-center"
+                                    <div class="w-4 h-4 rounded-full border flex items-center justify-center group-has-[:checked]:border-teal-600 group-has-[:checked]:bg-teal-600"
                                          :class="mode === 'barter' ? 'border-teal-600 bg-teal-600' : 'border-slate-300 bg-white'">
-                                        <div class="w-1.5 h-1.5 rounded-full bg-white" x-show="mode === 'barter'"></div>
+                                        <div class="w-1.5 h-1.5 rounded-full bg-white transition-opacity group-has-[:checked]:opacity-100" 
+                                             :class="mode === 'barter' ? 'opacity-100' : 'opacity-0'"
+                                             style="{{ $isBarter ? '' : 'display: none;' }}"
+                                             x-show="mode === 'barter'"></div>
                                     </div>
                                 </div>
                                 <h3 class="font-bold text-xs text-gray-900">Tukar Barang Kuliah</h3>
@@ -318,7 +620,10 @@
                     </div>
 
                     <!-- Nominal Harga Pas (Hanya jika mode = harga_pas) -->
-                    <div x-show="mode === 'harga_pas'" x-cloak x-transition class="space-y-2 p-4 rounded-xl bg-amber-50/80 border border-amber-200">
+                    <div x-show="mode === 'harga_pas'" 
+                         style="{{ $isHargaPas ? '' : 'display: none;' }}"
+                         x-transition 
+                         class="space-y-2 p-4 rounded-xl bg-amber-50/80 border border-amber-200">
                         <label for="price" class="block text-xs font-semibold text-amber-950">
                             Nominal Harga Pas (Rupiah) <span class="text-rose-500">*</span>
                         </label>
@@ -333,7 +638,10 @@
                     </div>
 
                     <!-- Barang Penukar Barter (Hanya jika mode = barter) -->
-                    <div x-show="mode === 'barter'" x-cloak x-transition class="space-y-2 p-4 rounded-xl bg-teal-50/80 border border-teal-200">
+                    <div x-show="mode === 'barter'" 
+                         style="{{ $isBarter ? '' : 'display: none;' }}"
+                         x-transition 
+                         class="space-y-2 p-4 rounded-xl bg-teal-50/80 border border-teal-200">
                         <label for="barter_request" class="block text-xs font-semibold text-teal-950">
                             Barang yang Kamu Cari untuk Ditukar <span class="text-rose-500">*</span>
                         </label>
@@ -405,7 +713,7 @@
                         
                         <!-- Gambar & Badge -->
                         <div class="relative w-full h-44 bg-slate-100 overflow-hidden">
-                            <img x-show="photoPreview1" x-cloak :src="photoPreview1" class="w-full h-full object-cover">
+                            <img id="feedCardPreviewImg" x-show="photoPreview1" x-cloak :src="photoPreview1" class="w-full h-full object-cover">
                             <div x-show="!photoPreview1" class="w-full h-full flex flex-col items-center justify-center bg-slate-50 text-slate-400 p-4 text-center">
                                 <x-icon name="package" class="w-8 h-8 mb-1 text-slate-300" />
                                 <span class="text-xs font-medium">Foto barang akan tampil di sini</span>
@@ -486,74 +794,4 @@
         </div>
 
     </div>
-
-    <script>
-        document.addEventListener('alpine:init', () => {
-            if (window.Alpine) {
-                Alpine.data('itemCreateForm', () => itemCreateFormState());
-            }
-        });
-
-        function itemCreateFormState() {
-            return {
-                title: @json(old('title', '')),
-                category: @json(old('category', 'Elektronik & Gadget Belajar')),
-                condition: @json(old('condition', 'Bekas Layak Pakai')),
-                description: @json(old('description', '')),
-                mode: @json(old('mode', 'harga_pas')),
-                price: @json((float) old('price', 45000)),
-                barter_request: @json(old('barter_request', '')),
-                photoPreview1: null,
-                photoPreview2: null,
-                photoPreview3: null,
-                photoName1: '',
-                photoName2: '',
-                photoName3: '',
-                formatPrice(val) {
-                    if (!val) return '0';
-                    return new Intl.NumberFormat('id-ID').format(val);
-                },
-                handleImage(e, slot) {
-                    const files = e.target.files;
-                    if (files && files.length > 0) {
-                        const file = files[0];
-                        const reader = new FileReader();
-                        reader.onload = (event) => {
-                            if (slot === 1) {
-                                this.photoPreview1 = event.target.result;
-                                this.photoName1 = file.name;
-                            }
-                            if (slot === 2) {
-                                this.photoPreview2 = event.target.result;
-                                this.photoName2 = file.name;
-                            }
-                            if (slot === 3) {
-                                this.photoPreview3 = event.target.result;
-                                this.photoName3 = file.name;
-                            }
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                },
-                removeImage(slot) {
-                    if (slot === 1) {
-                        this.photoPreview1 = null;
-                        this.photoName1 = '';
-                    }
-                    if (slot === 2) {
-                        this.photoPreview2 = null;
-                        this.photoName2 = '';
-                    }
-                    if (slot === 3) {
-                        this.photoPreview3 = null;
-                        this.photoName3 = '';
-                    }
-                    const input = document.getElementById('photoInput' + slot);
-                    if (input) input.value = '';
-                }
-            };
-        }
-
-        window.itemCreateForm = itemCreateFormState;
-    </script>
 </x-app-layout>

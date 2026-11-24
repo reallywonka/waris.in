@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\EnsureAdmin;
+use App\Http\Middleware\EnsureNotSuspended;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -13,12 +15,12 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            'admin' => \App\Http\Middleware\EnsureAdmin::class,
-            'not_suspended' => \App\Http\Middleware\EnsureNotSuspended::class,
+            'admin' => EnsureAdmin::class,
+            'not_suspended' => EnsureNotSuspended::class,
         ]);
 
         $middleware->appendToGroup('web', [
-            \App\Http\Middleware\EnsureNotSuspended::class,
+            EnsureNotSuspended::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

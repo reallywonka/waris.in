@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="t2">
+  <title id="t2">waris.in - Monoline Lentera</title>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Outer W cradle (Two hands / open pages) -->
+    <path d="
+      M 48 80
+      L 78 184
+      C 84 198, 96 204, 110 204
+      C 120 204, 128 196, 132 184
+      L 148 132
+      L 164 184
+      C 168 196, 176 204, 186 204
+      C 200 204, 212 198, 218 184
+      L 248 80
+    " stroke="#064E3B" stroke-width="16"/>
+    <!-- Center Torch Spire ('i' stem) -->
+    <line x1="128" y1="140" x2="128" y2="88" stroke="#047857" stroke-width="14"/>
+  </g>
+  <!-- Center Golden Flame ('i' dot) -->
+  <circle cx="128" cy="64" r="8" fill="#D97706"/>
+</svg>

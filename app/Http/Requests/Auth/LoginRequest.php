@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -28,8 +30,21 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
+            'email' => ['required', 'string'],
             'password' => ['required', 'string'],
+        ];
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'Email atau NIM wajib diisi.',
+            'password.required' => 'Kata sandi wajib diisi.',
         ];
     }
 
@@ -42,13 +57,45 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        $loginInput = $this->string('email')->trim()->value();
+        $password = $this->string('password')->value();
+
+        // Cari pengguna berdasarkan email atau NIM kampus
+        $user = User::where('email', $loginInput)
+            ->orWhere('nim', $loginInput)
+            ->first();
+
+        // 1. Akun tidak ditemukan
+        if (! $user) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => 'Akun dengan email/NIM ini belum terdaftar. Silakan periksa kembali atau buat akun baru.',
             ]);
         }
+
+        // 2. Akun sedang ditangguhkan (Suspended)
+        if ($user->isSuspended()) {
+            RateLimiter::hit($this->throttleKey());
+
+            $reason = $user->suspend_reason ? " karena: {$user->suspend_reason}" : '';
+
+            throw ValidationException::withMessages([
+                'email' => "Akun Anda sedang ditangguhkan{$reason}. Silakan hubungi admin kampus.",
+            ]);
+        }
+
+        // 3. Akun ditemukan, tetapi kata sandi tidak cocok
+        if (! Hash::check($password, $user->password)) {
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'password' => 'Kata sandi yang Anda masukkan salah. Silakan coba lagi.',
+            ]);
+        }
+
+        // 4. Autentikasi berhasil
+        Auth::login($user, $this->boolean('remember'));
 
         RateLimiter::clear($this->throttleKey());
     }
@@ -69,10 +116,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
-                'seconds' => $seconds,
-                'minutes' => ceil($seconds / 60),
-            ]),
+            'email' => "Terlalu banyak percobaan masuk yang gagal. Silakan coba lagi dalam {$seconds} detik.",
         ]);
     }
 

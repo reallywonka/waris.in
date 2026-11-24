@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="title-c">
+  <title id="title-c">waris.in - The Heritage Crest</title>
+  <g id="symbol-c">
+    <!-- Left Monolith: Arching upward and embracing inward -->
+    <path fill="#064E3B" d="
+      M 48 72
+      L 76 72
+      L 98 156
+      C 102 172, 112 180, 122 180
+      L 122 204
+      C 100 204, 82 192, 74 168
+      L 48 72
+      Z
+    "/>
+    <!-- Right Monolith: Mirrored, completing the foundation -->
+    <path fill="#064E3B" d="
+      M 208 72
+      L 180 72
+      L 158 156
+      C 154 172, 144 180, 134 180
+      L 134 204
+      C 156 204, 174 192, 182 168
+      L 208 72
+      Z
+    "/>
+    <!-- Center Upward Chevron (The Heritage Uplift / Legacy Pillar) -->
+    <path fill="#047857" d="
+      M 128 80
+      L 152 144
+      L 136 144
+      L 128 122
+      L 120 144
+      L 104 144
+      Z
+    "/>
+    <!-- Subtle Golden Accent at apex -->
+    <circle cx="128" cy="62" r="6" fill="#D97706"/>
+  </g>
+</svg>

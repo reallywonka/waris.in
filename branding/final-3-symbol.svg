@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="t3">
+  <title id="t3">waris.in - Lembaran Estafet (Concept 3)</title>
+  <g id="symbol-3" fill="#064E3B">
+    <!-- Left Leaf / Page of W -->
+    <path d="
+      M 48 74
+      L 74 74
+      L 100 174
+      C 102 182, 100 190, 94 194
+      L 86 198
+      C 78 202, 68 198, 64 190
+      L 48 74
+      Z
+    "/>
+    <!-- Left Center Stem -->
+    <path fill="#047857" d="
+      M 112 184
+      L 136 100
+      L 122 100
+      L 100 176
+      C 98 184, 104 190, 112 184
+      Z
+    "/>
+    <!-- Right Center Stem -->
+    <path fill="#047857" d="
+      M 144 184
+      L 120 100
+      L 134 100
+      L 156 176
+      C 158 184, 152 190, 144 184
+      Z
+    "/>
+    <!-- Right Leaf / Page of W -->
+    <path d="
+      M 208 74
+      L 182 74
+      L 156 174
+      C 154 182, 156 190, 162 194
+      L 170 198
+      C 178 202, 188 198, 192 190
+      L 208 74
+      Z
+    "/>
+    <!-- Golden Apex Horizon Sun -->
+    <circle cx="128" cy="74" r="7" fill="#D97706"/>
+  </g>
+</svg>

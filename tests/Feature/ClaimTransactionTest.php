@@ -13,8 +13,11 @@ class ClaimTransactionTest extends TestCase
     use RefreshDatabase;
 
     private User $owner;
+
     private User $claimant1;
+
     private User $claimant2;
+
     private Item $item;
 
     protected function setUp(): void

@@ -71,21 +71,24 @@ class Item extends Model
         if ($this->mode === 'barter') {
             return 'Barter';
         }
-        return 'Rp ' . number_format($this->price, 0, ',', '.');
+
+        return 'Rp '.number_format($this->price, 0, ',', '.');
     }
 
     public function getPrimaryImageUrlAttribute(): string
     {
         $primary = $this->images->firstWhere('is_primary', true) ?? $this->images->first();
-        if ($primary && !empty($primary->image_path)) {
+        if ($primary && ! empty($primary->image_path)) {
             if (str_starts_with($primary->image_path, 'http://') || str_starts_with($primary->image_path, 'https://')) {
                 return $primary->image_path;
             }
             if (str_starts_with($primary->image_path, 'images/')) {
                 return asset($primary->image_path);
             }
-            return asset('storage/' . $primary->image_path);
+
+            return asset('storage/'.$primary->image_path);
         }
+
         return asset('images/placeholders/default.svg');
     }
 }

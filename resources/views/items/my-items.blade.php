@@ -163,13 +163,21 @@
                                     <span>Peminat ({{ $item->claims->count() }})</span>
                                 </a>
 
-                                <form method="POST" action="{{ route('items.destroy', $item) }}" onsubmit="return confirm('Apakah Anda yakin ingin menghapus barang ini? Seluruh data pengajuan terkait juga akan terhapus.');">
+                                <form method="POST" 
+                                      action="{{ route('items.destroy', $item) }}" 
+                                      data-confirm="Apakah Anda yakin ingin menghapus barang &quot;{{ addslashes($item->title) }}&quot;?"
+                                      data-confirm-title="Hapus Barang Ini?"
+                                      data-confirm-button="Ya, Hapus Barang"
+                                      data-confirm-color="rose"
+                                      data-confirm-icon="trash"
+                                      data-confirm-note="Listing barang beserta seluruh data riwayat peminat terkait akan dihapus secara permanen dari waris.in."
+                                      class="inline-flex">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" 
-                                            class="p-1.5 rounded-xl text-gray-400 hover:text-rose-600 hover:bg-rose-50 transition-colors" 
+                                            class="p-2 rounded-xl text-rose-600 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 transition-colors cursor-pointer flex items-center justify-center" 
                                             title="Hapus Barang">
-                                        <x-icon name="trash" class="w-4 h-4" />
+                                        <x-icon name="trash" class="w-4 h-4 text-rose-600" />
                                     </button>
                                 </form>
                             </div>

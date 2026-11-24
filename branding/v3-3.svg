@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="t3">
+  <title id="t3">waris.in - Lembaran Estafet (Open Pages W)</title>
+  <g id="pages-w">
+    <!-- Left Page / Wing: Sweeping architectural curve -->
+    <path fill="#064E3B" d="
+      M 48 84
+      C 44 84, 40 88, 42 94
+      L 74 186
+      C 78 198, 90 204, 102 204
+      L 122 204
+      L 104 126
+      C 100 110, 88 98, 72 90
+      L 54 84
+      Z
+    "/>
+    <!-- Right Page / Wing: Mirrored harmony -->
+    <path fill="#064E3B" d="
+      M 208 84
+      C 212 84, 216 88, 214 94
+      L 182 186
+      C 178 198, 166 204, 154 204
+      L 134 204
+      L 152 126
+      C 156 110, 168 98, 184 90
+      L 202 84
+      Z
+    "/>
+    <!-- Center Spine & Horizon Rise (The Knowledge Handover) -->
+    <path fill="#047857" d="
+      M 128 76
+      L 142 168
+      C 142 174, 138 180, 132 182
+      L 128 184
+      L 124 182
+      C 118 180, 114 174, 114 168
+      L 128 76
+      Z
+    "/>
+    <!-- Minimalist Sun / Horizon Node -->
+    <circle cx="128" cy="58" r="6" fill="#D97706"/>
+  </g>
+</svg>

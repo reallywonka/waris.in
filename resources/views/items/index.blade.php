@@ -175,23 +175,25 @@
         </div>
 
         <!-- 6. Bottom Banner CTA -->
-        <div class="bg-emerald-900 rounded-2xl p-7 sm:p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-6">
-            <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center shrink-0 border border-white/20">
+        <div class="bg-gradient-to-br from-emerald-900 to-teal-950 rounded-3xl p-6 sm:p-10 border border-emerald-800 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-xs">
+            <div class="flex items-start space-x-4 max-w-xl">
+                <div class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center shrink-0 border border-white/20 shadow-2xs">
                     <x-icon name="recycle" class="w-6 h-6 text-emerald-200" />
                 </div>
-                <div class="space-y-1">
-                    <h3 class="font-bold text-base sm:text-lg">Punya barang kuliah nganggur di kosan?</h3>
-                    <p class="text-xs sm:text-sm text-emerald-100/90 leading-relaxed max-w-xl">
+                <div class="space-y-1.5">
+                    <h3 class="font-black text-lg sm:text-xl text-white">Punya barang kuliah nganggur di kosan?</h3>
+                    <p class="text-xs sm:text-sm text-emerald-100/90 leading-relaxed">
                         Bantu teman kampusmu yang sedang butuh alat praktikum, buku, atau perlengkapan kuliah. Pasang sekarang dalam hitungan menit!
                     </p>
                 </div>
             </div>
-            <a href="{{ route('items.create') }}" 
-               class="px-5 py-3 bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white font-bold text-xs sm:text-sm rounded-xl transition-colors shrink-0 flex items-center space-x-2 shadow-xs cursor-pointer">
-                <x-icon name="plus" class="w-4 h-4 text-white" />
-                <span>Pasang Barang Sekarang</span>
-            </a>
+            <div class="shrink-0">
+                <a href="{{ route('items.create') }}" 
+                   class="px-6 py-3 bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white font-bold text-xs sm:text-sm rounded-full transition-colors shrink-0 flex items-center space-x-2 shadow-2xs cursor-pointer">
+                    <x-icon name="plus" class="w-4 h-4 text-white" />
+                    <span>Pasang Barang Sekarang</span>
+                </a>
+            </div>
         </div>
 
     </div>

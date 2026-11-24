@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="title-c">
+  <title id="title-c">waris.in - Panah Barter (Concept C)</title>
+  <g id="symbol-c">
+    <!-- Left Stem: Inflow Arrow from top-left curving up to center peak -->
+    <path fill="#047857" d="
+      M 48 64
+      C 40 64, 34 70, 36 78
+      L 58 166
+      C 64 186, 78 196, 96 196
+      C 114 196, 126 186, 132 168
+      L 148 116
+      L 124 116
+      L 112 154
+      C 108 166, 102 170, 96 170
+      C 90 170, 84 166, 80 154
+      L 62 88
+      L 86 88
+      L 76 64
+      Z
+    "/>
+    <!-- Right Stem: Outflow / Exchange Arrow with integrated arrowhead at top right -->
+    <path fill="#10B981" d="
+      M 136 100
+      L 152 154
+      C 156 166, 162 170, 168 170
+      C 174 170, 180 166, 184 154
+      L 202 88
+      L 182 88
+      L 214 54
+      L 236 100
+      L 218 100
+      L 196 166
+      C 190 186, 176 196, 158 196
+      C 142 196, 130 186, 122 168
+      L 114 140
+      L 126 100
+      Z
+    "/>
+    <!-- Dynamic Exchange Core Accent -->
+    <circle cx="128" cy="74" r="12" fill="#D97706"/>
+  </g>
+</svg>

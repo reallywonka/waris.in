@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Claim;
 use App\Models\Item;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,9 +21,9 @@ class ItemController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%")
-                  ->orWhere('barter_request', 'like', "%{$search}%")
-                  ->orWhere('category', 'like', "%{$search}%");
+                    ->orWhere('description', 'like', "%{$search}%")
+                    ->orWhere('barter_request', 'like', "%{$search}%")
+                    ->orWhere('category', 'like', "%{$search}%");
             });
         }
 
@@ -226,7 +227,7 @@ class ItemController extends Controller
         $totalItems = auth()->user()->items()->count();
         $availableItems = auth()->user()->items()->where('status', 'available')->count();
         $lockedItems = auth()->user()->items()->where('status', 'locked')->count();
-        $totalClaimsReceived = \App\Models\Claim::whereIn('item_id', auth()->user()->items()->pluck('id'))->count();
+        $totalClaimsReceived = Claim::whereIn('item_id', auth()->user()->items()->pluck('id'))->count();
 
         return view('items.my-items', compact(
             'items',

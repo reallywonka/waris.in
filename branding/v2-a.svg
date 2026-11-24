@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="title-a">
+  <title id="title-a">waris.in - The Interlocking Legacy</title>
+  <!-- Pure Deep Forest Emerald (#064E3B) for high-end elegance -->
+  <g id="symbol-a" fill="#064E3B">
+    <!-- Left Link: Tilted -28 deg around (92, 134) -->
+    <path fill-rule="evenodd" d="
+      M 62 68
+      C 76 54, 98 56, 110 72
+      L 128 96
+      L 110 110
+      L 96 92
+      C 90 84, 78 82, 70 90
+      L 52 108
+      C 44 116, 44 128, 52 136
+      L 86 170
+      C 94 178, 106 178, 114 170
+      L 132 152
+      L 146 166
+      L 128 184
+      C 112 200, 88 200, 72 184
+      L 38 150
+      C 22 134, 22 110, 38 94
+      Z
+    "/>
+    <!-- Right Link: Interlocking with the left, tilted +28 deg around (164, 134) -->
+    <path fill-rule="evenodd" d="
+      M 194 68
+      C 180 54, 158 56, 146 72
+      L 128 96
+      L 146 110
+      L 160 92
+      C 166 84, 178 82, 186 90
+      L 204 108
+      C 212 116, 212 128, 204 136
+      L 170 170
+      C 162 178, 150 178, 142 170
+      L 124 152
+      L 110 166
+      L 128 184
+      C 144 200, 168 200, 184 184
+      L 218 150
+      C 234 134, 234 110, 218 94
+      Z
+    "/>
+    <!-- Subtle Golden Legacy Accent at the intersection node -->
+    <circle cx="128" cy="96" r="6" fill="#D97706"/>
+  </g>
+</svg>

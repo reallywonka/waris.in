@@ -52,7 +52,7 @@
                 <!-- Brand & Judul -->
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-2">
-                        <img src="{{ asset('images/letter-w_g.png') }}" alt="waris.in logo" class="w-8 h-8 object-contain">
+                        <img src="{{ asset('images/logo-symbol.svg') }}" alt="waris.in logo" class="w-8 h-8 object-contain">
                         <span class="text-xl font-black tracking-tight text-gray-900">waris<span class="text-emerald-700">.in</span></span>
                     </div>
                     <span class="inline-flex items-center text-[10px] font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">

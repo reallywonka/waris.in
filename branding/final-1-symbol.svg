@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="t1">
+  <title id="t1">waris.in - Lentera Warisan (Concept 1)</title>
+  <g id="symbol-1">
+    <!-- Left Hand / Wing of W (Deep Forest Emerald #064E3B) -->
+    <path fill="#064E3B" d="
+      M 48 76
+      C 42 76, 38 82, 40 90
+      L 68 178
+      C 74 194, 88 202, 104 202
+      C 118 202, 126 194, 130 182
+      L 142 142
+      L 124 142
+      L 114 172
+      C 112 178, 108 182, 102 182
+      C 94 182, 88 176, 84 166
+      L 64 94
+      L 56 76
+      Z
+    "/>
+    <!-- Right Hand / Wing of W (Deep Forest Emerald #064E3B) -->
+    <path fill="#064E3B" d="
+      M 208 76
+      C 214 76, 218 82, 216 90
+      L 188 178
+      C 182 194, 168 202, 152 202
+      C 138 202, 130 194, 126 182
+      L 114 142
+      L 132 142
+      L 142 172
+      C 144 178, 148 182, 154 182
+      C 162 182, 168 176, 172 166
+      L 192 94
+      L 200 76
+      Z
+    "/>
+    <!-- Center Pillar (The 'i' stem / Torch of Wisdom in Rich Emerald #047857) -->
+    <rect x="121" y="92" width="14" height="64" rx="7" fill="#047857"/>
+    <!-- Golden Ember Dot (The 'i' dot / Flame of Knowledge) -->
+    <circle cx="128" cy="70" r="8" fill="#D97706"/>
+  </g>
+</svg>

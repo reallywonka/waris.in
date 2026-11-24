@@ -151,7 +151,7 @@ class ClaimController extends Controller
 
             return back()->with('success', 'Pengajuan berhasil disetujui! Status barang otomatis terkunci dan kontak WhatsApp mahasiswa peminat telah terbuka.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Gagal memproses persetujuan: ' . $e->getMessage());
+            return back()->with('error', 'Gagal memproses persetujuan: '.$e->getMessage());
         }
     }
 

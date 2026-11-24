@@ -66,7 +66,7 @@
                 <!-- Brand & Header -->
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-2">
-                        <img src="{{ asset('images/letter-w_g.png') }}" alt="waris.in logo" class="w-8 h-8 object-contain">
+                        <img src="{{ asset('images/logo-symbol.svg') }}" alt="waris.in logo" class="w-8 h-8 object-contain">
                         <span class="text-xl font-black tracking-tight text-gray-900">waris<span class="text-emerald-700">.in</span></span>
                     </div>
                     <span class="inline-flex items-center text-[11px] font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
@@ -81,9 +81,22 @@
 
                 <!-- Session Status / Errors -->
                 <x-auth-session-status class="mt-3 text-xs" :status="session('status')" />
+
+                @if (session('error'))
+                    <div class="mt-3 p-3 rounded-2xl bg-rose-50 border border-rose-200/80 text-rose-800 text-xs font-medium flex items-start space-x-2.5">
+                        <x-icon name="alert-circle" class="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                        <span>{{ session('error') }}</span>
+                    </div>
+                @endif
+
                 @if ($errors->any())
-                    <div class="mt-3 p-2.5 rounded-xl bg-red-50 text-red-700 text-xs font-medium">
-                        {{ $errors->first() }}
+                    <div class="mt-3 p-3 rounded-2xl bg-rose-50 border border-rose-200/80 text-rose-800 text-xs font-medium flex items-start space-x-2.5">
+                        <x-icon name="alert-circle" class="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                        <div class="space-y-0.5">
+                            @foreach ($errors->all() as $error)
+                                <p>{{ $error }}</p>
+                            @endforeach
+                        </div>
                     </div>
                 @endif
 
@@ -91,12 +104,17 @@
                 <form method="POST" action="{{ route('login') }}" class="mt-4 space-y-3.5">
                     @csrf
 
-                    <!-- Email Pribadi / Kampus -->
+                    <!-- Email Pribadi / Kampus / NIM -->
                     <div>
-                        <label for="email" class="block text-xs font-semibold text-gray-700 mb-1">Email Pribadi / Kampus</label>
-                        <input id="email" type="email" name="email" :value="old('email')" required autofocus autocomplete="username"
-                               placeholder="andi.pratama@gmail.com"
-                               class="w-full text-xs rounded-xl border-gray-200 focus:border-emerald-700 focus:ring-emerald-700 py-2.5 px-3.5 bg-gray-50/50">
+                        <label for="email" class="block text-xs font-semibold text-gray-700 mb-1">Email Pribadi / Kampus / NIM</label>
+                        <input id="email" type="text" name="email" value="{{ old('email') }}" required autofocus autocomplete="username"
+                               placeholder="andi.pratama@gmail.com atau NIM"
+                               class="w-full text-xs rounded-xl py-2.5 px-3.5 transition-colors {{ $errors->has('email') ? 'border-rose-300 bg-rose-50/20 text-rose-900 focus:border-rose-500 focus:ring-rose-500' : 'border-gray-200 focus:border-emerald-700 focus:ring-emerald-700 bg-gray-50/50' }}">
+                        @error('email')
+                            <p class="mt-1 text-[11px] text-rose-600 font-medium flex items-center space-x-1">
+                                <span>{{ $message }}</span>
+                            </p>
+                        @enderror
                     </div>
 
                     <!-- Kata Sandi -->
@@ -111,7 +129,12 @@
                         </div>
                         <input id="password" type="password" name="password" required autocomplete="current-password"
                                placeholder="••••••••"
-                               class="w-full text-xs rounded-xl border-gray-200 focus:border-emerald-700 focus:ring-emerald-700 py-2.5 px-3.5 bg-gray-50/50">
+                               class="w-full text-xs rounded-xl py-2.5 px-3.5 transition-colors {{ $errors->has('password') ? 'border-rose-300 bg-rose-50/20 text-rose-900 focus:border-rose-500 focus:ring-rose-500' : 'border-gray-200 focus:border-emerald-700 focus:ring-emerald-700 bg-gray-50/50' }}">
+                        @error('password')
+                            <p class="mt-1 text-[11px] text-rose-600 font-medium flex items-center space-x-1">
+                                <span>{{ $message }}</span>
+                            </p>
+                        @enderror
                     </div>
 
                     <!-- Ingat Saya -->

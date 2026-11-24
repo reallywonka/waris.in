@@ -36,6 +36,7 @@ class ItemImage extends Model
         if (str_starts_with($this->image_path, 'images/')) {
             return asset($this->image_path);
         }
-        return asset('storage/' . $this->image_path);
+
+        return asset('storage/'.$this->image_path);
     }
 }

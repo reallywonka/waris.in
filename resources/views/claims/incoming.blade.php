@@ -207,10 +207,17 @@
                                             </button>
 
                                             <!-- Tombol Tolak -->
-                                            <form method="POST" action="{{ route('claims.reject', $claim) }}" onsubmit="return confirm('Apakah Anda yakin ingin menolak pengajuan ini?');">
+                                            <form method="POST" 
+                                                  action="{{ route('claims.reject', $claim) }}" 
+                                                  data-confirm="Tolak permohonan dari {{ addslashes($claim->claimant->name) }} untuk barang ini?"
+                                                  data-confirm-title="Tolak Pengajuan Peminat?"
+                                                  data-confirm-button="Ya, Tolak Pengajuan"
+                                                  data-confirm-color="rose"
+                                                  data-confirm-icon="x"
+                                                  data-confirm-note="Peminat akan menerima pemberitahuan bahwa pengajuannya ditolak. Tindakan ini tidak dapat dibatalkan.">
                                                 @csrf
                                                 <button type="submit" 
-                                                        class="w-full py-2.5 px-4 bg-white border border-gray-200 hover:bg-rose-50 hover:text-rose-700 hover:border-rose-200 text-gray-600 font-bold text-xs rounded-xl transition-colors">
+                                                        class="w-full py-2.5 px-4 bg-white border border-gray-200 hover:bg-rose-50 hover:text-rose-700 hover:border-rose-200 text-gray-600 font-bold text-xs rounded-xl transition-colors cursor-pointer">
                                                     Tolak Pengajuan
                                                 </button>
                                             </form>
@@ -317,9 +324,9 @@
                  x-transition:enter="ease-out duration-300"
                  x-transition:enter-start="opacity-0"
                  x-transition:enter-end="opacity-100"
-                 x-transition:exit="ease-in duration-200"
-                 x-transition:exit-start="opacity-100"
-                 x-transition:exit-end="opacity-0"
+                 x-transition:leave="ease-in duration-200"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
                  class="fixed inset-0 bg-gray-900/60 backdrop-blur-xs transition-opacity"
                  @click="approveModalOpen = false"></div>
 
@@ -328,9 +335,9 @@
                      x-transition:enter="ease-out duration-300"
                      x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                      x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                     x-transition:exit="ease-in duration-200"
-                     x-transition:exit-start="opacity-100 translate-y-0 sm:scale-100"
-                     x-transition:exit-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                     x-transition:leave="ease-in duration-200"
+                     x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                     x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                      class="relative transform overflow-hidden rounded-3xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-md border border-gray-100 p-6 space-y-4">
                     
                     <div class="flex items-center space-x-3">
