@@ -1,6 +1,17 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
 
+/**
+ * Helper agar Tailwind mendukung CSS Custom Properties (var(--waris-*))
+ * lengkap dengan modifier transparansi (misal: bg-waris-primary/10).
+ */
+const cssVar = (variable) => ({ opacityValue }) => {
+    if (opacityValue !== undefined) {
+        return `color-mix(in srgb, var(${variable}) calc(${opacityValue} * 100%), transparent)`;
+    }
+    return `var(${variable})`;
+};
+
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
@@ -16,33 +27,51 @@ export default {
                 sans: ['Plus Jakarta Sans', 'Inter', ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                brand: {
-                    50: '#f2f9f5',
-                    100: '#e1f2e8',
-                    200: '#c4e5d2',
-                    300: '#97d2b2',
-                    400: '#64b68d',
-                    500: '#3e9a70',
-                    600: '#2e7c57',
-                    700: '#266347',
-                    800: '#144d37', // Utama Waris.in
-                    900: '#0f3a29', // Tombol utama / dark green
-                    950: '#061d15',
+                waris: {
+                    primary: cssVar('--waris-primary'),
+                    'primary-hover': cssVar('--waris-primary-hover'),
+                    'primary-active': cssVar('--waris-primary-active'),
+                    'primary-soft': cssVar('--waris-primary-soft'),
+                    'primary-border': cssVar('--waris-primary-border'),
+                    'primary-muted': cssVar('--waris-primary-muted'),
+
+                    accent: cssVar('--waris-accent'),
+                    'accent-hover': cssVar('--waris-accent-hover'),
+                    'accent-active': cssVar('--waris-accent-active'),
+                    'accent-soft': cssVar('--waris-accent-soft'),
+                    'accent-border': cssVar('--waris-accent-border'),
+                    'accent-text': cssVar('--waris-accent-text'),
+
+                    barter: cssVar('--waris-barter'),
+                    'barter-hover': cssVar('--waris-barter-hover'),
+                    'barter-soft': cssVar('--waris-barter-soft'),
+                    'barter-border': cssVar('--waris-barter-border'),
+                    'barter-text': cssVar('--waris-barter-text'),
+
+                    bg: cssVar('--waris-bg'),
+                    surface: cssVar('--waris-surface'),
+                    'surface-muted': cssVar('--waris-surface-muted'),
+                    'surface-hover': cssVar('--waris-surface-hover'),
+                    border: cssVar('--waris-border'),
+                    'border-strong': cssVar('--waris-border-strong'),
+
+                    text: cssVar('--waris-text'),
+                    'text-secondary': cssVar('--waris-text-secondary'),
+                    muted: cssVar('--waris-text-muted'),
+                    subtle: cssVar('--waris-text-subtle'),
+                    faint: cssVar('--waris-text-faint'),
+
+                    danger: cssVar('--waris-danger'),
+                    'danger-hover': cssVar('--waris-danger-hover'),
+                    'danger-soft': cssVar('--waris-danger-soft'),
+                    'danger-border': cssVar('--waris-danger-border'),
+                    'danger-text': cssVar('--waris-danger-text'),
+
+                    info: cssVar('--waris-info'),
+                    'info-soft': cssVar('--waris-info-soft'),
+                    'info-border': cssVar('--waris-info-border'),
+                    'info-text': cssVar('--waris-info-text'),
                 },
-                mint: {
-                    50: '#f6faf7',
-                    100: '#ebf5ed',
-                    200: '#d7ebd9',
-                    300: '#b8dcbe',
-                },
-                mode: {
-                    gratis: '#16a34a',
-                    gratisBg: '#f0fdf4',
-                    hargaPas: '#d97706',
-                    hargaPasBg: '#fffbeb',
-                    barter: '#0d9488',
-                    barterBg: '#f0fdfa',
-                }
             },
             borderRadius: {
                 '2xl': '1rem',

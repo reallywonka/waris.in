@@ -18,7 +18,7 @@
             [x-cloak] { display: none !important; }
         </style>
     </head>
-    <body class="font-sans antialiased text-slate-800 bg-slate-50 flex flex-col min-h-screen selection:bg-emerald-100 selection:text-emerald-900">
+    <body class="font-sans antialiased text-waris-text bg-waris-bg flex flex-col min-h-screen selection:bg-waris-primary-soft selection:text-waris-primary">
         
         <!-- Navbar Atas -->
         @include('layouts.navigation')
@@ -26,36 +26,36 @@
         <!-- Flash Messages (Notifikasi Berhasil / Gagal) -->
         @if (session('success'))
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 w-full">
-                <div class="bg-emerald-50 border border-emerald-200/80 text-emerald-900 px-4 py-3 rounded-xl flex items-center justify-between shadow-2xs">
+                <div class="bg-waris-primary-soft border border-waris-primary-border text-waris-primary px-4 py-3 rounded-xl flex items-center justify-between shadow-2xs">
                     <div class="flex items-center space-x-2.5">
-                        <x-icon name="check-circle" class="w-4 h-4 text-emerald-700 shrink-0" />
+                        <x-icon name="check-circle" class="w-4 h-4 text-waris-primary-muted shrink-0" />
                         <span class="text-xs sm:text-sm font-medium">{{ session('success') }}</span>
                     </div>
-                    <button onclick="this.parentElement.remove()" class="text-emerald-600 hover:text-emerald-900 text-sm font-bold cursor-pointer">&times;</button>
+                    <button onclick="this.parentElement.remove()" class="text-waris-primary-muted hover:text-waris-primary text-sm font-bold cursor-pointer">&times;</button>
                 </div>
             </div>
         @endif
 
         @if (session('error'))
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 w-full">
-                <div class="bg-rose-50 border border-rose-200/80 text-rose-900 px-4 py-3 rounded-xl flex items-center justify-between shadow-2xs">
+                <div class="bg-waris-danger-soft border border-waris-danger-border text-waris-danger-text px-4 py-3 rounded-xl flex items-center justify-between shadow-2xs">
                     <div class="flex items-center space-x-2.5">
-                        <x-icon name="alert-triangle" class="w-4 h-4 text-rose-600 shrink-0" />
+                        <x-icon name="alert-triangle" class="w-4 h-4 text-waris-danger shrink-0" />
                         <span class="text-xs sm:text-sm font-medium">{{ session('error') }}</span>
                     </div>
-                    <button onclick="this.parentElement.remove()" class="text-rose-600 hover:text-rose-900 text-sm font-bold cursor-pointer">&times;</button>
+                    <button onclick="this.parentElement.remove()" class="text-waris-danger hover:text-waris-danger-hover text-sm font-bold cursor-pointer">&times;</button>
                 </div>
             </div>
         @endif
 
         @if (session('info'))
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 w-full">
-                <div class="bg-blue-50 border border-blue-200/80 text-blue-900 px-4 py-3 rounded-xl flex items-center justify-between shadow-2xs">
+                <div class="bg-waris-info-soft border border-waris-info-border text-waris-info-text px-4 py-3 rounded-xl flex items-center justify-between shadow-2xs">
                     <div class="flex items-center space-x-2.5">
-                        <x-icon name="info" class="w-4 h-4 text-blue-700 shrink-0" />
+                        <x-icon name="info" class="w-4 h-4 text-waris-info shrink-0" />
                         <span class="text-xs sm:text-sm font-medium">{{ session('info') }}</span>
                     </div>
-                    <button onclick="this.parentElement.remove()" class="text-blue-600 hover:text-blue-900 text-sm font-bold cursor-pointer">&times;</button>
+                    <button onclick="this.parentElement.remove()" class="text-waris-info hover:text-waris-info-text text-sm font-bold cursor-pointer">&times;</button>
                 </div>
             </div>
         @endif

@@ -1,88 +1,75 @@
 <x-guest-layout>
-    <div class="w-full bg-white rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-12 border border-emerald-900/10 max-h-[92vh]">
+    <div class="w-full bg-waris-surface rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-12 border border-waris-primary/10 max-h-[92vh]">
         
-        <!-- Sisi Kiri: Edukasi Gerakan Kampus Sirkular -->
-        <div class="md:col-span-5 bg-emerald-50/80 p-6 lg:p-8 flex flex-col justify-between border-b md:border-b-0 md:border-r border-emerald-900/10">
+        <!-- Sisi Kiri: Ringkasan Platform -->
+        <div class="md:col-span-5 bg-waris-primary-soft/80 p-6 lg:p-8 flex flex-col justify-between border-b md:border-b-0 md:border-r border-waris-border">
             <div>
-                <!-- Badge Gerakan -->
-                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-800 text-white text-[11px] font-semibold tracking-wide uppercase shadow-2xs">
-                    <x-icon name="repeat" class="w-3.5 h-3.5 text-emerald-200" />
-                    <span>Gerakan Kampus Sirkular</span>
-                </div>
-
-                <h2 class="mt-4 text-xl lg:text-2xl font-black text-gray-900 leading-snug">
-                    Warisan barang berharga antar civitas akademika.
+                <h2 class="mt-2 text-xl lg:text-2xl font-bold text-waris-text leading-snug">
+                    Warisan barang kuliah antar sesama mahasiswa.
                 </h2>
-                <p class="mt-2 text-xs text-gray-600 leading-relaxed">
-                    Dari buku kuliah, alat laboratorium, sampai perlengkapan kos. Lebih hemat, kurangi limbah, pererat silaturahmi.
+                <p class="mt-2.5 text-xs text-waris-muted leading-relaxed">
+                    Dari buku ajar, alat praktikum, sampai perlengkapan kos yang sudah tidak terpakai — oper ke adik tingkat atau teman yang membutuhkan.
                 </p>
 
-                <!-- Aktivitas Terkini (Ticker Ringkas) -->
-                <div class="mt-5 bg-white rounded-2xl p-3.5 shadow-2xs border border-emerald-900/10">
-                    <div class="flex items-center justify-between text-[11px] font-semibold text-gray-500 mb-2.5">
-                        <span class="flex items-center space-x-1.5 text-emerald-800">
-                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                            <span>Aktivitas Terkini</span>
-                        </span>
-                        <span class="bg-gray-100 px-2 py-0.5 rounded text-[10px]">Zona Kampus A</span>
+                <!-- Alur Singkat -->
+                <div class="mt-6 space-y-3">
+                    <div class="bg-waris-surface rounded-2xl p-3.5 border border-waris-border shadow-2xs flex items-start space-x-3">
+                        <div class="w-8 h-8 rounded-xl bg-waris-primary-soft text-waris-primary flex items-center justify-center shrink-0">
+                            <x-icon name="package" class="w-4 h-4" />
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-xs text-waris-text">Tawarkan dengan 3 Pilihan</h4>
+                            <p class="text-[11px] text-waris-subtle mt-0.5 leading-relaxed">Bisa dihibahkan gratis, dijual harga pas mahasiswa, atau dibarter.</p>
+                        </div>
                     </div>
 
-                    <div class="space-y-2 text-xs">
-                        <div class="flex items-center justify-between bg-emerald-50/60 p-2 rounded-xl border border-emerald-100/80">
-                            <div class="truncate pr-2">
-                                <p class="font-bold text-gray-800 text-[11px] truncate">Kalkulus Edisi 9</p>
-                                <p class="text-gray-500 text-[10px]">Dihibahkan oleh Fajar (Teknik)</p>
-                            </div>
-                            <span class="px-2 py-0.5 rounded-lg bg-emerald-100 text-emerald-800 font-bold text-[10px] shrink-0">Gratis</span>
+                    <div class="bg-waris-surface rounded-2xl p-3.5 border border-waris-border shadow-2xs flex items-start space-x-3">
+                        <div class="w-8 h-8 rounded-xl bg-waris-accent-soft text-waris-accent flex items-center justify-center shrink-0">
+                            <x-icon name="check-circle" class="w-4 h-4" />
                         </div>
+                        <div>
+                            <h4 class="font-semibold text-xs text-waris-text">Pilih Peminat Tanpa Ribet</h4>
+                            <p class="text-[11px] text-waris-subtle mt-0.5 leading-relaxed">Setujui satu pengajuan terbaik, barang otomatis terkunci dari yang lain.</p>
+                        </div>
+                    </div>
 
-                        <div class="flex items-center justify-between bg-teal-50/60 p-2 rounded-xl border border-teal-100/80">
-                            <div class="truncate pr-2">
-                                <p class="font-bold text-gray-800 text-[11px] truncate">Kalkulator Saintifik Casio</p>
-                                <p class="text-gray-500 text-[10px]">Barter dengan Meja Lipat</p>
-                            </div>
-                            <span class="px-2 py-0.5 rounded-lg bg-teal-100 text-teal-800 font-bold text-[10px] shrink-0">Barter</span>
+                    <div class="bg-waris-surface rounded-2xl p-3.5 border border-waris-border shadow-2xs flex items-start space-x-3">
+                        <div class="w-8 h-8 rounded-xl bg-waris-barter-soft text-waris-barter flex items-center justify-center shrink-0">
+                            <x-icon name="map-pin" class="w-4 h-4" />
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-xs text-waris-text">COD Langsung di Area Kampus</h4>
+                            <p class="text-[11px] text-waris-subtle mt-0.5 leading-relaxed">Kontak WhatsApp terbuka setelah disetujui agar serah terima aman.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Dampak Stat -->
-            <div class="mt-6 pt-4 border-t border-emerald-900/10 flex items-center justify-between text-xs font-medium text-gray-600">
-                <div>
-                    <span class="block text-sm lg:text-base font-black text-emerald-800">Rp 48.2 jt</span>
-                    <span class="text-[11px]">dihemat mhs</span>
-                </div>
-                <div class="text-right">
-                    <span class="block text-sm lg:text-base font-black text-teal-700">1,240+ kg</span>
-                    <span class="text-[11px]">emisi dicegah</span>
-                </div>
+            <div class="mt-6 pt-3 border-t border-waris-primary/10 text-[11px] text-waris-subtle">
+                waris.in &mdash; Estafet Barang Kampus
             </div>
         </div>
 
-        <!-- Sisi Kanan: Form Login (Satu Pintu Bebas Tab Admin) -->
+        <!-- Sisi Kanan: Form Login -->
         <div class="md:col-span-7 p-6 lg:p-8 flex flex-col justify-between overflow-y-auto">
             <div>
                 <!-- Brand & Header -->
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-2">
                         <img src="{{ asset('images/letter-w_g.png') }}" alt="waris.in logo" class="w-8 h-8 object-contain">
-                        <span class="text-xl font-black tracking-tight text-gray-900">waris<span class="text-emerald-700">.in</span></span>
+                        <span class="text-xl font-bold tracking-tight text-waris-text">waris<span class="text-waris-primary">.in</span></span>
                     </div>
-                    <span class="inline-flex items-center text-[11px] font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-                        ● Node Kampus Terbuka
-                    </span>
                 </div>
 
                 <div class="mt-4">
-                    <h3 class="text-lg lg:text-xl font-bold text-gray-900">Hai, selamat datang!</h3>
-                    <p class="text-xs text-gray-500 mt-0.5">Masuk dan temukan barang yang mungkin kamu butuhkan.</p>
+                    <h3 class="text-lg lg:text-xl font-bold text-waris-text">Hai, selamat datang!</h3>
+                    <p class="text-xs text-waris-subtle mt-0.5">Masuk dan temukan barang yang mungkin kamu butuhkan.</p>
                 </div>
 
                 <!-- Session Status / Errors -->
                 <x-auth-session-status class="mt-3 text-xs" :status="session('status')" />
                 @if ($errors->any())
-                    <div class="mt-3 p-2.5 rounded-xl bg-red-50 text-red-700 text-xs font-medium">
+                    <div class="mt-3 p-2.5 rounded-xl bg-waris-danger-soft text-waris-danger-text border border-waris-danger-border text-xs font-medium">
                         {{ $errors->first() }}
                     </div>
                 @endif
@@ -91,54 +78,50 @@
                 <form method="POST" action="{{ route('login') }}" class="mt-4 space-y-3.5">
                     @csrf
 
-                    <!-- Email Pribadi / Kampus -->
+                    <!-- Email -->
                     <div>
-                        <label for="email" class="block text-xs font-semibold text-gray-700 mb-1">Email Pribadi / Kampus</label>
+                        <label for="email" class="block text-xs font-semibold text-waris-text-secondary mb-1">Email</label>
                         <input id="email" type="email" name="email" :value="old('email')" required autofocus autocomplete="username"
                                placeholder="andi.pratama@gmail.com"
-                               class="w-full text-xs rounded-xl border-gray-200 focus:border-emerald-700 focus:ring-emerald-700 py-2.5 px-3.5 bg-gray-50/50">
+                               class="w-full text-xs rounded-xl border-waris-border focus:border-waris-primary focus:ring-waris-primary py-2.5 px-3.5 bg-waris-surface-hover text-waris-text">
                     </div>
 
                     <!-- Kata Sandi -->
                     <div>
                         <div class="flex items-center justify-between mb-1">
-                            <label for="password" class="block text-xs font-semibold text-gray-700">Kata Sandi</label>
+                            <label for="password" class="block text-xs font-semibold text-waris-text-secondary">Kata Sandi</label>
                             @if (Route::has('password.request'))
-                                <a href="{{ route('password.request') }}" class="text-[11px] font-medium text-emerald-700 hover:underline">
+                                <a href="{{ route('password.request') }}" class="text-[11px] font-medium text-waris-primary-muted hover:underline">
                                     Lupa kata sandi?
                                 </a>
                             @endif
                         </div>
                         <input id="password" type="password" name="password" required autocomplete="current-password"
                                placeholder="••••••••"
-                               class="w-full text-xs rounded-xl border-gray-200 focus:border-emerald-700 focus:ring-emerald-700 py-2.5 px-3.5 bg-gray-50/50">
+                               class="w-full text-xs rounded-xl border-waris-border focus:border-waris-primary focus:ring-waris-primary py-2.5 px-3.5 bg-waris-surface-hover text-waris-text">
                     </div>
 
                     <!-- Ingat Saya -->
-                    <div class="flex items-center justify-between pt-0.5">
+                    <div class="flex items-center pt-0.5">
                         <label for="remember_me" class="inline-flex items-center cursor-pointer">
                             <input id="remember_me" type="checkbox" name="remember" 
-                                   class="rounded border-gray-300 text-emerald-800 shadow-xs focus:ring-emerald-700">
-                            <span class="ms-2 text-xs text-gray-600">Ingat saya</span>
+                                   class="rounded border-waris-border-strong text-waris-primary shadow-xs focus:ring-waris-primary cursor-pointer">
+                            <span class="ms-2 text-xs text-waris-muted">Ingat saya</span>
                         </label>
-                        <span class="text-[11px] text-gray-400 flex items-center space-x-1">
-                            <x-icon name="lock" class="w-3 h-3 text-gray-400" />
-                            <span>TLS 256-bit</span>
-                        </span>
                     </div>
 
-                    <!-- Tombol Masuk -->
-                    <button type="submit" class="w-full py-2.5 px-4 bg-emerald-800 hover:bg-emerald-900 active:bg-emerald-950 text-white font-bold text-xs sm:text-sm rounded-xl shadow-xs transition-colors flex items-center justify-center space-x-2 cursor-pointer">
+                    <!-- Tombol Masuk (Signature Hover: Emerald -> Marigold) -->
+                    <button type="submit" class="w-full py-2.5 px-4 bg-waris-primary hover:bg-waris-accent active:bg-waris-accent-hover text-white font-bold text-xs sm:text-sm rounded-xl shadow-xs transition-colors duration-200 flex items-center justify-center space-x-2 cursor-pointer">
                         <span>Masuk Sekarang</span>
-                        <x-icon name="arrow-right" class="w-4 h-4 text-white" />
+                        <x-icon name="arrow-right" class="w-4 h-4" />
                     </button>
                 </form>
             </div>
 
             <!-- Link Daftar -->
-            <div class="mt-4 pt-3 border-t border-gray-100 text-center text-xs text-gray-600">
+            <div class="mt-4 pt-3 border-t border-waris-surface-muted text-center text-xs text-waris-muted">
                 Belum punya akun? 
-                <a href="{{ route('register') }}" class="font-bold text-emerald-800 hover:underline">
+                <a href="{{ route('register') }}" class="font-bold text-waris-primary hover:underline">
                     Daftar sekarang.
                 </a>
             </div>

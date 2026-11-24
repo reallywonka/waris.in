@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-200/80 sticky top-0 z-50">
+<nav x-data="{ open: false }" class="bg-waris-surface border-b border-waris-border sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
             
@@ -7,8 +7,8 @@
                 <!-- Brand Logo -->
                 <a href="{{ route('dashboard') }}" class="flex items-center space-x-2.5 group focus:outline-none">
                     <img src="{{ asset('images/letter-w_g.png') }}" alt="waris.in" class="w-8 h-8 object-contain group-hover:scale-105 transition-transform duration-200">
-                    <span class="text-xl font-bold tracking-tight text-gray-900">
-                        waris<span class="text-emerald-800">.in</span>
+                    <span class="text-xl font-bold tracking-tight text-waris-text">
+                        waris<span class="text-waris-primary">.in</span>
                     </span>
                 </a>
 
@@ -16,20 +16,20 @@
                 <div class="hidden md:flex items-center space-x-1.5 text-sm font-medium">
                     <!-- Beranda -->
                     <a href="{{ route('dashboard') }}" 
-                       class="px-3.5 py-2 rounded-xl transition-all duration-150 {{ request()->routeIs('dashboard') ? 'bg-emerald-50 text-emerald-800 font-bold' : 'text-gray-600 hover:text-emerald-800 hover:bg-gray-50' }}">
+                       class="px-3.5 py-2 rounded-xl transition-all duration-150 {{ request()->routeIs('dashboard') ? 'bg-waris-primary-soft text-waris-primary font-bold' : 'text-waris-muted hover:text-waris-primary hover:bg-waris-surface-hover' }}">
                         Beranda
                     </a>
 
                     <!-- Jelajahi Katalog -->
                     <a href="{{ route('items.index') }}" 
-                       class="px-3.5 py-2 rounded-xl transition-all duration-150 {{ request()->routeIs('items.index') ? 'bg-emerald-50 text-emerald-800 font-bold' : 'text-gray-600 hover:text-emerald-800 hover:bg-gray-50' }}">
+                       class="px-3.5 py-2 rounded-xl transition-all duration-150 {{ request()->routeIs('items.index') ? 'bg-waris-primary-soft text-waris-primary font-bold' : 'text-waris-muted hover:text-waris-primary hover:bg-waris-surface-hover' }}">
                         Jelajahi Katalog
                     </a>
 
                     @auth
                         <!-- Barang Saya (Task 6) -->
                         <a href="{{ route('items.my') }}" 
-                           class="px-3.5 py-2 rounded-xl transition-all duration-150 {{ request()->routeIs('items.my*') ? 'bg-emerald-50 text-emerald-800 font-bold' : 'text-gray-600 hover:text-emerald-800 hover:bg-gray-50' }}">
+                           class="px-3.5 py-2 rounded-xl transition-all duration-150 {{ request()->routeIs('items.my*') ? 'bg-waris-primary-soft text-waris-primary font-bold' : 'text-waris-muted hover:text-waris-primary hover:bg-waris-surface-hover' }}">
                             Barang Saya
                         </a>
 
@@ -38,10 +38,10 @@
                             $unreadIncomingCount = \App\Models\Claim::whereHas('item', fn($q) => $q->where('user_id', auth()->id()))->where('status', 'pending')->count();
                         @endphp
                         <a href="{{ route('claims.incoming') }}" 
-                           class="relative px-3.5 py-2 rounded-xl transition-all duration-150 flex items-center space-x-1.5 {{ request()->routeIs('claims.incoming*') ? 'bg-emerald-50 text-emerald-800 font-bold' : 'text-gray-600 hover:text-emerald-800 hover:bg-gray-50' }}">
+                           class="relative px-3.5 py-2 rounded-xl transition-all duration-150 flex items-center space-x-1.5 {{ request()->routeIs('claims.incoming*') ? 'bg-waris-primary-soft text-waris-primary font-bold' : 'text-waris-muted hover:text-waris-primary hover:bg-waris-surface-hover' }}">
                             <span>Pengajuan Masuk</span>
                             @if ($unreadIncomingCount > 0)
-                                <span class="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-black leading-none text-white bg-amber-500 rounded-full">
+                                <span class="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white bg-waris-accent rounded-full">
                                     {{ $unreadIncomingCount }}
                                 </span>
                             @endif
@@ -49,13 +49,13 @@
 
                         <!-- Pengajuan Saya (Task 9) -->
                         <a href="{{ route('claims.my') }}" 
-                           class="px-3.5 py-2 rounded-xl transition-all duration-150 {{ request()->routeIs('claims.my*') ? 'bg-emerald-50 text-emerald-800 font-bold' : 'text-gray-600 hover:text-emerald-800 hover:bg-gray-50' }}">
+                           class="px-3.5 py-2 rounded-xl transition-all duration-150 {{ request()->routeIs('claims.my*') ? 'bg-waris-primary-soft text-waris-primary font-bold' : 'text-waris-muted hover:text-waris-primary hover:bg-waris-surface-hover' }}">
                             Pengajuan Saya
                         </a>
 
                         <!-- Pasang Barang (Warm Amber Accent CTA) -->
                         <a href="{{ route('items.create') }}" 
-                           class="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl transition-all duration-150 font-semibold text-xs {{ request()->routeIs('items.create') ? 'bg-amber-700 text-white shadow-xs' : 'bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white shadow-2xs' }}">
+                           class="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl transition-all duration-150 font-semibold text-xs {{ request()->routeIs('items.create') ? 'bg-waris-accent-hover text-white shadow-xs' : 'bg-waris-accent hover:bg-waris-accent-hover active:bg-waris-accent-active text-white shadow-2xs' }}">
                             <x-icon name="plus" class="w-4 h-4" />
                             <span>Pasang Barang</span>
                         </a>
@@ -63,8 +63,8 @@
                         @if (Auth::user()->isAdmin())
                             <!-- Portal Admin Moderasi -->
                             <a href="{{ route('admin.dashboard') }}" 
-                               class="inline-flex items-center space-x-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all duration-150 {{ request()->routeIs('admin*') ? 'bg-amber-100 text-amber-900 border border-amber-300 shadow-2xs' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200' }}">
-                                <x-icon name="shield" class="w-3.5 h-3.5 text-amber-700" />
+                               class="inline-flex items-center space-x-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all duration-150 {{ request()->routeIs('admin*') ? 'bg-waris-accent-soft text-waris-accent-text border border-waris-accent-border shadow-2xs' : 'bg-waris-surface-muted text-waris-text-secondary hover:bg-waris-border border border-waris-border' }}">
+                                <x-icon name="shield" class="w-3.5 h-3.5 text-waris-accent" />
                                 <span>Portal Admin</span>
                             </a>
                         @endif
@@ -83,46 +83,46 @@
                          @keydown.escape.window="isOpen = false">
                         <button type="button" 
                                 @click="isOpen = !isOpen" 
-                                class="flex items-center space-x-3 p-1.5 pe-4 bg-gray-50 hover:bg-emerald-50 border border-gray-200 hover:border-emerald-300 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 cursor-pointer">
+                                class="flex items-center space-x-3 p-1.5 pe-4 bg-waris-surface-hover hover:bg-waris-primary-soft border border-waris-border hover:border-waris-primary-border rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-waris-primary cursor-pointer">
                             <!-- Avatar -->
-                            <img class="w-8 h-8 rounded-full object-cover border border-emerald-700/20" 
-                                 src="{{ Auth::user()->avatar ?? 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name).'&background=144d37&color=ffffff' }}" 
+                            <img class="w-8 h-8 rounded-full object-cover border border-waris-primary/20" 
+                                 src="{{ Auth::user()->avatar ?? 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name).'&background=065F46&color=ffffff' }}" 
                                  referrerpolicy="no-referrer"
-                                 onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=144d37&color=ffffff';"
+                                 onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=065F46&color=ffffff';"
                                  alt="{{ Auth::user()->name }}">
                             
                             <!-- Nama & Program Studi -->
                             <div class="text-left text-xs">
-                                <div class="font-bold text-gray-900 leading-tight truncate max-w-36">
+                                <div class="font-bold text-waris-text leading-tight truncate max-w-36">
                                     {{ Auth::user()->name }}
                                 </div>
-                                <div class="text-emerald-700 font-medium text-[10px] truncate max-w-36">
+                                <div class="text-waris-primary-muted font-medium text-[10px] truncate max-w-36">
                                     {{ Auth::user()->study_program ?? (Auth::user()->role === 'admin' ? 'Admin Kampus' : 'Mahasiswa') }}
                                 </div>
                             </div>
 
                             <!-- Panah Bawah -->
                             <x-icon name="chevron-down" 
-                                    class="w-3.5 h-3.5 text-gray-400 transition-transform duration-200 group-hover:rotate-180" 
-                                    ::class="isOpen ? 'rotate-180 text-emerald-700' : ''" />
+                                    class="w-3.5 h-3.5 text-waris-faint transition-transform duration-200 group-hover:rotate-180" 
+                                    ::class="isOpen ? 'rotate-180 text-waris-primary-muted' : ''" />
                         </button>
 
-                        <!-- Menu Dropdown: Terbuka saat group di-hover (CSS) ATAU saat isOpen=true (Klik) -->
+                        <!-- Menu Dropdown -->
                         <div class="absolute right-0 top-full pt-1.5 w-64 z-50 transition-all duration-150"
                              :class="isOpen ? 'block' : 'hidden group-hover:block'">
                             
-                            <div class="bg-white rounded-2xl shadow-xl border border-gray-200 py-2 divide-y divide-gray-100">
+                            <div class="bg-waris-surface rounded-2xl shadow-xl border border-waris-border py-2 divide-y divide-waris-surface-muted">
                                 <!-- Ringkasan Info Mahasiswa -->
-                                <div class="px-4 py-3 bg-gray-50/70">
-                                    <p class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Akun Mahasiswa</p>
-                                    <p class="text-xs font-bold text-gray-900 truncate mt-0.5">{{ Auth::user()->name }}</p>
-                                    <p class="text-[11px] text-gray-500 truncate">{{ Auth::user()->email }}</p>
+                                <div class="px-4 py-3 bg-waris-surface-hover">
+                                    <p class="text-[10px] uppercase font-bold text-waris-faint tracking-wider">Akun Mahasiswa</p>
+                                    <p class="text-xs font-bold text-waris-text truncate mt-0.5">{{ Auth::user()->name }}</p>
+                                    <p class="text-[11px] text-waris-subtle truncate">{{ Auth::user()->email }}</p>
                                     <div class="flex flex-wrap gap-1 mt-2">
-                                        <span class="inline-flex items-center text-[10px] font-bold text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded-md">
+                                        <span class="inline-flex items-center text-[10px] font-bold text-waris-primary bg-waris-primary-soft px-2 py-0.5 rounded-md border border-waris-primary-border">
                                             {{ Auth::user()->study_program ?? 'Program Studi' }} &bull; Smt {{ Auth::user()->semester ?? 1 }}
                                         </span>
                                         @if(Auth::user()->nim)
-                                            <span class="inline-flex items-center text-[10px] font-semibold text-gray-600 bg-gray-200/80 px-2 py-0.5 rounded-md">
+                                            <span class="inline-flex items-center text-[10px] font-semibold text-waris-muted bg-waris-surface-muted px-2 py-0.5 rounded-md">
                                                 NIM: {{ Auth::user()->nim }}
                                             </span>
                                         @endif
@@ -132,46 +132,46 @@
                                 <!-- Menu Akses Cepat Transaksi & Listing -->
                                 <div class="p-1.5 space-y-0.5">
                                     <a href="{{ route('items.my') }}" 
-                                       class="w-full text-left px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 rounded-xl flex items-center justify-between transition-colors">
+                                       class="w-full text-left px-3 py-2 text-xs font-semibold text-waris-text-secondary hover:bg-waris-primary-soft hover:text-waris-primary rounded-xl flex items-center justify-between transition-colors">
                                         <div class="flex items-center space-x-2">
-                                            <x-icon name="package" class="w-4 h-4 text-emerald-700" />
+                                            <x-icon name="package" class="w-4 h-4 text-waris-primary-muted" />
                                             <span>Barang Saya</span>
                                         </div>
-                                        <x-icon name="chevron-right" class="w-3.5 h-3.5 text-gray-400" />
+                                        <x-icon name="chevron-right" class="w-3.5 h-3.5 text-waris-faint" />
                                     </a>
 
                                     <a href="{{ route('claims.incoming') }}" 
-                                       class="w-full text-left px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 rounded-xl flex items-center justify-between transition-colors">
+                                       class="w-full text-left px-3 py-2 text-xs font-semibold text-waris-text-secondary hover:bg-waris-primary-soft hover:text-waris-primary rounded-xl flex items-center justify-between transition-colors">
                                         <div class="flex items-center space-x-2">
-                                            <x-icon name="inbox" class="w-4 h-4 text-emerald-700" />
+                                            <x-icon name="inbox" class="w-4 h-4 text-waris-primary-muted" />
                                             <span>Pengajuan Masuk</span>
                                         </div>
                                         @if (isset($unreadIncomingCount) && $unreadIncomingCount > 0)
-                                            <span class="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-black leading-none text-white bg-amber-500 rounded-full">
+                                            <span class="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white bg-waris-accent rounded-full">
                                                 {{ $unreadIncomingCount }}
                                             </span>
                                         @else
-                                            <x-icon name="chevron-right" class="w-3.5 h-3.5 text-gray-400" />
+                                            <x-icon name="chevron-right" class="w-3.5 h-3.5 text-waris-faint" />
                                         @endif
                                     </a>
 
                                     <a href="{{ route('claims.my') }}" 
-                                       class="w-full text-left px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 rounded-xl flex items-center justify-between transition-colors">
+                                       class="w-full text-left px-3 py-2 text-xs font-semibold text-waris-text-secondary hover:bg-waris-primary-soft hover:text-waris-primary rounded-xl flex items-center justify-between transition-colors">
                                         <div class="flex items-center space-x-2">
-                                            <x-icon name="clock" class="w-4 h-4 text-emerald-700" />
+                                            <x-icon name="clock" class="w-4 h-4 text-waris-primary-muted" />
                                             <span>Pengajuan Saya</span>
                                         </div>
-                                        <x-icon name="chevron-right" class="w-3.5 h-3.5 text-gray-400" />
+                                        <x-icon name="chevron-right" class="w-3.5 h-3.5 text-waris-faint" />
                                     </a>
 
                                     @if (Auth::user()->isAdmin())
                                         <a href="{{ route('admin.dashboard') }}" 
-                                           class="w-full text-left px-3 py-2 text-xs font-bold text-amber-800 bg-amber-50/70 hover:bg-amber-100 rounded-xl flex items-center justify-between transition-colors">
+                                           class="w-full text-left px-3 py-2 text-xs font-bold text-waris-accent-text bg-waris-accent-soft hover:bg-waris-accent-border/40 rounded-xl flex items-center justify-between transition-colors">
                                             <div class="flex items-center space-x-2">
-                                                <x-icon name="shield" class="w-4 h-4 text-amber-700" />
+                                                <x-icon name="shield" class="w-4 h-4 text-waris-accent" />
                                                 <span>Portal Moderasi Admin</span>
                                             </div>
-                                            <x-icon name="chevron-right" class="w-3.5 h-3.5 text-amber-500" />
+                                            <x-icon name="chevron-right" class="w-3.5 h-3.5 text-waris-accent" />
                                         </a>
                                     @endif
                                 </div>
@@ -181,8 +181,8 @@
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
                                         <button type="submit" 
-                                                class="w-full text-left px-3.5 py-2.5 text-xs font-bold text-rose-600 hover:bg-rose-50 rounded-xl flex items-center space-x-2.5 transition-colors cursor-pointer">
-                                            <x-icon name="log-out" class="w-4 h-4 text-rose-600" />
+                                                class="w-full text-left px-3.5 py-2.5 text-xs font-bold text-waris-danger hover:bg-waris-danger-soft rounded-xl flex items-center space-x-2.5 transition-colors cursor-pointer">
+                                            <x-icon name="log-out" class="w-4 h-4 text-waris-danger" />
                                             <span>Keluar Sesi</span>
                                         </button>
                                     </form>
@@ -193,11 +193,11 @@
                 @else
                     <!-- Tombol Masuk & Daftar untuk Tamu -->
                     <a href="{{ route('login') }}" 
-                       class="text-xs font-bold text-gray-700 hover:text-emerald-800 px-4 py-2 rounded-xl hover:bg-gray-50 transition-colors">
+                       class="text-xs font-bold text-waris-text-secondary hover:text-waris-primary px-4 py-2 rounded-xl hover:bg-waris-surface-hover transition-colors">
                         Masuk
                     </a>
                     <a href="{{ route('register') }}" 
-                       class="inline-flex items-center space-x-1.5 text-xs font-bold text-white bg-emerald-800 hover:bg-emerald-900 px-4.5 py-2.5 rounded-xl transition-colors focus-visible:ring-2 focus-visible:ring-emerald-700">
+                       class="inline-flex items-center space-x-1.5 text-xs font-bold text-white bg-waris-primary hover:bg-waris-primary-hover px-4 py-2.5 rounded-xl transition-colors focus-visible:ring-2 focus-visible:ring-waris-primary">
                         <span>Daftar Sekarang</span>
                         <x-icon name="arrow-right" class="w-3.5 h-3.5" />
                     </a>
@@ -208,7 +208,7 @@
             <div class="flex items-center md:hidden">
                 <button @click="open = !open" 
                         aria-label="Buka Menu Navigasi"
-                        class="p-2.5 rounded-xl text-gray-700 hover:text-emerald-800 hover:bg-emerald-50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700">
+                        class="p-2.5 rounded-xl text-waris-text-secondary hover:text-waris-primary hover:bg-waris-primary-soft transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-waris-primary">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': !open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
@@ -227,77 +227,77 @@
          x-transition:exit="transition ease-in duration-150"
          x-transition:exit-start="opacity-100 translate-y-0"
          x-transition:exit-end="opacity-0 -translate-y-2"
-         class="md:hidden border-t border-gray-200 bg-white px-4 pt-3 pb-6 space-y-2 shadow-lg">
+         class="md:hidden border-t border-waris-border bg-waris-surface px-4 pt-3 pb-6 space-y-2 shadow-lg">
         
         <div class="space-y-1 text-sm font-medium">
             <a href="{{ route('dashboard') }}" 
-               class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl transition-colors {{ request()->routeIs('dashboard') ? 'bg-emerald-50 text-emerald-800 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
-                <x-icon name="package" class="w-4 h-4 text-emerald-800" />
+               class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl transition-colors {{ request()->routeIs('dashboard') ? 'bg-waris-primary-soft text-waris-primary font-bold' : 'text-waris-text-secondary hover:bg-waris-surface-hover' }}">
+                <x-icon name="package" class="w-4 h-4 text-waris-primary" />
                 <span>Beranda</span>
             </a>
             <a href="{{ route('items.index') }}" 
-               class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl transition-colors {{ request()->routeIs('items.index') ? 'bg-emerald-50 text-emerald-800 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
-                <x-icon name="search" class="w-4 h-4 text-emerald-800" />
+               class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl transition-colors {{ request()->routeIs('items.index') ? 'bg-waris-primary-soft text-waris-primary font-bold' : 'text-waris-text-secondary hover:bg-waris-surface-hover' }}">
+                <x-icon name="search" class="w-4 h-4 text-waris-primary" />
                 <span>Jelajahi Katalog</span>
             </a>
             
             @auth
                 <a href="{{ route('items.create') }}" 
-                   class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl bg-amber-50 text-amber-900 border border-amber-200/80 font-bold transition-colors">
-                    <x-icon name="plus" class="w-4 h-4 text-amber-700" />
+                   class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl bg-waris-accent-soft text-waris-accent-text border border-waris-accent-border font-bold transition-colors">
+                    <x-icon name="plus" class="w-4 h-4 text-waris-accent" />
                     <span>Pasang Barang Baru</span>
                 </a>
                 <a href="{{ route('claims.incoming') }}" 
-                   class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors">
-                    <x-icon name="inbox" class="w-4 h-4 text-emerald-700" />
+                   class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl text-waris-text-secondary hover:bg-waris-surface-hover transition-colors">
+                    <x-icon name="inbox" class="w-4 h-4 text-waris-primary-muted" />
                     <span>Pengajuan Masuk</span>
                 </a>
                 <a href="{{ route('items.my') }}" 
-                   class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors">
-                    <x-icon name="package" class="w-4 h-4 text-emerald-700" />
+                   class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl text-waris-text-secondary hover:bg-waris-surface-hover transition-colors">
+                    <x-icon name="package" class="w-4 h-4 text-waris-primary-muted" />
                     <span>Barang Saya</span>
                 </a>
                 <a href="{{ route('claims.my') }}" 
-                   class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors">
-                    <x-icon name="clock" class="w-4 h-4 text-amber-600" />
+                   class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl text-waris-text-secondary hover:bg-waris-surface-hover transition-colors">
+                    <x-icon name="clock" class="w-4 h-4 text-waris-accent" />
                     <span>Pengajuan Saya</span>
                 </a>
 
                 @if (Auth::user()->isAdmin())
                     <a href="{{ route('admin.dashboard') }}" 
-                       class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl text-amber-900 bg-amber-50 hover:bg-amber-100 border border-amber-200 font-bold transition-colors">
-                        <x-icon name="shield" class="w-4 h-4 text-amber-700" />
+                       class="flex items-center space-x-2.5 px-3.5 py-3 rounded-xl text-waris-accent-text bg-waris-accent-soft hover:bg-waris-accent-border/40 border border-waris-accent-border font-bold transition-colors">
+                        <x-icon name="shield" class="w-4 h-4 text-waris-accent" />
                         <span>Portal Moderasi Admin</span>
                     </a>
                 @endif
             @endauth
         </div>
 
-        <div class="border-t border-gray-100 pt-3 mt-2">
+        <div class="border-t border-waris-surface-muted pt-3 mt-2">
             @auth
-                <div class="flex items-center space-x-3 px-3 py-2.5 bg-gray-50 rounded-2xl mb-2">
-                    <img class="w-10 h-10 rounded-full object-cover border border-emerald-700/20 shrink-0" 
-                         src="{{ Auth::user()->avatar ?? 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name).'&background=144d37&color=ffffff' }}" 
+                <div class="flex items-center space-x-3 px-3 py-2.5 bg-waris-surface-hover rounded-2xl mb-2">
+                    <img class="w-10 h-10 rounded-full object-cover border border-waris-primary/20 shrink-0" 
+                         src="{{ Auth::user()->avatar ?? 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name).'&background=065F46&color=ffffff' }}" 
                          referrerpolicy="no-referrer"
-                         onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=144d37&color=ffffff';"
+                         onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=065F46&color=ffffff';"
                          alt="{{ Auth::user()->name }}">
                     <div class="truncate">
-                        <div class="font-bold text-gray-900 text-sm truncate">{{ Auth::user()->name }}</div>
-                        <div class="text-xs text-emerald-700 truncate">{{ Auth::user()->study_program ?? Auth::user()->faculty ?? 'Mahasiswa Kampus' }} &bull; Semester {{ Auth::user()->semester ?? 1 }}</div>
+                        <div class="font-bold text-waris-text text-sm truncate">{{ Auth::user()->name }}</div>
+                        <div class="text-xs text-waris-primary-muted truncate">{{ Auth::user()->study_program ?? Auth::user()->faculty ?? 'Mahasiswa Kampus' }} &bull; Semester {{ Auth::user()->semester ?? 1 }}</div>
                     </div>
                 </div>
 
                 <div class="space-y-1">
                     <a href="{{ route('profile.edit') }}" 
-                       class="flex items-center space-x-2 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50">
-                        <x-icon name="settings" class="w-4 h-4 text-gray-500" />
+                       class="flex items-center space-x-2 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-waris-text-secondary hover:bg-waris-surface-hover">
+                        <x-icon name="settings" class="w-4 h-4 text-waris-subtle" />
                         <span>Pengaturan Profil</span>
                     </a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" 
-                                class="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-bold text-rose-600 hover:bg-rose-50 flex items-center space-x-2">
-                            <x-icon name="log-out" class="w-4 h-4 text-rose-600" />
+                                class="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-bold text-waris-danger hover:bg-waris-danger-soft flex items-center space-x-2">
+                            <x-icon name="log-out" class="w-4 h-4 text-waris-danger" />
                             <span>Keluar Sesi</span>
                         </button>
                     </form>
@@ -305,11 +305,11 @@
             @else
                 <div class="grid grid-cols-2 gap-2 pt-1">
                     <a href="{{ route('login') }}" 
-                       class="w-full text-center py-3 text-xs font-bold text-gray-700 border border-gray-200 rounded-xl hover:bg-gray-50">
+                       class="w-full text-center py-3 text-xs font-bold text-waris-text-secondary border border-waris-border rounded-xl hover:bg-waris-surface-hover">
                         Masuk
                     </a>
                     <a href="{{ route('register') }}" 
-                       class="w-full text-center py-3 text-xs font-bold text-white bg-emerald-800 rounded-xl hover:bg-emerald-900">
+                       class="w-full text-center py-3 text-xs font-bold text-white bg-waris-primary rounded-xl hover:bg-waris-primary-hover">
                         Daftar Akun
                     </a>
                 </div>

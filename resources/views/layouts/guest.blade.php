@@ -15,7 +15,7 @@
         <!-- Scripts & Tailwind CSS -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased text-slate-800 bg-slate-50 min-h-screen flex items-center justify-center p-3 sm:p-4 lg:p-6">
+    <body class="font-sans antialiased text-waris-text bg-waris-bg min-h-screen flex items-center justify-center p-3 sm:p-4 lg:p-6">
         <div class="w-full max-w-5xl my-auto flex items-center justify-center">
             {{ $slot }}
         </div>

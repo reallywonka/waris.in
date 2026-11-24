@@ -2,8 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ==========================================================================
+   Variabel Warna Utama waris.in (Single Source of Truth)
+   Cukup ubah kode hex di bawah ini untuk mengganti palet warna seluruh web.
+   - CSS inline : style="background-color: var(--waris-primary);"
+   - Tailwind   : class="bg-waris-primary" atau "bg-waris-primary/10"
+   ========================================================================== */
+:root {
+    /* 1. Warna Utama Brand (Deep Emerald) */
+    --waris-primary: #065F46;
+    --waris-primary-hover: #064E3B;
+    --waris-primary-active: #022C22;
+    --waris-primary-soft: #ECFDF5;
+    --waris-primary-border: #A7F3D0;
+    --waris-primary-muted: #047857;
+
+    /* 2. Warna Aksen / CTA Utama (Warm Amber / Marigold) */
+    --waris-accent: #D97706;
+    --waris-accent-hover: #B45309;
+    --waris-accent-active: #92400E;
+    --waris-accent-soft: #FFFBEB;
+    --waris-accent-border: #FDE68A;
+    --waris-accent-text: #92400E;
+
+    /* 3. Warna Mode Barter (Teal) */
+    --waris-barter: #0F766E;
+    --waris-barter-hover: #115E59;
+    --waris-barter-soft: #F0FDFA;
+    --waris-barter-border: #99F6E4;
+    --waris-barter-text: #115E59;
+
+    /* 4. Latar Belakang & Permukaan (Background & Surfaces) */
+    --waris-bg: #F8FAFC;
+    --waris-surface: #FFFFFF;
+    --waris-surface-muted: #F1F5F9;
+    --waris-surface-hover: #F8FAFC;
+    --waris-border: #E2E8F0;
+    --waris-border-strong: #CBD5E1;
+
+    /* 5. Tipografi & Teks Netral */
+    --waris-text: #111827;
+    --waris-text-secondary: #374151;
+    --waris-text-muted: #4B5563;
+    --waris-text-subtle: #6B7280;
+    --waris-text-faint: #9CA3AF;
+
+    /* 6. Status Semantik (Peringatan / Hapus / Info) */
+    --waris-danger: #E11D48;
+    --waris-danger-hover: #BE123C;
+    --waris-danger-soft: #FFF1F2;
+    --waris-danger-border: #FECDD3;
+    --waris-danger-text: #9F1239;
+
+    --waris-info: #0284C7;
+    --waris-info-soft: #F0F9FF;
+    --waris-info-border: #BAE6FD;
+    --waris-info-text: #075985;
+}
+
 /* Alpine.js x-cloak: Mencegah elemen tersembunyi muncul sebelum Alpine diinisialisasi */
 [x-cloak] {
     display: none !important;
 }
-
