@@ -57,7 +57,7 @@
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0"
          @click="close()" 
-         class="fixed inset-0 bg-gray-900/60 backdrop-blur-xs transition-opacity"></div>
+         class="fixed inset-0 bg-waris-text/60 backdrop-blur-xs transition-opacity"></div>
 
     <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
         <!-- Card Popup Dialog -->
@@ -68,15 +68,15 @@
              x-transition:leave="ease-in duration-150"
              x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
              x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-             class="relative transform overflow-hidden rounded-3xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-md border border-gray-100 p-6 space-y-4">
+             class="relative transform overflow-hidden rounded-3xl bg-waris-surface text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-md border border-waris-surface-muted p-6 space-y-4">
             
             <div class="flex items-start space-x-3.5">
                 <!-- Icon Badge Dinamis -->
                 <div :class="{
-                    'bg-rose-50 text-rose-600 border-rose-200': color === 'rose' || color === 'danger' || color === 'red',
-                    'bg-amber-50 text-amber-700 border-amber-200': color === 'amber' || color === 'warning' || color === 'yellow',
-                    'bg-emerald-50 text-emerald-800 border-emerald-200': color === 'emerald' || color === 'success' || color === 'green',
-                    'bg-blue-50 text-blue-800 border-blue-200': color === 'blue' || color === 'info'
+                    'bg-waris-danger-soft text-waris-danger border-waris-danger-border': color === 'rose' || color === 'danger' || color === 'red',
+                    'bg-waris-accent-soft text-waris-accent-text border-waris-accent-border': color === 'amber' || color === 'warning' || color === 'yellow',
+                    'bg-waris-primary-soft text-waris-primary border-waris-primary-border': color === 'emerald' || color === 'success' || color === 'green',
+                    'bg-waris-info-soft text-waris-info border-waris-info-border': color === 'blue' || color === 'info'
                 }" class="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 border mt-0.5">
                     <template x-if="icon === 'trash'">
                         <x-icon name="trash" class="w-5 h-5" />
@@ -102,10 +102,10 @@
                 </div>
                 
                 <div class="min-w-0 flex-1">
-                    <h3 class="text-base font-black text-gray-900 tracking-tight" id="confirm-modal-title" x-text="title">
+                    <h3 class="text-base font-black text-waris-text tracking-tight" id="confirm-modal-title" x-text="title">
                         Konfirmasi Tindakan
                     </h3>
-                    <p class="text-xs text-gray-500 mt-1 leading-relaxed" x-text="message">
+                    <p class="text-xs text-waris-subtle mt-1 leading-relaxed" x-text="message">
                         Apakah Anda yakin ingin melanjutkan tindakan ini?
                     </p>
                 </div>
@@ -114,10 +114,10 @@
             <!-- Box Catatan / Peringatan Tambahan (Opsional) -->
             <div x-show="note && note.length > 0" 
                  :class="{
-                     'bg-rose-50 border-rose-200 text-rose-900': color === 'rose' || color === 'danger' || color === 'red',
-                     'bg-amber-50 border-amber-200 text-amber-900': color === 'amber' || color === 'warning' || color === 'yellow',
-                     'bg-emerald-50 border-emerald-200 text-emerald-900': color === 'emerald' || color === 'success' || color === 'green',
-                     'bg-blue-50 border-blue-200 text-blue-900': color === 'blue' || color === 'info'
+                     'bg-waris-danger-soft border-waris-danger-border text-waris-danger-text': color === 'rose' || color === 'danger' || color === 'red',
+                     'bg-waris-accent-soft border-waris-accent-border text-waris-accent-text': color === 'amber' || color === 'warning' || color === 'yellow',
+                     'bg-waris-primary-soft border-waris-primary-border text-waris-primary': color === 'emerald' || color === 'success' || color === 'green',
+                     'bg-waris-info-soft border-waris-info-border text-waris-info-text': color === 'blue' || color === 'info'
                  }" 
                  class="p-3.5 rounded-2xl border text-[11px] leading-relaxed font-medium" 
                  x-text="note"></div>
@@ -126,17 +126,17 @@
             <div class="pt-2 flex items-center justify-end space-x-2">
                 <button type="button" 
                         @click="close()" 
-                        class="px-4 py-2.5 rounded-xl border border-gray-200 text-xs font-bold text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors cursor-pointer">
+                        class="px-4 py-2.5 rounded-xl border border-waris-border text-xs font-bold text-waris-muted hover:bg-waris-surface-muted hover:text-waris-text transition-colors cursor-pointer">
                     <span x-text="cancelText">Batal</span>
                 </button>
 
                 <button type="button" 
                         @click="confirmAction()"
                         :class="{
-                            'bg-rose-600 hover:bg-rose-700 text-white': color === 'rose' || color === 'danger' || color === 'red',
-                            'bg-amber-600 hover:bg-amber-700 text-white': color === 'amber' || color === 'warning' || color === 'yellow',
-                            'bg-emerald-800 hover:bg-emerald-900 text-white': color === 'emerald' || color === 'success' || color === 'green',
-                            'bg-blue-600 hover:bg-blue-700 text-white': color === 'blue' || color === 'info'
+                            'bg-waris-danger hover:bg-waris-danger-hover text-white': color === 'rose' || color === 'danger' || color === 'red',
+                            'bg-waris-accent hover:bg-waris-accent-hover text-white': color === 'amber' || color === 'warning' || color === 'yellow',
+                            'bg-waris-primary hover:bg-waris-primary-hover text-white': color === 'emerald' || color === 'success' || color === 'green',
+                            'bg-waris-info hover:bg-waris-info/90 text-white': color === 'blue' || color === 'info'
                         }"
                         class="px-5 py-2.5 rounded-xl text-xs font-black shadow-2xs hover:shadow-xs transition-all active:scale-[0.98] cursor-pointer">
                     <span x-text="buttonText">Ya, Lanjutkan</span>
