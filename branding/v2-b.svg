@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="title-b">
+  <title id="title-b">waris.in - Seutas Estafet (Harmonic Flow)</title>
+  <!-- Single continuous flowing ribbon with pure mathematical harmony -->
+  <path fill="none" stroke="#064E3B" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" d="
+    M 44 76
+    L 76 182
+    C 80 196, 92 204, 104 204
+    C 116 204, 126 194, 130 180
+    L 146 112
+    C 148 100, 158 92, 170 92
+    C 182 92, 192 100, 194 112
+    L 182 180
+    C 178 194, 186 204, 198 204
+    C 210 204, 220 194, 224 182
+    L 240 108
+  "/>
+</svg>

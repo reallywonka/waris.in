@@ -1,0 +1,835 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1600" height="984" viewBox="0 0 1600 984"><rect width="1600" height="984" fill="#f7f7f4"/><text x="60" y="78" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="40" font-weight="700" fill="#161616">waris.in — Eksplorasi Elegan &amp; Sarat Makna</text><text x="60" y="116" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="20" fill="#6b6b6b">Concepts for review — pick a direction (or tell me what you like in each).</text><rect x="60" y="150" width="474.667" height="774" rx="18" fill="#fff" stroke="#161616" stroke-width="2"/><g><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t1" viewBox="0 0 256 256" x="90" y="190" width="414.667" height="300" preserveAspectRatio="xMidYMid meet">
+  <title id="c0-t1">waris.in - Lentera Warisan (Concept 1)</title>
+  <g id="c0-symbol-1">
+    <!-- Left Hand / Wing of W (Deep Forest Emerald #064E3B) -->
+    <path fill="#064E3B" d="
+      M 48 76
+      C 42 76, 38 82, 40 90
+      L 68 178
+      C 74 194, 88 202, 104 202
+      C 118 202, 126 194, 130 182
+      L 142 142
+      L 124 142
+      L 114 172
+      C 112 178, 108 182, 102 182
+      C 94 182, 88 176, 84 166
+      L 64 94
+      L 56 76
+      Z
+    "/>
+    <!-- Right Hand / Wing of W (Deep Forest Emerald #064E3B) -->
+    <path fill="#064E3B" d="
+      M 208 76
+      C 214 76, 218 82, 216 90
+      L 188 178
+      C 182 194, 168 202, 152 202
+      C 138 202, 130 194, 126 182
+      L 114 142
+      L 132 142
+      L 142 172
+      C 144 178, 148 182, 154 182
+      C 162 182, 168 176, 172 166
+      L 192 94
+      L 200 76
+      Z
+    "/>
+    <!-- Center Pillar (The 'i' stem / Torch of Wisdom in Rich Emerald #047857) -->
+    <rect x="121" y="92" width="14" height="64" rx="7" fill="#047857"/>
+    <!-- Golden Ember Dot (The 'i' dot / Flame of Knowledge) -->
+    <circle cx="128" cy="70" r="8" fill="#D97706"/>
+  </g>
+</svg></g><g><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="tl-1" viewBox="0 0 760 256" x="90" y="514" width="414.667" height="120" preserveAspectRatio="xMidYMid meet">
+  <title id="l0-tl-1">waris.in Lockup - Lentera Warisan</title>
+  <g transform="translate(24, 24) scale(0.8125)">
+    <path fill="#064E3B" d="
+      M 48 76
+      C 42 76, 38 82, 40 90
+      L 68 178
+      C 74 194, 88 202, 104 202
+      C 118 202, 126 194, 130 182
+      L 142 142
+      L 124 142
+      L 114 172
+      C 112 178, 108 182, 102 182
+      C 94 182, 88 176, 84 166
+      L 64 94
+      L 56 76
+      Z
+    "/>
+    <path fill="#064E3B" d="
+      M 208 76
+      C 214 76, 218 82, 216 90
+      L 188 178
+      C 182 194, 168 202, 152 202
+      C 138 202, 130 194, 126 182
+      L 114 142
+      L 132 142
+      L 142 172
+      C 144 178, 148 182, 154 182
+      C 162 182, 168 176, 172 166
+      L 192 94
+      L 200 76
+      Z
+    "/>
+    <rect x="121" y="92" width="14" height="64" rx="7" fill="#047857"/>
+    <circle cx="128" cy="70" r="8" fill="#D97706"/>
+  </g>
+  <g id="l0-wordmark">
+    <path fill="#0F172A" d="
+      M 254 92
+      L 270 156
+      C 272 164, 276 166, 282 166
+      C 287 166, 291 163, 294 156
+      L 304 120
+      C 306 113, 310 113, 312 120
+      L 322 156
+      C 325 163, 329 166, 334 166
+      C 340 166, 344 164, 346 156
+      L 362 92
+      L 346 92
+      L 336 144
+      L 324 107
+      C 322 99, 317 94, 310 94
+      C 303 94, 298 99, 296 107
+      L 284 144
+      L 274 92
+      Z
+    "/>
+    
+    <path fill="#0F172A" fill-rule="evenodd" d="
+      M 392 92
+      C 412 92, 420 106, 420 122
+      L 420 166
+      L 406 166
+      L 406 155
+      C 402 163, 393 168, 384 168
+      C 371 168, 362 159, 362 143
+      C 362 125, 379 118, 406 117
+      L 406 115
+      C 406 106, 401 104, 392 104
+      C 384 104, 378 107, 376 112
+      L 364 105
+      C 370 97, 379 92, 392 92
+      Z
+      M 406 127
+      C 387 128, 376 132, 376 143
+      C 376 151, 382 156, 390 156
+      C 399 156, 406 149, 406 140
+      Z
+    "/>
+    
+    <path fill="#0F172A" d="
+      M 432 94
+      L 446 94
+      L 446 106
+      C 451 98, 459 92, 470 92
+      C 474 92, 478 94, 480 96
+      L 476 109
+      C 472 107, 468 106, 464 106
+      C 454 106, 447 114, 447 128
+      L 447 166
+      L 432 166
+      Z
+    "/>
+    
+    <g fill="#0F172A">
+      <rect x="482" y="94" width="14" height="72" rx="4"/>
+      <circle cx="489" cy="74" r="7.5"/>
+    </g>
+    
+    <path fill="#0F172A" d="
+      M 545 107
+      L 534 113
+      C 531 107, 527 105, 521 105
+      C 516 105, 512 108, 512 112
+      C 512 116, 515 119, 526 122
+      C 539 125, 547 131, 547 143
+      C 547 157, 535 166, 520 166
+      C 507 166, 496 160, 493 148
+      L 505 143
+      C 507 150, 513 154, 520 154
+      C 527 154, 532 150, 532 144
+      C 532 139, 529 136, 518 133
+      C 506 129, 498 124, 498 113
+      C 498 101, 509 92, 521 92
+      C 532 92, 541 98, 545 107
+      Z
+    "/>
+    
+    <circle cx="568" cy="158" r="8" fill="#D97706"/>
+    
+    <g fill="#064E3B">
+      <rect x="584" y="94" width="14" height="72" rx="4"/>
+      <circle cx="591" cy="74" r="7.5"/>
+    </g>
+    
+    <path fill="#064E3B" d="
+      M 612 94
+      L 626 94
+      L 626 105
+      C 632 97, 642 92, 653 92
+      C 666 92, 674 100, 674 116
+      L 674 166
+      L 660 166
+      L 660 118
+      C 660 109, 656 105, 647 105
+      C 639 105, 627 111, 627 123
+      L 627 166
+      L 612 166
+      Z
+    "/>
+    </g>
+</svg></g><g><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t1" viewBox="0 0 256 256" x="90" y="660" width="64" height="64" preserveAspectRatio="xMidYMid meet">
+  <title id="s064-t1">waris.in - Lentera Warisan (Concept 1)</title>
+  <g id="s064-symbol-1">
+    <!-- Left Hand / Wing of W (Deep Forest Emerald #064E3B) -->
+    <path fill="#064E3B" d="
+      M 48 76
+      C 42 76, 38 82, 40 90
+      L 68 178
+      C 74 194, 88 202, 104 202
+      C 118 202, 126 194, 130 182
+      L 142 142
+      L 124 142
+      L 114 172
+      C 112 178, 108 182, 102 182
+      C 94 182, 88 176, 84 166
+      L 64 94
+      L 56 76
+      Z
+    "/>
+    <!-- Right Hand / Wing of W (Deep Forest Emerald #064E3B) -->
+    <path fill="#064E3B" d="
+      M 208 76
+      C 214 76, 218 82, 216 90
+      L 188 178
+      C 182 194, 168 202, 152 202
+      C 138 202, 130 194, 126 182
+      L 114 142
+      L 132 142
+      L 142 172
+      C 144 178, 148 182, 154 182
+      C 162 182, 168 176, 172 166
+      L 192 94
+      L 200 76
+      Z
+    "/>
+    <!-- Center Pillar (The 'i' stem / Torch of Wisdom in Rich Emerald #047857) -->
+    <rect x="121" y="92" width="14" height="64" rx="7" fill="#047857"/>
+    <!-- Golden Ember Dot (The 'i' dot / Flame of Knowledge) -->
+    <circle cx="128" cy="70" r="8" fill="#D97706"/>
+  </g>
+</svg></g><text x="122" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">64px</text><g><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t1" viewBox="0 0 256 256" x="180" y="692" width="32" height="32" preserveAspectRatio="xMidYMid meet">
+  <title id="s032-t1">waris.in - Lentera Warisan (Concept 1)</title>
+  <g id="s032-symbol-1">
+    <!-- Left Hand / Wing of W (Deep Forest Emerald #064E3B) -->
+    <path fill="#064E3B" d="
+      M 48 76
+      C 42 76, 38 82, 40 90
+      L 68 178
+      C 74 194, 88 202, 104 202
+      C 118 202, 126 194, 130 182
+      L 142 142
+      L 124 142
+      L 114 172
+      C 112 178, 108 182, 102 182
+      C 94 182, 88 176, 84 166
+      L 64 94
+      L 56 76
+      Z
+    "/>
+    <!-- Right Hand / Wing of W (Deep Forest Emerald #064E3B) -->
+    <path fill="#064E3B" d="
+      M 208 76
+      C 214 76, 218 82, 216 90
+      L 188 178
+      C 182 194, 168 202, 152 202
+      C 138 202, 130 194, 126 182
+      L 114 142
+      L 132 142
+      L 142 172
+      C 144 178, 148 182, 154 182
+      C 162 182, 168 176, 172 166
+      L 192 94
+      L 200 76
+      Z
+    "/>
+    <!-- Center Pillar (The 'i' stem / Torch of Wisdom in Rich Emerald #047857) -->
+    <rect x="121" y="92" width="14" height="64" rx="7" fill="#047857"/>
+    <!-- Golden Ember Dot (The 'i' dot / Flame of Knowledge) -->
+    <circle cx="128" cy="70" r="8" fill="#D97706"/>
+  </g>
+</svg></g><text x="196" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">32px</text><g><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t1" viewBox="0 0 256 256" x="238" y="708" width="16" height="16" preserveAspectRatio="xMidYMid meet">
+  <title id="s016-t1">waris.in - Lentera Warisan (Concept 1)</title>
+  <g id="s016-symbol-1">
+    <!-- Left Hand / Wing of W (Deep Forest Emerald #064E3B) -->
+    <path fill="#064E3B" d="
+      M 48 76
+      C 42 76, 38 82, 40 90
+      L 68 178
+      C 74 194, 88 202, 104 202
+      C 118 202, 126 194, 130 182
+      L 142 142
+      L 124 142
+      L 114 172
+      C 112 178, 108 182, 102 182
+      C 94 182, 88 176, 84 166
+      L 64 94
+      L 56 76
+      Z
+    "/>
+    <!-- Right Hand / Wing of W (Deep Forest Emerald #064E3B) -->
+    <path fill="#064E3B" d="
+      M 208 76
+      C 214 76, 218 82, 216 90
+      L 188 178
+      C 182 194, 168 202, 152 202
+      C 138 202, 130 194, 126 182
+      L 114 142
+      L 132 142
+      L 142 172
+      C 144 178, 148 182, 154 182
+      C 162 182, 168 176, 172 166
+      L 192 94
+      L 200 76
+      Z
+    "/>
+    <!-- Center Pillar (The 'i' stem / Torch of Wisdom in Rich Emerald #047857) -->
+    <rect x="121" y="92" width="14" height="64" rx="7" fill="#047857"/>
+    <!-- Golden Ember Dot (The 'i' dot / Flame of Knowledge) -->
+    <circle cx="128" cy="70" r="8" fill="#D97706"/>
+  </g>
+</svg></g><text x="246" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">16px</text><text x="90.0" y="780" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#161616">A · Lentera Warisan</text><text x="90.0" y="808" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="15" font-weight="700" fill="#161616" letter-spacing="1.5">RECOMMENDED</text><text x="90.0" y="842" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">Fusi W + i: Dua tangan mengangkat lentera</text><text x="90.0" y="868" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">estafet kebaikan.</text><rect x="562.667" y="150" width="474.667" height="774" rx="18" fill="#fff" stroke="#e4e4e0" stroke-width="1"/><g><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t2" viewBox="0 0 256 256" x="592.667" y="190" width="414.667" height="300" preserveAspectRatio="xMidYMid meet">
+  <title id="c1-t2">waris.in - Simpul Amanah (Concept 2)</title>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Continuous fluid monoline W ribbon -->
+    <path d="
+      M 48 78
+      L 76 178
+      C 82 196, 94 204, 108 204
+      C 120 204, 130 194, 134 180
+      L 144 136
+      C 148 116, 136 94, 128 94
+      C 120 94, 108 116, 112 136
+      L 122 180
+      C 126 194, 136 204, 148 204
+      C 162 204, 174 196, 180 178
+      L 208 78
+    " stroke="#064E3B" stroke-width="16"/>
+  </g>
+  <!-- Central Golden Core -->
+  <circle cx="128" cy="118" r="7" fill="#D97706"/>
+</svg></g><g><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="tl-2" viewBox="0 0 760 256" x="592.667" y="514" width="414.667" height="120" preserveAspectRatio="xMidYMid meet">
+  <title id="l1-tl-2">waris.in Lockup - Simpul Amanah</title>
+  <g transform="translate(24, 24) scale(0.8125)">
+    <path fill="none" stroke="#064E3B" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" d="
+      M 48 78
+      L 76 178
+      C 82 196, 94 204, 108 204
+      C 120 204, 130 194, 134 180
+      L 144 136
+      C 148 116, 136 94, 128 94
+      C 120 94, 108 116, 112 136
+      L 122 180
+      C 126 194, 136 204, 148 204
+      C 162 204, 174 196, 180 178
+      L 208 78
+    "/>
+    <circle cx="128" cy="118" r="7" fill="#D97706"/>
+  </g>
+  <g id="l1-wordmark">
+    <path fill="#0F172A" d="
+      M 254 92
+      L 270 156
+      C 272 164, 276 166, 282 166
+      C 287 166, 291 163, 294 156
+      L 304 120
+      C 306 113, 310 113, 312 120
+      L 322 156
+      C 325 163, 329 166, 334 166
+      C 340 166, 344 164, 346 156
+      L 362 92
+      L 346 92
+      L 336 144
+      L 324 107
+      C 322 99, 317 94, 310 94
+      C 303 94, 298 99, 296 107
+      L 284 144
+      L 274 92
+      Z
+    "/>
+    
+    <path fill="#0F172A" fill-rule="evenodd" d="
+      M 392 92
+      C 412 92, 420 106, 420 122
+      L 420 166
+      L 406 166
+      L 406 155
+      C 402 163, 393 168, 384 168
+      C 371 168, 362 159, 362 143
+      C 362 125, 379 118, 406 117
+      L 406 115
+      C 406 106, 401 104, 392 104
+      C 384 104, 378 107, 376 112
+      L 364 105
+      C 370 97, 379 92, 392 92
+      Z
+      M 406 127
+      C 387 128, 376 132, 376 143
+      C 376 151, 382 156, 390 156
+      C 399 156, 406 149, 406 140
+      Z
+    "/>
+    
+    <path fill="#0F172A" d="
+      M 432 94
+      L 446 94
+      L 446 106
+      C 451 98, 459 92, 470 92
+      C 474 92, 478 94, 480 96
+      L 476 109
+      C 472 107, 468 106, 464 106
+      C 454 106, 447 114, 447 128
+      L 447 166
+      L 432 166
+      Z
+    "/>
+    
+    <g fill="#0F172A">
+      <rect x="482" y="94" width="14" height="72" rx="4"/>
+      <circle cx="489" cy="74" r="7.5"/>
+    </g>
+    
+    <path fill="#0F172A" d="
+      M 545 107
+      L 534 113
+      C 531 107, 527 105, 521 105
+      C 516 105, 512 108, 512 112
+      C 512 116, 515 119, 526 122
+      C 539 125, 547 131, 547 143
+      C 547 157, 535 166, 520 166
+      C 507 166, 496 160, 493 148
+      L 505 143
+      C 507 150, 513 154, 520 154
+      C 527 154, 532 150, 532 144
+      C 532 139, 529 136, 518 133
+      C 506 129, 498 124, 498 113
+      C 498 101, 509 92, 521 92
+      C 532 92, 541 98, 545 107
+      Z
+    "/>
+    
+    <circle cx="568" cy="158" r="8" fill="#D97706"/>
+    
+    <g fill="#064E3B">
+      <rect x="584" y="94" width="14" height="72" rx="4"/>
+      <circle cx="591" cy="74" r="7.5"/>
+    </g>
+    
+    <path fill="#064E3B" d="
+      M 612 94
+      L 626 94
+      L 626 105
+      C 632 97, 642 92, 653 92
+      C 666 92, 674 100, 674 116
+      L 674 166
+      L 660 166
+      L 660 118
+      C 660 109, 656 105, 647 105
+      C 639 105, 627 111, 627 123
+      L 627 166
+      L 612 166
+      Z
+    "/>
+    </g>
+</svg></g><g><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t2" viewBox="0 0 256 256" x="592.667" y="660" width="64" height="64" preserveAspectRatio="xMidYMid meet">
+  <title id="s164-t2">waris.in - Simpul Amanah (Concept 2)</title>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Continuous fluid monoline W ribbon -->
+    <path d="
+      M 48 78
+      L 76 178
+      C 82 196, 94 204, 108 204
+      C 120 204, 130 194, 134 180
+      L 144 136
+      C 148 116, 136 94, 128 94
+      C 120 94, 108 116, 112 136
+      L 122 180
+      C 126 194, 136 204, 148 204
+      C 162 204, 174 196, 180 178
+      L 208 78
+    " stroke="#064E3B" stroke-width="16"/>
+  </g>
+  <!-- Central Golden Core -->
+  <circle cx="128" cy="118" r="7" fill="#D97706"/>
+</svg></g><text x="624.667" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">64px</text><g><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t2" viewBox="0 0 256 256" x="682.667" y="692" width="32" height="32" preserveAspectRatio="xMidYMid meet">
+  <title id="s132-t2">waris.in - Simpul Amanah (Concept 2)</title>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Continuous fluid monoline W ribbon -->
+    <path d="
+      M 48 78
+      L 76 178
+      C 82 196, 94 204, 108 204
+      C 120 204, 130 194, 134 180
+      L 144 136
+      C 148 116, 136 94, 128 94
+      C 120 94, 108 116, 112 136
+      L 122 180
+      C 126 194, 136 204, 148 204
+      C 162 204, 174 196, 180 178
+      L 208 78
+    " stroke="#064E3B" stroke-width="16"/>
+  </g>
+  <!-- Central Golden Core -->
+  <circle cx="128" cy="118" r="7" fill="#D97706"/>
+</svg></g><text x="698.667" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">32px</text><g><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t2" viewBox="0 0 256 256" x="740.667" y="708" width="16" height="16" preserveAspectRatio="xMidYMid meet">
+  <title id="s116-t2">waris.in - Simpul Amanah (Concept 2)</title>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Continuous fluid monoline W ribbon -->
+    <path d="
+      M 48 78
+      L 76 178
+      C 82 196, 94 204, 108 204
+      C 120 204, 130 194, 134 180
+      L 144 136
+      C 148 116, 136 94, 128 94
+      C 120 94, 108 116, 112 136
+      L 122 180
+      C 126 194, 136 204, 148 204
+      C 162 204, 174 196, 180 178
+      L 208 78
+    " stroke="#064E3B" stroke-width="16"/>
+  </g>
+  <!-- Central Golden Core -->
+  <circle cx="128" cy="118" r="7" fill="#D97706"/>
+</svg></g><text x="748.667" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">16px</text><text x="592.6666666666667" y="780" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#161616">B · Simpul Amanah</text><text x="592.6666666666667" y="814" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">Monoline kontinu: Simpul kepercayaan</text><text x="592.6666666666667" y="840" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">antar-mahasiswa.</text><rect x="1065.33" y="150" width="474.667" height="774" rx="18" fill="#fff" stroke="#e4e4e0" stroke-width="1"/><g><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t3" viewBox="0 0 256 256" x="1095.33" y="190" width="414.667" height="300" preserveAspectRatio="xMidYMid meet">
+  <title id="c2-t3">waris.in - Lembaran Estafet (Concept 3)</title>
+  <g id="c2-symbol-3" fill="#064E3B">
+    <!-- Left Leaf / Page of W -->
+    <path d="
+      M 48 74
+      L 74 74
+      L 100 174
+      C 102 182, 100 190, 94 194
+      L 86 198
+      C 78 202, 68 198, 64 190
+      L 48 74
+      Z
+    "/>
+    <!-- Left Center Stem -->
+    <path fill="#047857" d="
+      M 112 184
+      L 136 100
+      L 122 100
+      L 100 176
+      C 98 184, 104 190, 112 184
+      Z
+    "/>
+    <!-- Right Center Stem -->
+    <path fill="#047857" d="
+      M 144 184
+      L 120 100
+      L 134 100
+      L 156 176
+      C 158 184, 152 190, 144 184
+      Z
+    "/>
+    <!-- Right Leaf / Page of W -->
+    <path d="
+      M 208 74
+      L 182 74
+      L 156 174
+      C 154 182, 156 190, 162 194
+      L 170 198
+      C 178 202, 188 198, 192 190
+      L 208 74
+      Z
+    "/>
+    <!-- Golden Apex Horizon Sun -->
+    <circle cx="128" cy="74" r="7" fill="#D97706"/>
+  </g>
+</svg></g><g><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="tl-3" viewBox="0 0 760 256" x="1095.33" y="514" width="414.667" height="120" preserveAspectRatio="xMidYMid meet">
+  <title id="l2-tl-3">waris.in Lockup - Lembaran Estafet</title>
+  <g transform="translate(24, 24) scale(0.8125)">
+    <path fill="#064E3B" d="
+      M 48 74
+      L 74 74
+      L 100 174
+      C 102 182, 100 190, 94 194
+      L 86 198
+      C 78 202, 68 198, 64 190
+      L 48 74
+      Z
+    "/>
+    <path fill="#047857" d="
+      M 112 184
+      L 136 100
+      L 122 100
+      L 100 176
+      C 98 184, 104 190, 112 184
+      Z
+    "/>
+    <path fill="#047857" d="
+      M 144 184
+      L 120 100
+      L 134 100
+      L 156 176
+      C 158 184, 152 190, 144 184
+      Z
+    "/>
+    <path fill="#064E3B" d="
+      M 208 74
+      L 182 74
+      L 156 174
+      C 154 182, 156 190, 162 194
+      L 170 198
+      C 178 202, 188 198, 192 190
+      L 208 74
+      Z
+    "/>
+    <circle cx="128" cy="74" r="7" fill="#D97706"/>
+  </g>
+  <g id="l2-wordmark">
+    <path fill="#0F172A" d="
+      M 254 92
+      L 270 156
+      C 272 164, 276 166, 282 166
+      C 287 166, 291 163, 294 156
+      L 304 120
+      C 306 113, 310 113, 312 120
+      L 322 156
+      C 325 163, 329 166, 334 166
+      C 340 166, 344 164, 346 156
+      L 362 92
+      L 346 92
+      L 336 144
+      L 324 107
+      C 322 99, 317 94, 310 94
+      C 303 94, 298 99, 296 107
+      L 284 144
+      L 274 92
+      Z
+    "/>
+    
+    <path fill="#0F172A" fill-rule="evenodd" d="
+      M 392 92
+      C 412 92, 420 106, 420 122
+      L 420 166
+      L 406 166
+      L 406 155
+      C 402 163, 393 168, 384 168
+      C 371 168, 362 159, 362 143
+      C 362 125, 379 118, 406 117
+      L 406 115
+      C 406 106, 401 104, 392 104
+      C 384 104, 378 107, 376 112
+      L 364 105
+      C 370 97, 379 92, 392 92
+      Z
+      M 406 127
+      C 387 128, 376 132, 376 143
+      C 376 151, 382 156, 390 156
+      C 399 156, 406 149, 406 140
+      Z
+    "/>
+    
+    <path fill="#0F172A" d="
+      M 432 94
+      L 446 94
+      L 446 106
+      C 451 98, 459 92, 470 92
+      C 474 92, 478 94, 480 96
+      L 476 109
+      C 472 107, 468 106, 464 106
+      C 454 106, 447 114, 447 128
+      L 447 166
+      L 432 166
+      Z
+    "/>
+    
+    <g fill="#0F172A">
+      <rect x="482" y="94" width="14" height="72" rx="4"/>
+      <circle cx="489" cy="74" r="7.5"/>
+    </g>
+    
+    <path fill="#0F172A" d="
+      M 545 107
+      L 534 113
+      C 531 107, 527 105, 521 105
+      C 516 105, 512 108, 512 112
+      C 512 116, 515 119, 526 122
+      C 539 125, 547 131, 547 143
+      C 547 157, 535 166, 520 166
+      C 507 166, 496 160, 493 148
+      L 505 143
+      C 507 150, 513 154, 520 154
+      C 527 154, 532 150, 532 144
+      C 532 139, 529 136, 518 133
+      C 506 129, 498 124, 498 113
+      C 498 101, 509 92, 521 92
+      C 532 92, 541 98, 545 107
+      Z
+    "/>
+    
+    <circle cx="568" cy="158" r="8" fill="#D97706"/>
+    
+    <g fill="#064E3B">
+      <rect x="584" y="94" width="14" height="72" rx="4"/>
+      <circle cx="591" cy="74" r="7.5"/>
+    </g>
+    
+    <path fill="#064E3B" d="
+      M 612 94
+      L 626 94
+      L 626 105
+      C 632 97, 642 92, 653 92
+      C 666 92, 674 100, 674 116
+      L 674 166
+      L 660 166
+      L 660 118
+      C 660 109, 656 105, 647 105
+      C 639 105, 627 111, 627 123
+      L 627 166
+      L 612 166
+      Z
+    "/>
+    </g>
+</svg></g><g><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t3" viewBox="0 0 256 256" x="1095.33" y="660" width="64" height="64" preserveAspectRatio="xMidYMid meet">
+  <title id="s264-t3">waris.in - Lembaran Estafet (Concept 3)</title>
+  <g id="s264-symbol-3" fill="#064E3B">
+    <!-- Left Leaf / Page of W -->
+    <path d="
+      M 48 74
+      L 74 74
+      L 100 174
+      C 102 182, 100 190, 94 194
+      L 86 198
+      C 78 202, 68 198, 64 190
+      L 48 74
+      Z
+    "/>
+    <!-- Left Center Stem -->
+    <path fill="#047857" d="
+      M 112 184
+      L 136 100
+      L 122 100
+      L 100 176
+      C 98 184, 104 190, 112 184
+      Z
+    "/>
+    <!-- Right Center Stem -->
+    <path fill="#047857" d="
+      M 144 184
+      L 120 100
+      L 134 100
+      L 156 176
+      C 158 184, 152 190, 144 184
+      Z
+    "/>
+    <!-- Right Leaf / Page of W -->
+    <path d="
+      M 208 74
+      L 182 74
+      L 156 174
+      C 154 182, 156 190, 162 194
+      L 170 198
+      C 178 202, 188 198, 192 190
+      L 208 74
+      Z
+    "/>
+    <!-- Golden Apex Horizon Sun -->
+    <circle cx="128" cy="74" r="7" fill="#D97706"/>
+  </g>
+</svg></g><text x="1127.33" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">64px</text><g><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t3" viewBox="0 0 256 256" x="1185.33" y="692" width="32" height="32" preserveAspectRatio="xMidYMid meet">
+  <title id="s232-t3">waris.in - Lembaran Estafet (Concept 3)</title>
+  <g id="s232-symbol-3" fill="#064E3B">
+    <!-- Left Leaf / Page of W -->
+    <path d="
+      M 48 74
+      L 74 74
+      L 100 174
+      C 102 182, 100 190, 94 194
+      L 86 198
+      C 78 202, 68 198, 64 190
+      L 48 74
+      Z
+    "/>
+    <!-- Left Center Stem -->
+    <path fill="#047857" d="
+      M 112 184
+      L 136 100
+      L 122 100
+      L 100 176
+      C 98 184, 104 190, 112 184
+      Z
+    "/>
+    <!-- Right Center Stem -->
+    <path fill="#047857" d="
+      M 144 184
+      L 120 100
+      L 134 100
+      L 156 176
+      C 158 184, 152 190, 144 184
+      Z
+    "/>
+    <!-- Right Leaf / Page of W -->
+    <path d="
+      M 208 74
+      L 182 74
+      L 156 174
+      C 154 182, 156 190, 162 194
+      L 170 198
+      C 178 202, 188 198, 192 190
+      L 208 74
+      Z
+    "/>
+    <!-- Golden Apex Horizon Sun -->
+    <circle cx="128" cy="74" r="7" fill="#D97706"/>
+  </g>
+</svg></g><text x="1201.33" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">32px</text><g><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t3" viewBox="0 0 256 256" x="1243.33" y="708" width="16" height="16" preserveAspectRatio="xMidYMid meet">
+  <title id="s216-t3">waris.in - Lembaran Estafet (Concept 3)</title>
+  <g id="s216-symbol-3" fill="#064E3B">
+    <!-- Left Leaf / Page of W -->
+    <path d="
+      M 48 74
+      L 74 74
+      L 100 174
+      C 102 182, 100 190, 94 194
+      L 86 198
+      C 78 202, 68 198, 64 190
+      L 48 74
+      Z
+    "/>
+    <!-- Left Center Stem -->
+    <path fill="#047857" d="
+      M 112 184
+      L 136 100
+      L 122 100
+      L 100 176
+      C 98 184, 104 190, 112 184
+      Z
+    "/>
+    <!-- Right Center Stem -->
+    <path fill="#047857" d="
+      M 144 184
+      L 120 100
+      L 134 100
+      L 156 176
+      C 158 184, 152 190, 144 184
+      Z
+    "/>
+    <!-- Right Leaf / Page of W -->
+    <path d="
+      M 208 74
+      L 182 74
+      L 156 174
+      C 154 182, 156 190, 162 194
+      L 170 198
+      C 178 202, 188 198, 192 190
+      L 208 74
+      Z
+    "/>
+    <!-- Golden Apex Horizon Sun -->
+    <circle cx="128" cy="74" r="7" fill="#D97706"/>
+  </g>
+</svg></g><text x="1251.33" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">16px</text><text x="1095.3333333333335" y="780" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#161616">C · Lembaran Estafet</text><text x="1095.3333333333335" y="814" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">Buku terbuka &amp; fajar ilmu yang diteruskan</text><text x="1095.3333333333335" y="840" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">ke adik tingkat.</text></svg>

@@ -30,8 +30,8 @@ class AdminController extends Controller
             $search = $request->item_search;
             $itemsQuery->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%")
-                  ->orWhereHas('user', fn($uq) => $uq->where('name', 'like', "%{$search}%"));
+                    ->orWhere('description', 'like', "%{$search}%")
+                    ->orWhereHas('user', fn ($uq) => $uq->where('name', 'like', "%{$search}%"));
             });
         }
 
@@ -52,8 +52,8 @@ class AdminController extends Controller
             $search = $request->user_search;
             $usersQuery->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%")
-                  ->orWhere('nim', 'like', "%{$search}%");
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('nim', 'like', "%{$search}%");
             });
         }
 
@@ -92,14 +92,14 @@ class AdminController extends Controller
 
         // Hapus file gambar terkait di public storage bila ada
         foreach ($item->images as $img) {
-            if ($img->image_path && !str_starts_with($img->image_path, 'images/placeholders/')) {
+            if ($img->image_path && ! str_starts_with($img->image_path, 'images/placeholders/')) {
                 Storage::disk('public')->delete($img->image_path);
             }
         }
 
         $item->delete();
 
-        return back()->with('success', "Listing '{$itemTitle}' milik {$ownerName} berhasil dihapus permanen dari platform.");
+        return redirect()->route('admin.dashboard', ['tab' => 'items'])->with('success', "Listing '{$itemTitle}' milik {$ownerName} berhasil dihapus permanen dari platform.");
     }
 
     /**
@@ -123,7 +123,7 @@ class AdminController extends Controller
             'suspend_reason' => $validated['suspend_reason'],
         ]);
 
-        return back()->with('success', "Akun mahasiswa {$user->name} berhasil ditangguhkan.");
+        return redirect()->route('admin.dashboard', ['tab' => 'users'])->with('success', "Akun mahasiswa {$user->name} berhasil ditangguhkan.");
     }
 
     /**
@@ -136,6 +136,6 @@ class AdminController extends Controller
             'suspend_reason' => null,
         ]);
 
-        return back()->with('success', "Status akun mahasiswa {$user->name} berhasil dipulihkan menjadi aktif kembali.");
+        return redirect()->route('admin.dashboard', ['tab' => 'users'])->with('success', "Status akun mahasiswa {$user->name} berhasil dipulihkan menjadi aktif kembali.");
     }
 }

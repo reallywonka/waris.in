@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="t3">
+  <title id="t3">waris.in - Rantai Estafet Monokrom</title>
+  <!-- Intertwined continuous ribbon forming W -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Left Loop Ribbon -->
+    <path d="
+      M 52 76
+      C 46 128, 56 196, 92 196
+      C 114 196, 122 172, 128 140
+      C 134 108, 142 84, 164 84
+      C 192 84, 204 136, 198 178
+    " stroke="#064E3B" stroke-width="16"/>
+    <!-- Right Loop Ribbon (Mirrored counter-flow) -->
+    <path d="
+      M 204 76
+      C 210 128, 200 196, 164 196
+      C 142 196, 134 172, 128 140
+      C 122 108, 114 84, 92 84
+      C 64 84, 52 136, 58 178
+    " stroke="#047857" stroke-width="16"/>
+  </g>
+  <!-- Center Gold Spark -->
+  <circle cx="128" cy="140" r="7" fill="#D97706"/>
+</svg>

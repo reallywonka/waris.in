@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-waris-surface border-b border-waris-border sticky top-0 z-50">
+<nav x-data="{ open: false }" @keydown.escape.window="open = false" class="bg-waris-surface border-b border-waris-border sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
             
@@ -6,7 +6,7 @@
             <div class="flex items-center space-x-8">
                 <!-- Brand Logo -->
                 <a href="{{ route('dashboard') }}" class="flex items-center space-x-2.5 group focus:outline-none">
-                    <img src="{{ asset('images/letter-w_g.png') }}" alt="waris.in" class="w-8 h-8 object-contain group-hover:scale-105 transition-transform duration-200">
+                    <img src="{{ asset('images/logo-symbol.svg') }}" alt="waris.in" class="w-8 h-8 object-contain group-hover:scale-105 transition-transform duration-200">
                     <span class="text-xl font-bold tracking-tight text-waris-text">
                         waris<span class="text-waris-primary">.in</span>
                     </span>
@@ -27,13 +27,13 @@
                     </a>
 
                     @auth
-                        <!-- Barang Saya (Task 6) -->
+                        <!-- Barang Saya -->
                         <a href="{{ route('items.my') }}" 
                            class="px-3.5 py-2 rounded-xl transition-all duration-150 {{ request()->routeIs('items.my*') ? 'bg-waris-primary-soft text-waris-primary font-bold' : 'text-waris-muted hover:text-waris-primary hover:bg-waris-surface-hover' }}">
                             Barang Saya
                         </a>
 
-                        <!-- Pengajuan Masuk (Task 8) -->
+                        <!-- Pengajuan Masuk -->
                         @php
                             $unreadIncomingCount = \App\Models\Claim::whereHas('item', fn($q) => $q->where('user_id', auth()->id()))->where('status', 'pending')->count();
                         @endphp
@@ -47,7 +47,7 @@
                             @endif
                         </a>
 
-                        <!-- Pengajuan Saya (Task 9) -->
+                        <!-- Pengajuan Saya -->
                         <a href="{{ route('claims.my') }}" 
                            class="px-3.5 py-2 rounded-xl transition-all duration-150 {{ request()->routeIs('claims.my*') ? 'bg-waris-primary-soft text-waris-primary font-bold' : 'text-waris-muted hover:text-waris-primary hover:bg-waris-surface-hover' }}">
                             Pengajuan Saya
@@ -61,7 +61,6 @@
                         </a>
 
                         @if (Auth::user()->isAdmin())
-                            <!-- Portal Admin Moderasi -->
                             <a href="{{ route('admin.dashboard') }}" 
                                class="inline-flex items-center space-x-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all duration-150 {{ request()->routeIs('admin*') ? 'bg-waris-accent-soft text-waris-accent-text border border-waris-accent-border shadow-2xs' : 'bg-waris-surface-muted text-waris-text-secondary hover:bg-waris-border border border-waris-border' }}">
                                 <x-icon name="shield" class="w-3.5 h-3.5 text-waris-accent" />
@@ -164,6 +163,15 @@
                                         <x-icon name="chevron-right" class="w-3.5 h-3.5 text-waris-faint" />
                                     </a>
 
+                                    <a href="{{ route('profile.edit') }}" 
+                                       class="w-full text-left px-3 py-2 text-xs font-semibold text-waris-text-secondary hover:bg-waris-primary-soft hover:text-waris-primary rounded-xl flex items-center justify-between transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <x-icon name="settings" class="w-4 h-4 text-waris-subtle" />
+                                            <span>Pengaturan Profil</span>
+                                        </div>
+                                        <x-icon name="chevron-right" class="w-3.5 h-3.5 text-waris-faint" />
+                                    </a>
+
                                     @if (Auth::user()->isAdmin())
                                         <a href="{{ route('admin.dashboard') }}" 
                                            class="w-full text-left px-3 py-2 text-xs font-bold text-waris-accent-text bg-waris-accent-soft hover:bg-waris-accent-border/40 rounded-xl flex items-center justify-between transition-colors">
@@ -206,9 +214,10 @@
 
             <!-- 3. Tombol Hamburger Menu (Mobile & Tablet) -->
             <div class="flex items-center md:hidden">
-                <button @click="open = !open" 
+                <button type="button"
+                        @click="open = !open" 
                         aria-label="Buka Menu Navigasi"
-                        class="p-2.5 rounded-xl text-waris-text-secondary hover:text-waris-primary hover:bg-waris-primary-soft transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-waris-primary">
+                        class="p-2.5 rounded-xl text-waris-text-secondary hover:text-waris-primary hover:bg-waris-primary-soft transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-waris-primary cursor-pointer">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': !open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
@@ -218,15 +227,15 @@
         </div>
     </div>
 
-    <!-- 4. Menu Drawer Mobile & Tablet (Responsive & Thumb-Friendly) -->
-    <div x-show="open" 
-         x-cloak
+    <!-- Mobile Drawer Menu -->
+    <div id="mobileDrawerMenu"
+         x-show="open" 
          x-transition:enter="transition ease-out duration-200"
          x-transition:enter-start="opacity-0 -translate-y-2"
          x-transition:enter-end="opacity-100 translate-y-0"
-         x-transition:exit="transition ease-in duration-150"
-         x-transition:exit-start="opacity-100 translate-y-0"
-         x-transition:exit-end="opacity-0 -translate-y-2"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100 translate-y-0"
+         x-transition:leave-end="opacity-0 -translate-y-2"
          class="md:hidden border-t border-waris-border bg-waris-surface px-4 pt-3 pb-6 space-y-2 shadow-lg">
         
         <div class="space-y-1 text-sm font-medium">
@@ -296,7 +305,7 @@
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" 
-                                class="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-bold text-waris-danger hover:bg-waris-danger-soft flex items-center space-x-2">
+                                class="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-bold text-waris-danger hover:bg-waris-danger-soft flex items-center space-x-2 cursor-pointer">
                             <x-icon name="log-out" class="w-4 h-4 text-waris-danger" />
                             <span>Keluar Sesi</span>
                         </button>

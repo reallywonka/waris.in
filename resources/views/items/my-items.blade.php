@@ -164,13 +164,21 @@
                                     <span>Peminat ({{ $item->claims->count() }})</span>
                                 </a>
 
-                                <form method="POST" action="{{ route('items.destroy', $item) }}" onsubmit="return confirm('Apakah Anda yakin ingin menghapus barang ini? Seluruh data pengajuan terkait juga akan terhapus.');">
+                                <form method="POST" 
+                                      action="{{ route('items.destroy', $item) }}" 
+                                      data-confirm="Apakah Anda yakin ingin menghapus barang &quot;{{ addslashes($item->title) }}&quot;?"
+                                      data-confirm-title="Hapus Barang Ini?"
+                                      data-confirm-button="Ya, Hapus Barang"
+                                      data-confirm-color="rose"
+                                      data-confirm-icon="trash"
+                                      data-confirm-note="Listing barang beserta seluruh data riwayat peminat terkait akan dihapus secara permanen dari waris.in."
+                                      class="inline-flex">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" 
-                                            class="p-1.5 rounded-xl text-waris-faint hover:text-waris-danger hover:bg-waris-danger-soft transition-colors cursor-pointer" 
+                                            class="p-2 rounded-xl text-waris-danger hover:text-waris-danger-hover bg-waris-danger-soft hover:bg-waris-danger-border/40 border border-waris-danger-border transition-colors cursor-pointer flex items-center justify-center" 
                                             title="Hapus Barang">
-                                        <x-icon name="trash" class="w-4 h-4" />
+                                        <x-icon name="trash" class="w-4 h-4 text-waris-danger" />
                                     </button>
                                 </form>
                             </div>

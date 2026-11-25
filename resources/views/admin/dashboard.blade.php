@@ -1,17 +1,112 @@
 <x-app-layout>
-    <div x-data="{
+    <script>
+        window.openSuspendModal = function(user) {
+            console.log('[Admin Portal] Membuka modal suspend untuk:', user);
+            const modal = document.getElementById('suspendModalWrapper');
+            if (modal) {
+                modal.removeAttribute('x-cloak');
+                modal.style.display = 'block';
+            }
+            const nameEl = document.getElementById('suspendModalUserName');
+            if (nameEl) nameEl.textContent = user.name || '';
+            const emailEl = document.getElementById('suspendModalUserEmail');
+            if (emailEl) emailEl.textContent = user.email || '';
+            const formEl = document.getElementById('suspendModalForm');
+            if (formEl && user.suspendUrl) {
+                formEl.action = user.suspendUrl;
+            }
+            const reasonInput = document.getElementById('suspend_reason');
+            if (reasonInput) {
+                reasonInput.value = '';
+                setTimeout(() => reasonInput.focus(), 80);
+            }
+            try {
+                const rootEl = document.getElementById('adminDashboardRoot');
+                if (rootEl && window.Alpine && Alpine.$data) {
+                    const d = Alpine.$data(rootEl);
+                    if (d) {
+                        d.userToSuspend = user;
+                        d.suspendModalOpen = true;
+                    }
+                }
+            } catch(e) {}
+        };
+
+        window.closeSuspendModal = function() {
+            console.log('[Admin Portal] Menutup modal suspend');
+            const modal = document.getElementById('suspendModalWrapper');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+            try {
+                const rootEl = document.getElementById('adminDashboardRoot');
+                if (rootEl && window.Alpine && Alpine.$data) {
+                    const d = Alpine.$data(rootEl);
+                    if (d) d.suspendModalOpen = false;
+                }
+            } catch(e) {}
+        };
+
+        window.openDeleteModal = function(item) {
+            console.log('[Admin Portal] Membuka modal hapus listing:', item);
+            const modal = document.getElementById('deleteModalWrapper');
+            if (modal) {
+                modal.removeAttribute('x-cloak');
+                modal.style.display = 'block';
+            }
+            const titleEl = document.getElementById('deleteModalItemTitle');
+            if (titleEl) titleEl.textContent = item.title || '';
+            const ownerEl = document.getElementById('deleteModalItemOwner');
+            if (ownerEl) ownerEl.textContent = item.owner || '';
+            const formEl = document.getElementById('deleteModalForm');
+            if (formEl && item.deleteUrl) {
+                formEl.action = item.deleteUrl;
+            }
+            try {
+                const rootEl = document.getElementById('adminDashboardRoot');
+                if (rootEl && window.Alpine && Alpine.$data) {
+                    const d = Alpine.$data(rootEl);
+                    if (d) {
+                        d.itemToDelete = item;
+                        d.deleteModalOpen = true;
+                    }
+                }
+            } catch(e) {}
+        };
+
+        window.closeDeleteModal = function() {
+            console.log('[Admin Portal] Menutup modal hapus listing');
+            const modal = document.getElementById('deleteModalWrapper');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+            try {
+                const rootEl = document.getElementById('adminDashboardRoot');
+                if (rootEl && window.Alpine && Alpine.$data) {
+                    const d = Alpine.$data(rootEl);
+                    if (d) d.deleteModalOpen = false;
+                }
+            } catch(e) {}
+        };
+    </script>
+    <div id="adminDashboardRoot"
+         x-data="{
             activeTab: '{{ request('tab', $tab ?? 'items') }}',
             deleteModalOpen: false,
             itemToDelete: null,
             suspendModalOpen: false,
             userToSuspend: null,
             openDeleteModal(item) {
-                this.itemToDelete = item;
-                this.deleteModalOpen = true;
+                window.openDeleteModal(item);
             },
             openSuspendModal(user) {
-                this.userToSuspend = user;
-                this.suspendModalOpen = true;
+                window.openSuspendModal(user);
+            },
+            closeDeleteModal() {
+                window.closeDeleteModal();
+            },
+            closeSuspendModal() {
+                window.closeSuspendModal();
             }
          }" 
          class="space-y-8 pb-16">
@@ -241,11 +336,17 @@
                                             </a>
 
                                             <button type="button" 
+                                                    onclick="window.openDeleteModal({
+                                                        id: {{ $item->id }},
+                                                        title: {{ json_encode($item->title) }},
+                                                        owner: {{ json_encode($item->user->name ?? 'Mahasiswa') }},
+                                                        deleteUrl: {{ json_encode(route('admin.items.destroy', $item)) }}
+                                                    })"
                                                     @click="openDeleteModal({
                                                         id: {{ $item->id }},
-                                                        title: '{{ addslashes($item->title) }}',
-                                                        owner: '{{ addslashes($item->user->name) }}',
-                                                        deleteUrl: '{{ route('admin.items.destroy', $item) }}'
+                                                        title: {{ json_encode($item->title) }},
+                                                        owner: {{ json_encode($item->user->name ?? 'Mahasiswa') }},
+                                                        deleteUrl: {{ json_encode(route('admin.items.destroy', $item)) }}
                                                     })"
                                                     class="inline-flex items-center space-x-1 px-3 py-1.5 bg-waris-danger-soft hover:bg-waris-danger-border/40 text-waris-danger-text border border-waris-danger-border rounded-xl text-xs font-bold transition-all active:scale-[0.98] cursor-pointer"
                                                     title="Hapus Listing Pelanggaran">
@@ -387,7 +488,16 @@
 
                                     <td class="py-3.5 px-4 text-right">
                                         @if ($u->isSuspended())
-                                            <form method="POST" action="{{ route('admin.users.activate', $u) }}" class="inline" onsubmit="return confirm('Pulihkan status akun {{ addslashes($u->name) }} agar dapat login dan bertransaksi kembali?');">
+                                            <!-- Tombol Pulihkan Akun -->
+                                            <form method="POST" 
+                                                  action="{{ route('admin.users.activate', $u) }}" 
+                                                  class="inline"
+                                                  data-confirm="Pulihkan status akun {{ addslashes($u->name) }} agar dapat login dan bertransaksi kembali di platform waris.in?"
+                                                  data-confirm-title="Pulihkan Status Akun Mahasiswa?"
+                                                  data-confirm-button="Ya, Pulihkan Akun"
+                                                  data-confirm-color="emerald"
+                                                  data-confirm-icon="check-circle"
+                                                  data-confirm-note="Mahasiswa akan dapat kembali mengakses seluruh fitur pasang barang, klaim hibah, dan transaksi barter.">
                                                 @csrf
                                                 <button type="submit" 
                                                         class="inline-flex items-center space-x-1 px-3 py-1.5 bg-waris-primary-soft hover:bg-waris-primary-border/40 text-waris-primary border border-waris-primary-border rounded-xl text-xs font-bold transition-all active:scale-[0.98] cursor-pointer">
@@ -397,11 +507,17 @@
                                             </form>
                                         @else
                                             <button type="button" 
+                                                    onclick="window.openSuspendModal({
+                                                        id: {{ $u->id }},
+                                                        name: {{ json_encode($u->name) }},
+                                                        email: {{ json_encode($u->email) }},
+                                                        suspendUrl: {{ json_encode(route('admin.users.suspend', $u)) }}
+                                                    })"
                                                     @click="openSuspendModal({
                                                         id: {{ $u->id }},
-                                                        name: '{{ addslashes($u->name) }}',
-                                                        email: '{{ addslashes($u->email) }}',
-                                                        suspendUrl: '{{ route('admin.users.suspend', $u) }}'
+                                                        name: {{ json_encode($u->name) }},
+                                                        email: {{ json_encode($u->email) }},
+                                                        suspendUrl: {{ json_encode(route('admin.users.suspend', $u)) }}
                                                     })"
                                                     class="inline-flex items-center space-x-1 px-3 py-1.5 bg-waris-danger-soft hover:bg-waris-danger-border/40 text-waris-danger-text border border-waris-danger-border rounded-xl text-xs font-bold transition-all active:scale-[0.98] cursor-pointer"
                                                     title="Tangguhkan Akses Pengguna">
@@ -429,8 +545,9 @@
 
         </div>
 
-        <!-- ================= MODAL 1: KONFIRMASI HAPUS LISTING ================= -->
-        <div x-show="deleteModalOpen" 
+        <!-- ================= MODAL 1: KONFIRMASI HAPUS LISTING (FR-10) ================= -->
+        <div id="deleteModalWrapper"
+             x-show="deleteModalOpen" 
              x-cloak
              style="display: none;"
              class="fixed inset-0 z-50 overflow-y-auto" 
@@ -442,20 +559,21 @@
                  x-transition:enter="ease-out duration-300"
                  x-transition:enter-start="opacity-0"
                  x-transition:enter-end="opacity-100"
-                 x-transition:exit="ease-in duration-200"
-                 x-transition:exit-start="opacity-100"
-                 x-transition:exit-end="opacity-0"
+                 x-transition:leave="ease-in duration-200"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
                  class="fixed inset-0 bg-waris-text/60 backdrop-blur-xs transition-opacity"
-                 @click="deleteModalOpen = false"></div>
+                 onclick="window.closeDeleteModal()"
+                 @click="closeDeleteModal()"></div>
 
             <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
                 <div x-show="deleteModalOpen"
                      x-transition:enter="ease-out duration-300"
                      x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                      x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                     x-transition:exit="ease-in duration-200"
-                     x-transition:exit-start="opacity-100 translate-y-0 sm:scale-100"
-                     x-transition:exit-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                     x-transition:leave="ease-in duration-200"
+                     x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                     x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                      class="relative transform overflow-hidden rounded-3xl bg-waris-surface text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-md border border-waris-surface-muted p-6 space-y-4">
                     
                     <div class="flex items-center space-x-3">
@@ -474,7 +592,7 @@
 
                     <div class="p-4 bg-waris-danger-soft rounded-2xl border border-waris-danger-border text-xs text-waris-danger-text space-y-1.5">
                         <p class="font-bold">
-                            Apakah Anda yakin ingin menghapus barang <span class="underline" x-text="itemToDelete ? itemToDelete.title : ''"></span> milik <span class="underline" x-text="itemToDelete ? itemToDelete.owner : ''"></span>?
+                            Apakah Anda yakin ingin menghapus barang <span id="deleteModalItemTitle" class="font-black underline" x-text="itemToDelete ? itemToDelete.title : ''"></span> milik <span id="deleteModalItemOwner" class="font-black underline" x-text="itemToDelete ? itemToDelete.owner : ''"></span>?
                         </p>
                         <p class="text-[11px] leading-relaxed">
                             Listing barang dan seluruh riwayat pengajuan terkait akan dihapus secara permanen dari basis data kampus waris.in.
@@ -483,14 +601,16 @@
 
                     <div class="pt-2 flex items-center justify-end space-x-2">
                         <button type="button" 
-                                @click="deleteModalOpen = false" 
+                                onclick="window.closeDeleteModal()"
+                                @click="closeDeleteModal()" 
                                 class="px-4 py-2.5 rounded-xl border border-waris-border-strong text-xs font-bold text-waris-text-secondary hover:bg-waris-surface-muted transition-colors cursor-pointer">
                             Batal
                         </button>
                         
-                        <form :action="itemToDelete ? itemToDelete.deleteUrl : '#'" method="POST">
+                        <form id="deleteModalForm" :action="itemToDelete ? itemToDelete.deleteUrl : '#'" method="POST">
                             @csrf
                             @method('DELETE')
+                            <input type="hidden" name="tab" value="items">
                             <button type="submit" 
                                     class="px-5 py-2.5 rounded-xl bg-waris-danger hover:bg-waris-danger-hover text-white text-xs font-bold shadow-2xs hover:shadow-xs transition-colors cursor-pointer">
                                 Ya, Hapus Permanen
@@ -502,8 +622,9 @@
             </div>
         </div>
 
-        <!-- ================= MODAL 2: SUSPEND PENGGUNA ================= -->
-        <div x-show="suspendModalOpen" 
+        <!-- ================= MODAL 2: SUSPEND PENGGUNA (FR-11) ================= -->
+        <div id="suspendModalWrapper"
+             x-show="suspendModalOpen" 
              x-cloak
              style="display: none;"
              class="fixed inset-0 z-50 overflow-y-auto" 
@@ -515,20 +636,21 @@
                  x-transition:enter="ease-out duration-300"
                  x-transition:enter-start="opacity-0"
                  x-transition:enter-end="opacity-100"
-                 x-transition:exit="ease-in duration-200"
-                 x-transition:exit-start="opacity-100"
-                 x-transition:exit-end="opacity-0"
+                 x-transition:leave="ease-in duration-200"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
                  class="fixed inset-0 bg-waris-text/60 backdrop-blur-xs transition-opacity"
-                 @click="suspendModalOpen = false"></div>
+                 onclick="window.closeSuspendModal()"
+                 @click="closeSuspendModal()"></div>
 
             <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
                 <div x-show="suspendModalOpen"
                      x-transition:enter="ease-out duration-300"
                      x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                      x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                     x-transition:exit="ease-in duration-200"
-                     x-transition:exit-start="opacity-100 translate-y-0 sm:scale-100"
-                     x-transition:exit-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                     x-transition:leave="ease-in duration-200"
+                     x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                     x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                      class="relative transform overflow-hidden rounded-3xl bg-waris-surface text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-md border border-waris-surface-muted p-6 space-y-4">
                     
                     <div class="flex items-center space-x-3">
@@ -540,13 +662,14 @@
                                 Tangguhkan Akun Mahasiswa
                             </h3>
                             <p class="text-xs text-waris-subtle mt-0.5">
-                                Akun: <span class="font-bold text-waris-text" x-text="userToSuspend ? userToSuspend.name : ''"></span> (<span x-text="userToSuspend ? userToSuspend.email : ''"></span>)
+                                Akun: <span id="suspendModalUserName" class="font-bold text-waris-text" x-text="userToSuspend ? userToSuspend.name : ''"></span> (<span id="suspendModalUserEmail" x-text="userToSuspend ? userToSuspend.email : ''"></span>)
                             </p>
                         </div>
                     </div>
 
-                    <form :action="userToSuspend ? userToSuspend.suspendUrl : '#'" method="POST" class="space-y-4">
+                    <form id="suspendModalForm" :action="userToSuspend ? userToSuspend.suspendUrl : '#'" method="POST" class="space-y-4">
                         @csrf
+                        <input type="hidden" name="tab" value="users">
 
                         <div>
                             <label for="suspend_reason" class="block text-xs font-bold text-waris-text-secondary mb-1">
@@ -569,10 +692,9 @@
 
                         <div class="pt-2 flex items-center justify-end space-x-2">
                             <button type="button" 
-                                    @click="suspendModalOpen = false" 
+                                    onclick="window.closeSuspendModal()"
+                                    @click="closeSuspendModal()" 
                                     class="px-4 py-2.5 rounded-xl border border-waris-border-strong text-xs font-bold text-waris-text-secondary hover:bg-waris-surface-muted transition-colors cursor-pointer">
-                                Batal
-                            </button>
                             <button type="submit" 
                                     class="px-5 py-2.5 rounded-xl bg-waris-danger hover:bg-waris-danger-hover text-white text-xs font-bold shadow-2xs hover:shadow-xs transition-colors cursor-pointer">
                                 Ya, Tangguhkan Akun

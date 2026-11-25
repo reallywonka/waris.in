@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="t2">
+  <title id="t2">waris.in - Simpul Tak Terputus (Concept 2)</title>
+  <g id="symbol-2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Unbroken Interlocking Möbius Loop forming W -->
+    <path d="
+      M 56 76
+      C 48 124, 58 196, 94 196
+      C 114 196, 122 174, 128 144
+      C 134 114, 142 92, 162 92
+      C 188 92, 202 136, 196 178
+      C 192 200, 172 204, 156 196
+      C 142 188, 134 170, 128 144
+      C 122 118, 114 100, 100 92
+      C 84 84, 64 88, 60 110
+      C 54 132, 68 184, 94 196
+    " stroke="#064E3B" stroke-width="16"/>
+  </g>
+  <!-- Golden Harmony Node at the center loop junction -->
+  <circle cx="128" cy="144" r="7" fill="#D97706"/>
+</svg>

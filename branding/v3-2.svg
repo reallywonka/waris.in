@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="t2">
+  <title id="t2">waris.in - Pita Möbius Estafet</title>
+  <g id="mobius-w">
+    <!-- Front Flow Ribbon (Deep Forest Emerald) -->
+    <path fill="#064E3B" d="
+      M 48 78
+      C 42 78, 38 84, 40 92
+      L 64 172
+      C 70 190, 84 200, 102 200
+      C 118 200, 130 190, 138 174
+      L 156 136
+      L 136 126
+      L 122 156
+      C 118 164, 110 170, 102 170
+      C 94 170, 86 164, 82 152
+      L 66 98
+      L 58 78
+      Z
+    "/>
+    <!-- Rear Continuous Loop Ribbon (Rich Emerald) -->
+    <path fill="#047857" d="
+      M 208 78
+      C 214 78, 218 84, 216 92
+      L 192 172
+      C 186 190, 172 200, 154 200
+      C 138 200, 126 190, 118 174
+      L 100 136
+      L 120 126
+      L 134 156
+      C 138 164, 146 170, 154 170
+      C 162 170, 170 164, 174 152
+      L 190 98
+      L 198 78
+      Z
+    "/>
+    <!-- Golden Nexus / Handover Core -->
+    <circle cx="128" cy="94" r="7" fill="#D97706"/>
+  </g>
+</svg>

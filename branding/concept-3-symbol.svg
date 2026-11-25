@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="t3">
+  <title id="t3">waris.in - Dua Generasi (Concept 3)</title>
+  <g id="symbol-3">
+    <!-- Left Pillar (Senior / Tangan Memberi) -->
+    <path fill="#064E3B" d="
+      M 54 72
+      L 82 72
+      L 106 156
+      C 110 172, 120 180, 128 180
+      L 128 204
+      C 106 204, 88 192, 80 168
+      L 54 72
+      Z
+    "/>
+    <!-- Right Pillar (Junior / Tangan Menyambut) -->
+    <path fill="#064E3B" d="
+      M 202 72
+      L 174 72
+      L 150 156
+      C 146 172, 136 180, 128 180
+      L 128 204
+      C 150 204, 168 192, 176 168
+      L 202 72
+      Z
+    "/>
+    <!-- Center Upward Ascent (The Legacy / Ilmu yang Diteruskan) -->
+    <path fill="#047857" d="
+      M 128 84
+      L 148 140
+      L 136 140
+      L 128 120
+      L 120 140
+      L 108 140
+      Z
+    "/>
+    <!-- Golden Apex Spark -->
+    <circle cx="128" cy="66" r="6" fill="#D97706"/>
+  </g>
+</svg>

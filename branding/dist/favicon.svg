@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256"><title>waris.in Brand Mark</title><g transform="translate(-34.94 -28.58) scale(1.273)">
+  <title id="title-small">waris.in Favicon and Small Size Symbol</title>
+  <g id="symbol-small">
+    <!-- Left Flap with boosted thickness for small display -->
+    <path fill="#047857" d="
+      M 44 70
+      C 34 70, 30 78, 32 88
+      L 60 176
+      C 66 194, 82 204, 102 204
+      L 124 204
+      L 96 108
+      L 66 108
+      L 56 70
+      Z
+    "/>
+    <!-- Right Flap -->
+    <path fill="#047857" d="
+      M 212 70
+      C 222 70, 226 78, 224 88
+      L 196 176
+      C 190 194, 174 204, 154 204
+      L 132 204
+      L 160 108
+      L 190 108
+      L 200 70
+      Z
+    "/>
+    <!-- Center Base Fold -->
+    <polygon points="128,132 94,200 162,200" fill="#065F46"/>
+    <!-- Amplified Gift Spark for crisp 16px contrast -->
+    <polygon points="128,42 148,72 128,102 108,72" fill="#D97706"/>
+  </g>
+</g></svg>

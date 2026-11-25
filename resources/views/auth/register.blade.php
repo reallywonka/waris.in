@@ -46,7 +46,7 @@
                 <!-- Brand & Judul -->
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-2">
-                        <img src="{{ asset('images/letter-w_g.png') }}" alt="waris.in logo" class="w-8 h-8 object-contain">
+                        <img src="{{ asset('images/logo-symbol.svg') }}" alt="waris.in logo" class="w-8 h-8 object-contain">
                         <span class="text-xl font-bold tracking-tight text-waris-text">waris<span class="text-waris-primary">.in</span></span>
                     </div>
                     <span class="inline-flex items-center text-[11px] font-semibold text-waris-primary bg-waris-primary-soft px-2.5 py-0.5 rounded-full border border-waris-primary-border">
@@ -68,14 +68,14 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                         <div>
                             <label for="name" class="block text-xs font-semibold text-waris-text-secondary mb-0.5">Nama Lengkap <span class="text-waris-danger">*</span></label>
-                            <input id="name" type="text" name="name" :value="old('name')" required autofocus autocomplete="name"
+                            <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name"
                                    placeholder="Andi Pratama"
                                    class="w-full text-xs rounded-xl border-waris-border focus:border-waris-primary focus:ring-waris-primary py-2 px-3 bg-waris-surface-hover text-waris-text">
                             <x-input-error :messages="$errors->get('name')" class="mt-0.5 text-[10px]" />
                         </div>
                         <div>
                             <label for="nim" class="block text-xs font-semibold text-waris-text-secondary mb-0.5">NIM Mahasiswa <span class="text-waris-danger">*</span></label>
-                            <input id="nim" type="text" name="nim" :value="old('nim')" required
+                            <input id="nim" type="text" name="nim" value="{{ old('nim') }}" required
                                    placeholder="13521098"
                                    class="w-full text-xs rounded-xl border-waris-border focus:border-waris-primary focus:ring-waris-primary py-2 px-3 bg-waris-surface-hover text-waris-text">
                             <x-input-error :messages="$errors->get('nim')" class="mt-0.5 text-[10px]" />
@@ -86,7 +86,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                         <div class="sm:col-span-2">
                             <label for="study_program" class="block text-xs font-semibold text-waris-text-secondary mb-0.5">Program Studi / Jurusan <span class="text-waris-danger">*</span></label>
-                            <input id="study_program" type="text" name="study_program" :value="old('study_program')" required
+                            <input id="study_program" type="text" name="study_program" value="{{ old('study_program') }}" required
                                    placeholder="Contoh: Farmasi, Teknik Informatika"
                                    class="w-full text-xs rounded-xl border-waris-border focus:border-waris-primary focus:ring-waris-primary py-2 px-3 bg-waris-surface-hover text-waris-text">
                             <x-input-error :messages="$errors->get('study_program')" class="mt-0.5 text-[10px]" />
@@ -110,7 +110,7 @@
                             <label for="email" class="block text-xs font-semibold text-waris-text-secondary">Email Pribadi <span class="text-waris-danger">*</span></label>
                             <span class="text-[11px] text-waris-faint">Tidak perlu email kampus</span>
                         </div>
-                        <input id="email" type="email" name="email" :value="old('email')" required autocomplete="username"
+                        <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="username"
                                placeholder="nama@gmail.com"
                                class="w-full text-xs rounded-xl border-waris-border focus:border-waris-primary focus:ring-waris-primary py-2 px-3 bg-waris-surface-hover text-waris-text">
                         <x-input-error :messages="$errors->get('email')" class="mt-0.5 text-[10px]" />

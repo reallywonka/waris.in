@@ -1,0 +1,59 @@
+{
+  "brand": "waris.in",
+  "tagline": "Platform Tukar & Hibah Barang Mahasiswa Kampus",
+  "brief": "Platform web bagi mahasiswa satu kampus untuk saling kasih/hibah, barter/tukar, atau jual murah barang kuliah preloved secara santai, rapi, dan tepercaya.",
+  "adjectives": [
+    "Akrab",
+    "Sirkular",
+    "Terpercaya",
+    "Modern",
+    "Praktis"
+  ],
+  "criteria": "Mudah dikenali di favicon 16px, ramah mahasiswa, mencerminkan estafet kepedulian kampus, dan fleksibel di berbagai media fisik maupun digital.",
+  "industry": "consumer-app",
+  "mockups": [
+    "website",
+    "box",
+    "tote",
+    "sticker",
+    "app-icon",
+    "badge"
+  ],
+  "nav": [
+    "Beranda",
+    "Jelajahi Katalog",
+    "Barang Saya",
+    "Pengajuan Masuk"
+  ],
+  "brand_color": "#047857",
+  "tile_color": "#065F46",
+  "greyscale": false,
+  "final": true,
+  "designer": "Senior Identity Designer",
+  "round": 2,
+  "concepts": [
+    {
+      "name": "Kotak Berbagi (The Handover Box)",
+      "symbol": "waris-symbol.svg",
+      "lockup": "waris-horizontal.svg",
+      "stacked": "waris-stacked.svg",
+      "symbol_on_tile": "waris-symbol-white.svg",
+      "stacked_on_tile": "waris-stacked-white.svg",
+      "symbol_on_dark": "waris-symbol-white.svg",
+      "lockup_on_dark": "waris-horizontal-white.svg",
+      "stacked_on_dark": "waris-stacked-white.svg",
+      "idea": "Siluet kotak paket terbuka membentuk huruf W sekaligus sepasang tangan menyambut, dengan aksen gift spark di tengahnya.",
+      "rationale": [
+        "Bentuk origami W langsung mengidentifikasikan platform dengan wadah perlengkapan kuliah fisik.",
+        "Sudut lipatan geometris yang kokoh memancarkan rasa aman, keteraturan, dan transparansi.",
+        "Warna Emerald Green (#047857) merefleksikan nilai sirkularitas ramah lingkungan, dipadukan aksen hangat Amber (#D97706) sebagai simbol kebaikan yang dibagikan."
+      ]
+    }
+  ],
+  "recommendation": "Konsep B (Kotak Berbagi) terpilih sebagai identitas resmi waris.in karena menyatukan simbol paket fisik dengan gestur kehangatan tangan mahasiswa.",
+  "next_steps": [
+    "Penerapan file aset ke aplikasi web (/public/images, navigation, dan favicon)",
+    "Integrasi komponen webmanifest untuk browser & PWA",
+    "Penerapan panduan brand guidelines pada merchandise kampus"
+  ]
+}

@@ -56,21 +56,34 @@
                 <!-- Brand & Header -->
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-2">
-                        <img src="{{ asset('images/letter-w_g.png') }}" alt="waris.in logo" class="w-8 h-8 object-contain">
+                        <img src="{{ asset('images/logo-symbol.svg') }}" alt="waris.in logo" class="w-8 h-8 object-contain">
                         <span class="text-xl font-bold tracking-tight text-waris-text">waris<span class="text-waris-primary">.in</span></span>
                     </div>
                 </div>
 
                 <div class="mt-4">
                     <h3 class="text-lg lg:text-xl font-bold text-waris-text">Hai, selamat datang!</h3>
-                    <p class="text-xs text-waris-subtle mt-0.5">Masuk dan temukan barang yang mungkin kamu butuhkan.</p>
+                    <p class="text-xs text-waris-subtle mt-0.5">Masuk menggunakan Email atau NIM dan temukan barang yang kamu butuhkan.</p>
                 </div>
 
                 <!-- Session Status / Errors -->
                 <x-auth-session-status class="mt-3 text-xs" :status="session('status')" />
+
+                @if (session('error'))
+                    <div class="mt-3 p-3 rounded-2xl bg-waris-danger-soft border border-waris-danger-border text-waris-danger-text text-xs font-medium flex items-start space-x-2.5">
+                        <x-icon name="alert-circle" class="w-4 h-4 text-waris-danger shrink-0 mt-0.5" />
+                        <span>{{ session('error') }}</span>
+                    </div>
+                @endif
+
                 @if ($errors->any())
-                    <div class="mt-3 p-2.5 rounded-xl bg-waris-danger-soft text-waris-danger-text border border-waris-danger-border text-xs font-medium">
-                        {{ $errors->first() }}
+                    <div class="mt-3 p-3 rounded-2xl bg-waris-danger-soft border border-waris-danger-border text-waris-danger-text text-xs font-medium flex items-start space-x-2.5">
+                        <x-icon name="alert-circle" class="w-4 h-4 text-waris-danger shrink-0 mt-0.5" />
+                        <div class="space-y-0.5">
+                            @foreach ($errors->all() as $error)
+                                <p>{{ $error }}</p>
+                            @endforeach
+                        </div>
                     </div>
                 @endif
 
@@ -78,12 +91,17 @@
                 <form method="POST" action="{{ route('login') }}" class="mt-4 space-y-3.5">
                     @csrf
 
-                    <!-- Email -->
+                    <!-- Email atau NIM -->
                     <div>
-                        <label for="email" class="block text-xs font-semibold text-waris-text-secondary mb-1">Email</label>
-                        <input id="email" type="email" name="email" :value="old('email')" required autofocus autocomplete="username"
-                               placeholder="andi.pratama@gmail.com"
-                               class="w-full text-xs rounded-xl border-waris-border focus:border-waris-primary focus:ring-waris-primary py-2.5 px-3.5 bg-waris-surface-hover text-waris-text">
+                        <label for="email" class="block text-xs font-semibold text-waris-text-secondary mb-1">Email atau NIM</label>
+                        <input id="email" type="text" name="email" value="{{ old('email') }}" required autofocus autocomplete="username"
+                               placeholder="andi.pratama@gmail.com atau NIM"
+                               class="w-full text-xs rounded-xl py-2.5 px-3.5 transition-colors {{ $errors->has('email') ? 'border-waris-danger-border bg-waris-danger-soft/30 text-waris-danger-text focus:border-waris-danger focus:ring-waris-danger' : 'border-waris-border focus:border-waris-primary focus:ring-waris-primary bg-waris-surface-hover text-waris-text' }}">
+                        @error('email')
+                            <p class="mt-1 text-[11px] text-waris-danger font-medium flex items-center space-x-1">
+                                <span>{{ $message }}</span>
+                            </p>
+                        @enderror
                     </div>
 
                     <!-- Kata Sandi -->
@@ -98,7 +116,12 @@
                         </div>
                         <input id="password" type="password" name="password" required autocomplete="current-password"
                                placeholder="••••••••"
-                               class="w-full text-xs rounded-xl border-waris-border focus:border-waris-primary focus:ring-waris-primary py-2.5 px-3.5 bg-waris-surface-hover text-waris-text">
+                               class="w-full text-xs rounded-xl py-2.5 px-3.5 transition-colors {{ $errors->has('password') ? 'border-waris-danger-border bg-waris-danger-soft/30 text-waris-danger-text focus:border-waris-danger focus:ring-waris-danger' : 'border-waris-border focus:border-waris-primary focus:ring-waris-primary bg-waris-surface-hover text-waris-text' }}">
+                        @error('password')
+                            <p class="mt-1 text-[11px] text-waris-danger font-medium flex items-center space-x-1">
+                                <span>{{ $message }}</span>
+                            </p>
+                        @enderror
                     </div>
 
                     <!-- Ingat Saya -->

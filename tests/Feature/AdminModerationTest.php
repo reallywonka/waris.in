@@ -12,7 +12,9 @@ class AdminModerationTest extends TestCase
     use RefreshDatabase;
 
     private User $admin;
+
     private User $student;
+
     private Item $item;
 
     protected function setUp(): void

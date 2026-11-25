@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="t3">
+  <title id="t3">waris.in - Architectural W</title>
+  <g id="mark-3">
+    <!-- Outer Arching Fold -->
+    <path fill="#047857" d="
+      M 48 76
+      L 76 76
+      L 104 156
+      L 128 92
+      L 152 156
+      L 180 76
+      L 208 76
+      L 168 188
+      C 164 196, 156 200, 148 200
+      C 140 200, 134 194, 130 184
+      L 116 148
+      L 102 184
+      C 98 194, 92 200, 84 200
+      C 76 200, 68 196, 64 188
+      Z
+    "/>
+    <!-- Center Amber Keystone / Legacy Gem -->
+    <polygon points="128,56 138,74 128,92 118,74" fill="#D97706"/>
+  </g>
+</svg>

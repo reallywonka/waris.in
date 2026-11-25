@@ -45,16 +45,60 @@ class AuthenticationTest extends TestCase
         $this->assertNotNull($user->fresh()->remember_token);
     }
 
+    public function test_users_can_authenticate_using_nim(): void
+    {
+        $user = User::factory()->create([
+            'nim' => '230101999',
+        ]);
+
+        $response = $this->post('/login', [
+            'email' => '230101999',
+            'password' => 'password',
+        ]);
+
+        $this->assertAuthenticated();
+        $response->assertRedirect(route('dashboard', absolute: false));
+    }
+
     public function test_users_can_not_authenticate_with_invalid_password(): void
     {
         $user = User::factory()->create();
 
-        $this->post('/login', [
+        $response = $this->post('/login', [
             'email' => $user->email,
             'password' => 'wrong-password',
         ]);
 
         $this->assertGuest();
+        $response->assertSessionHasErrors(['password' => 'Kata sandi yang Anda masukkan salah. Silakan coba lagi.']);
+    }
+
+    public function test_users_can_not_authenticate_with_unregistered_email(): void
+    {
+        $response = $this->post('/login', [
+            'email' => 'nonexistent@example.com',
+            'password' => 'password',
+        ]);
+
+        $this->assertGuest();
+        $response->assertSessionHasErrors(['email' => 'Akun dengan email/NIM ini belum terdaftar. Silakan periksa kembali atau buat akun baru.']);
+    }
+
+    public function test_suspended_user_cannot_login_and_receives_suspension_message(): void
+    {
+        $user = User::factory()->create([
+            'status' => 'suspended',
+            'suspend_reason' => 'Pelanggaran ketentuan COD kampus.',
+        ]);
+
+        $response = $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $this->assertGuest();
+        $response->assertSessionHasErrors(['email']);
+        $this->assertStringContainsString('Pelanggaran ketentuan COD kampus.', session('errors')->first('email'));
     }
 
     public function test_users_can_logout(): void

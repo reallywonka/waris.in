@@ -475,9 +475,9 @@
                          x-transition:enter="ease-out duration-300"
                          x-transition:enter-start="opacity-0"
                          x-transition:enter-end="opacity-100"
-                         x-transition:exit="ease-in duration-200"
-                         x-transition:exit-start="opacity-100"
-                         x-transition:exit-end="opacity-0"
+                         x-transition:leave="ease-in duration-200"
+                         x-transition:leave-start="opacity-100"
+                         x-transition:leave-end="opacity-0"
                          class="fixed inset-0 bg-waris-text/60 backdrop-blur-xs transition-opacity"
                          @click="claimModalOpen = false"></div>
 
@@ -486,9 +486,9 @@
                              x-transition:enter="ease-out duration-300"
                              x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                              x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                             x-transition:exit="ease-in duration-200"
-                             x-transition:exit-start="opacity-100 translate-y-0 sm:scale-100"
-                             x-transition:exit-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                             x-transition:leave="ease-in duration-200"
+                             x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                             x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                              class="relative transform overflow-hidden rounded-3xl bg-waris-surface text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-lg border border-waris-surface-muted">
                             
                             <!-- Header Modal -->

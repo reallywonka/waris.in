@@ -32,7 +32,7 @@ class HomeController extends Controller
         $userSharedCount = auth()->check() ? auth()->user()->items()->count() : 0;
 
         // Ambil barang milik pengguna yang sedang login untuk tracking progres & peminat langsung di beranda
-        $myItems = auth()->check() 
+        $myItems = auth()->check()
             ? auth()->user()->items()
                 ->with(['claims', 'primaryImage', 'images'])
                 ->latest()
@@ -41,15 +41,15 @@ class HomeController extends Controller
             : collect();
 
         $myActiveCount = auth()->check() ? auth()->user()->items()->where('status', 'available')->count() : 0;
-        $myPendingClaimsCount = auth()->check() 
-            ? Claim::whereHas('item', fn($q) => $q->where('user_id', auth()->id()))
+        $myPendingClaimsCount = auth()->check()
+            ? Claim::whereHas('item', fn ($q) => $q->where('user_id', auth()->id()))
                 ->where('status', 'pending')
-                ->count() 
+                ->count()
             : 0;
 
         return view('dashboard', compact(
-            'recentItems', 
-            'categories', 
+            'recentItems',
+            'categories',
             'userSharedCount',
             'myItems',
             'myActiveCount',

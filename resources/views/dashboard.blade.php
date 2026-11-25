@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="space-y-10">
+    <div class="space-y-10 sm:space-y-12">
         
         <!-- 1. Header Sapaan Mahasiswa (Jika Login) -->
         @auth
@@ -78,7 +78,7 @@
                                     <div class="relative w-full aspect-4/3 rounded-lg overflow-hidden bg-waris-surface-muted border border-waris-border">
                                         <img src="{{ $myItem->primary_image_url }}" 
                                              alt="{{ $myItem->title }}"
-                                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                                             class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200"
                                              onerror="this.onerror=null; this.src='{{ asset('images/placeholders/default.svg') }}';">
                                         
                                         <!-- Badge Status -->
@@ -234,7 +234,7 @@
             </div>
         </div>
 
-        <!-- 3. Kategori Kebutuhan Kampus -->
+        <!-- 3. Section Kategori Barang Kuliah -->
         <div class="space-y-3">
             <div class="flex items-center justify-between">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-waris-subtle flex items-center space-x-1.5">
@@ -243,7 +243,7 @@
                 </h3>
                 <a href="{{ route('items.index') }}" class="text-xs font-semibold text-waris-primary hover:underline flex items-center space-x-1">
                     <span>Semua Kategori</span>
-                    <x-icon name="arrow-right" class="w-3.5 h-3.5" />
+                    <x-icon name="chevron-right" class="w-3.5 h-3.5 text-waris-primary" />
                 </a>
             </div>
             
@@ -261,7 +261,7 @@
             </div>
         </div>
 
-        <!-- 4. Listing Terbaru dari Rekan Kampus -->
+        <!-- 4. Section Listing Terbaru dari Rekan Kampus -->
         <div class="space-y-5">
             <div class="flex items-center justify-between">
                 <div>
@@ -272,16 +272,16 @@
                 </div>
                 <a href="{{ route('items.index') }}" class="text-xs font-semibold text-waris-primary hover:text-waris-primary-hover flex items-center space-x-1">
                     <span>Buka Katalog Lengkap</span>
-                    <x-icon name="arrow-right" class="w-3.5 h-3.5" />
+                    <x-icon name="chevron-right" class="w-4 h-4 text-waris-primary" />
                 </a>
             </div>
 
             <!-- Grid Kartu Barang -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
                 @forelse ($recentItems as $item)
                     <x-item-card :item="$item" />
                 @empty
-                    <div class="col-span-3 text-center py-12 bg-waris-surface rounded-2xl border border-dashed border-waris-border-strong space-y-2">
+                    <div class="col-span-full text-center py-12 bg-waris-surface rounded-2xl border border-dashed border-waris-border-strong space-y-2">
                         <x-icon name="package" class="w-8 h-8 text-waris-faint mx-auto" />
                         <p class="text-sm font-semibold text-waris-text-secondary">Belum ada barang yang dipasang saat ini.</p>
                         <p class="text-xs text-waris-faint">Jadilah mahasiswa pertama yang mengoper barang kuliah di sini!</p>
