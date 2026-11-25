@@ -665,17 +665,41 @@
 
                     <div>
                         <label for="contact_info" class="block text-xs font-semibold text-waris-text-secondary mb-1">
-                            Nomor WhatsApp & Titik Kumpul Nyaman Kamu <span class="text-waris-danger">*</span>
+                            Nomor WhatsApp / Kontak Aktif <span class="text-waris-danger">*</span>
                         </label>
-                        <textarea id="contact_info" name="contact_info" rows="2" required
-                                  placeholder="Contoh: WhatsApp 0812-3456-7890 (Andi). Bisa ketemuan di Gazebo Fasilkom jam istirahat kuliah."
-                                  class="w-full text-xs sm:text-sm rounded-xl border-waris-border focus:border-waris-primary focus:ring-waris-primary py-2.5 px-3 bg-waris-surface-hover text-waris-text leading-relaxed">{{ old('contact_info', auth()->user()->phone ? 'WhatsApp: ' . auth()->user()->phone . ' (' . auth()->user()->name . ')' : '') }}</textarea>
+                        <input type="text" id="contact_info" name="contact_info" required
+                               value="{{ old('contact_info', auth()->user()->phone ? 'WhatsApp: ' . auth()->user()->phone . ' (' . auth()->user()->name . ')' : '') }}"
+                               placeholder="Contoh: WhatsApp 0812-3456-7890 (Andi)"
+                               class="w-full text-xs sm:text-sm rounded-xl border-waris-border focus:border-waris-primary focus:ring-waris-primary py-2.5 px-3 bg-waris-surface-hover text-waris-text">
+                        <p class="text-xs text-waris-faint mt-1">Digunakan untuk koordinasi serah terima setelah peminat kamu setujui.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label for="meetup_location" class="block text-xs font-semibold text-waris-text-secondary mb-1">
+                                Titik Lokasi COD Kampus <span class="text-waris-faint font-normal">(Opsional)</span>
+                            </label>
+                            <input type="text" id="meetup_location" name="meetup_location"
+                                   value="{{ old('meetup_location') }}"
+                                   placeholder="Contoh: Gazebo Fasilkom / Perpustakaan Pusat"
+                                   class="w-full text-xs sm:text-sm rounded-xl border-waris-border focus:border-waris-primary focus:ring-waris-primary py-2.5 px-3 bg-waris-surface-hover text-waris-text">
+                        </div>
+
+                        <div>
+                            <label for="time_handover" class="block text-xs font-semibold text-waris-text-secondary mb-1">
+                                Waktu Serah Terima <span class="text-waris-faint font-normal">(Opsional)</span>
+                            </label>
+                            <input type="text" id="time_handover" name="time_handover"
+                                   value="{{ old('time_handover') }}"
+                                   placeholder="Contoh: Senin–Jumat jam istirahat / sore"
+                                   class="w-full text-xs sm:text-sm rounded-xl border-waris-border focus:border-waris-primary focus:ring-waris-primary py-2.5 px-3 bg-waris-surface-hover text-waris-text">
+                        </div>
                     </div>
 
                     <div class="p-3 bg-waris-bg border border-waris-border rounded-xl flex items-start space-x-2.5 text-xs text-waris-muted">
                         <x-icon name="lock" class="w-4 h-4 text-waris-primary-muted shrink-0 mt-0.5" />
                         <p class="leading-relaxed">
-                            Kontak ini <strong>hanya terbuka bagi peminat yang kamu setujui</strong>. Nomor dan media sosialmu tidak dipublikasikan ke katalog umum.
+                            Nomor kontak ini <strong>hanya terbuka bagi peminat yang kamu setujui</strong> dan tidak ditampilkan ke katalog umum. Titik lokasi COD membantu calon peminat memperkirakan lokasi ketemuan di kampus.
                         </p>
                     </div>
                 </div>

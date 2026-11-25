@@ -19,14 +19,7 @@ class HomeController extends Controller
             ->take(6)
             ->get();
 
-        $categories = [
-            'Buku & Modul',
-            'Elektronik',
-            'Perlengkapan Kuliah',
-            'Fashion & Jaket',
-            'Alat Praktikum',
-            'Lainnya',
-        ];
+        $categories = Item::CATEGORIES;
 
         // Hitung jejak kebaikan user yang sedang login (berapa barang yang pernah dia pasang)
         $userSharedCount = auth()->check() ? auth()->user()->items()->count() : 0;

@@ -100,12 +100,9 @@
                     <div class="flex flex-wrap items-center gap-2">
                         <select name="category" onchange="this.form.submit()" class="py-1.5 px-3 text-xs rounded-xl border-waris-border focus:border-waris-primary focus:ring-waris-primary bg-waris-surface-hover text-waris-text font-medium">
                             <option value="Semua">Semua Kategori</option>
-                            <option value="Buku & Modul" {{ request('category') === 'Buku & Modul' ? 'selected' : '' }}>Buku & Modul</option>
-                            <option value="Elektronik" {{ request('category') === 'Elektronik' ? 'selected' : '' }}>Elektronik</option>
-                            <option value="Perlengkapan Kuliah" {{ request('category') === 'Perlengkapan Kuliah' ? 'selected' : '' }}>Perlengkapan Kuliah</option>
-                            <option value="Fashion & Jaket" {{ request('category') === 'Fashion & Jaket' ? 'selected' : '' }}>Fashion & Jaket</option>
-                            <option value="Alat Praktikum" {{ request('category') === 'Alat Praktikum' ? 'selected' : '' }}>Alat Praktikum</option>
-                            <option value="Lainnya" {{ request('category') === 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                            @foreach ($categories as $cat)
+                                <option value="{{ $cat }}" {{ request('category') === $cat ? 'selected' : '' }}>{{ $cat }}</option>
+                            @endforeach
                         </select>
 
                         <select name="condition" onchange="this.form.submit()" class="py-1.5 px-3 text-xs rounded-xl border-waris-border focus:border-waris-primary focus:ring-waris-primary bg-waris-surface-hover text-waris-text font-medium">

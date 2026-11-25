@@ -12,6 +12,24 @@ class Item extends Model
 {
     use HasFactory;
 
+    public const CATEGORIES = [
+        'Elektronik & Gadget Belajar',
+        'Buku & Modul',
+        'Alat Praktikum',
+        'Perlengkapan Kuliah',
+        'Alat Tulis & Gambar',
+        'Fashion & Jaket',
+        'Perlengkapan Kos',
+        'Lainnya',
+    ];
+
+    public const CONDITIONS = [
+        'Baru (Gress)' => 'Belum pernah dibuka/dipakai, segel masih utuh.',
+        'Seperti Baru' => 'Hanya dipakai beberapa kali, mulus tanpa cacat.',
+        'Bekas Layak Pakai' => 'Fungsi 100% normal, ada tanda pemakaian wajar.',
+        'Ada Kekurangan' => 'Ada baret atau fungsi sampingan yang minus tapi masih bisa pakai.',
+    ];
+
     protected $fillable = [
         'user_id',
         'title',

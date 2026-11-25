@@ -32,9 +32,14 @@ class ItemController extends Controller
             $query->where('mode', $request->mode);
         }
 
-        // 3. Filter Kategori
+        // 3. Filter Kategori (mendukung varian kategori lama seperti "Buku & Catatan" / "Elektronik")
         if ($request->filled('category') && $request->category !== 'Semua') {
-            $query->where('category', 'like', "%{$request->category}%");
+            $categoryFilter = match ($request->category) {
+                'Elektronik & Gadget Belajar' => 'Elektronik',
+                'Buku & Modul' => 'Buku',
+                default => $request->category,
+            };
+            $query->where('category', 'like', "%{$categoryFilter}%");
         }
 
         // 4. Filter Kondisi Barang
@@ -74,6 +79,8 @@ class ItemController extends Controller
 
         $faculties = ['Fasilkom', 'Farmasi', 'Teknik Mesin', 'Ilmu Hukum', 'Kedokteran', 'Teknik Elektro', 'Ekonomi & Bisnis', 'MIPA'];
 
+        $categories = Item::CATEGORIES;
+
         return view('items.index', compact(
             'items',
             'totalListing',
@@ -81,7 +88,8 @@ class ItemController extends Controller
             'hargaPasCount',
             'barterCount',
             'fakultasCount',
-            'faculties'
+            'faculties',
+            'categories'
         ));
     }
 
@@ -126,21 +134,8 @@ class ItemController extends Controller
      */
     public function create()
     {
-        $categories = [
-            'Elektronik & Gadget Belajar',
-            'Buku & Modul',
-            'Perlengkapan Kuliah',
-            'Fashion & Jaket',
-            'Alat Praktikum',
-            'Lainnya',
-        ];
-
-        $conditions = [
-            'Baru (Gress)' => 'Belum pernah dibuka/dipakai, segel masih utuh.',
-            'Seperti Baru' => 'Hanya dipakai beberapa kali, mulus tanpa cacat.',
-            'Bekas Layak Pakai' => 'Fungsi 100% normal, ada tanda pemakaian wajar.',
-            'Ada Kekurangan' => 'Ada baret atau fungsi sampingan yang minus tapi masih bisa pakai.',
-        ];
+        $categories = Item::CATEGORIES;
+        $conditions = Item::CONDITIONS;
 
         return view('items.create', compact('categories', 'conditions'));
     }
@@ -171,7 +166,7 @@ class ItemController extends Controller
             'mode.required' => 'Pilih format transaksi (Gratis / Harga Pas / Barter).',
             'price.required_if' => 'Nominal harga wajib diisi jika memilih mode Harga Pas.',
             'barter_request.required_if' => 'Tuliskan barang yang ingin kamu tukar jika memilih mode Barter.',
-            'contact_info.required' => 'Informasi kontak & lokasi COD wajib diisi.',
+            'contact_info.required' => 'Nomor WhatsApp atau kontak yang bisa dihubungi wajib diisi.',
             'photos.max' => 'Maksimal 3 foto yang dapat diunggah.',
             'photos.*.image' => 'File harus berupa gambar (JPG, PNG, atau WEBP).',
             'photos.*.max' => 'Ukuran setiap foto maksimal 2MB.',
@@ -247,21 +242,8 @@ class ItemController extends Controller
             abort(403, 'Anda tidak berhak mengedit barang milik pengguna lain.');
         }
 
-        $categories = [
-            'Elektronik & Gadget Belajar',
-            'Buku & Modul',
-            'Perlengkapan Kuliah',
-            'Fashion & Jaket',
-            'Alat Praktikum',
-            'Lainnya',
-        ];
-
-        $conditions = [
-            'Baru (Gress)' => 'Belum pernah dibuka/dipakai, segel masih utuh.',
-            'Seperti Baru' => 'Hanya dipakai beberapa kali, mulus tanpa cacat.',
-            'Bekas Layak Pakai' => 'Fungsi 100% normal, ada tanda pemakaian wajar.',
-            'Ada Kekurangan' => 'Ada baret atau fungsi sampingan yang minus tapi masih bisa pakai.',
-        ];
+        $categories = Item::CATEGORIES;
+        $conditions = Item::CONDITIONS;
 
         return view('items.edit', compact('item', 'categories', 'conditions'));
     }
